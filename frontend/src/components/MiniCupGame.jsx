@@ -231,19 +231,19 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
 
         {/* Ball */}
         <div 
-          className={`absolute w-12 h-12 transition-all ${
+          className={`absolute transition-all ${
             isKicking ? 'duration-600 ease-out' : 'duration-300'
           }`}
           style={{
             left: `${ballPosition.x}%`,
             top: `${ballPosition.y}%`,
             transform: 'translate(-50%, -50%)',
-            zIndex: 10
+            zIndex: 10,
+            fontSize: '3rem',
+            filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))'
           }}
         >
-          <div className="w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center text-2xl">
-            ⚽
-          </div>
+          ⚽
         </div>
 
         {/* Result Message */}
