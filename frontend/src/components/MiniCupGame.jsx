@@ -38,6 +38,25 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     }
   }, [gameOver, isKicking, difficulty, goalKeeperDirection]);
 
+  const handleMouseMove = (e) => {
+    if (isKicking || gameOver) return;
+    
+    const rect = gameRef.current.getBoundingClientRect();
+    const mouseX = ((e.clientX - rect.left) / rect.width) * 100;
+    const mouseY = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    // Only show aim indicator when mouse is above the ball
+    if (mouseY < 80) {
+      setAimPosition({ x: mouseX, y: mouseY });
+    } else {
+      setAimPosition(null);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setAimPosition(null);
+  };
+
   const handleClick = (e) => {
     if (isKicking || gameOver) return;
     
@@ -54,17 +73,19 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
 
   const shootBall = (targetX) => {
     setIsKicking(true);
+    setAimPosition(null);
     
     // Clamp target position to goal area
     const clampedX = Math.max(25, Math.min(75, targetX));
     
-    // Animate ball
-    setBallPosition({ x: clampedX, y: 20 });
+    // Animate ball to target position
+    setBallPosition({ x: clampedX, y: 15 });
     
     setTimeout(() => {
-      // Check if goal - goalkeeper range expands slightly with difficulty
-      const goalKeeperRange = Math.max(12, 18 - difficulty);
-      const isGoal = Math.abs(clampedX - goalKeeperPosition) > goalKeeperRange;
+      // Check if goal - goalkeeper should visually block the ball
+      const goalKeeperRange = Math.max(10, 16 - difficulty);
+      const distance = Math.abs(clampedX - goalKeeperPosition);
+      const isGoal = distance > goalKeeperRange;
       
       if (isGoal) {
         setShowResult('goal');
@@ -77,6 +98,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           setIsKicking(false);
         }, 1500);
       } else {
+        // Move ball to goalkeeper's position for visual blocking
+        setBallPosition({ x: goalKeeperPosition, y: 15 });
         setShowResult('miss');
         addGameHistory(selectedTeam.name, score);
         setTimeout(() => {
