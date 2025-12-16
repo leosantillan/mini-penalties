@@ -115,11 +115,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
 
       <div 
         ref={gameRef}
-        className="flex-1 relative overflow-hidden"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
+        className="flex-1 relative overflow-hidden cursor-pointer"
+        onClick={handleClick}
       >
         {/* Goal */}
         <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-64 h-32 border-4 border-white rounded-t-lg">
