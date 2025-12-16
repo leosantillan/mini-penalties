@@ -231,18 +231,10 @@ metadata:
   test_sequence: 1
 
 test_plan:
-  current_focus:
-    - "Landing Page Display"
-    - "Team Selection Interface"
-    - "Game Screen Interface"
-    - "Aiming System"
-    - "Shooting Mechanics"
-    - "Goal Detection System"
-    - "Save Detection System"
-    - "Game Over Functionality"
+  current_focus: []
   stuck_tasks: []
-  test_all: true
-  test_priority: "sequential"
+  test_all: false
+  test_priority: "completed"
 
 agent_communication:
   - agent: "testing"
