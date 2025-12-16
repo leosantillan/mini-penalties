@@ -12,6 +12,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [goalKeeperDirection, setGoalKeeperDirection] = useState(1);
   const [showResult, setShowResult] = useState(null);
   const [difficulty, setDifficulty] = useState(1);
+  const [aimPosition, setAimPosition] = useState(null);
   const gameRef = useRef(null);
 
   useEffect(() => {
