@@ -101,3 +101,125 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the Mini Cup Game to ensure all features work correctly including landing page, team selection, game mechanics, aiming system, shooting mechanics, goal detection, save detection, and game over functionality."
+
+frontend:
+  - task: "Landing Page Display"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/LandingPage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test landing page with spinning soccer ball, stats display (8 teams, total goals, players worldwide), and Start Playing button functionality"
+
+  - task: "Team Selection Interface"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/TeamSelection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test 8 teams display with flags, names, countries, goal counts, rankings, clickable team cards, leaderboard section, and Back button functionality"
+
+  - task: "Game Screen Interface"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/MiniCupGame.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test game screen with selected team info, goal post display, goalkeeper movement, ball positioning, and score display"
+
+  - task: "Aiming System"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/MiniCupGame.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test mouse movement aiming with arrow from ball to mouse position, target circle at mouse position, and arrow disappearing when mouse is below ball or leaves screen"
+
+  - task: "Shooting Mechanics"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/MiniCupGame.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test clicking on different parts of goal (left, right, center) and verify ball moves to clicked positions"
+
+  - task: "Goal Detection System"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/MiniCupGame.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test goal scoring by clicking away from keeper, verify GOAL! message appears, score increments, and ball returns to starting position"
+
+  - task: "Save Detection System"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/MiniCupGame.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test clicking near goalkeeper position, verify SAVED! message appears, ball moves to goalkeeper position, and game over screen appears"
+
+  - task: "Game Over Functionality"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/MiniCupGame.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test game over screen displays final score, Play Again button restarts with same team, and Choose Different Team button returns to team selection"
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+
+test_plan:
+  current_focus:
+    - "Landing Page Display"
+    - "Team Selection Interface"
+    - "Game Screen Interface"
+    - "Aiming System"
+    - "Shooting Mechanics"
+    - "Goal Detection System"
+    - "Save Detection System"
+    - "Game Over Functionality"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "sequential"
+
+agent_communication:
+  - agent: "testing"
+    message: "Starting comprehensive testing of Mini Cup Game. Will test all 8 major components sequentially: landing page, team selection, game interface, aiming system, shooting mechanics, goal detection, save detection, and game over functionality."
