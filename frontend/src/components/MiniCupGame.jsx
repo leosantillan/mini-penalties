@@ -37,56 +37,33 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     }
   }, [gameOver, isKicking, difficulty, goalKeeperDirection]);
 
-  const handleTouchStart = (e) => {
+  const handleClick = (e) => {
     if (isKicking || gameOver) return;
-    const touch = e.touches[0];
-    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
-  };
-
-  const handleTouchEnd = (e) => {
-    if (isKicking || gameOver || !touchStartRef.current) return;
     
-    const touch = e.changedTouches[0];
-    const deltaX = touch.clientX - touchStartRef.current.x;
-    const deltaY = touchStartRef.current.y - touch.clientY;
+    // Get click position relative to the game area
+    const rect = gameRef.current.getBoundingClientRect();
+    const clickX = ((e.clientX - rect.left) / rect.width) * 100;
+    const clickY = ((e.clientY - rect.top) / rect.height) * 100;
     
-    if (deltaY > 30) {
-      shootBall(deltaX, deltaY);
+    // Only shoot if clicking on upper part of the screen (above the ball)
+    if (clickY < 80) {
+      shootBall(clickX);
     }
-    touchStartRef.current = null;
   };
 
-  const handleMouseDown = (e) => {
-    if (isKicking || gameOver) return;
-    touchStartRef.current = { x: e.clientX, y: e.clientY };
-  };
-
-  const handleMouseUp = (e) => {
-    if (isKicking || gameOver || !touchStartRef.current) return;
-    
-    const deltaX = e.clientX - touchStartRef.current.x;
-    const deltaY = touchStartRef.current.y - e.clientY;
-    
-    if (deltaY > 30) {
-      shootBall(deltaX, deltaY);
-    }
-    touchStartRef.current = null;
-  };
-
-  const shootBall = (deltaX, deltaY) => {
+  const shootBall = (targetX) => {
     setIsKicking(true);
     
-    // Calculate target position based on swipe
-    const targetX = Math.max(10, Math.min(90, 50 + (deltaX / 5)));
-    const power = Math.min(deltaY / 3, 100);
+    // Clamp target position to goal area
+    const clampedX = Math.max(25, Math.min(75, targetX));
     
     // Animate ball
-    setBallPosition({ x: targetX, y: 20 });
+    setBallPosition({ x: clampedX, y: 20 });
     
     setTimeout(() => {
-      // Check if goal
-      const goalKeeperRange = 15;
-      const isGoal = Math.abs(targetX - goalKeeperPosition) > goalKeeperRange;
+      // Check if goal - goalkeeper range expands slightly with difficulty
+      const goalKeeperRange = Math.max(12, 18 - difficulty);
+      const isGoal = Math.abs(clampedX - goalKeeperPosition) > goalKeeperRange;
       
       if (isGoal) {
         setShowResult('goal');
