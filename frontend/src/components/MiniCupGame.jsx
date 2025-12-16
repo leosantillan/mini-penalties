@@ -9,10 +9,10 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 85 });
   const [isKicking, setIsKicking] = useState(false);
   const [goalKeeperPosition, setGoalKeeperPosition] = useState(50);
+  const [goalKeeperDirection, setGoalKeeperDirection] = useState(1);
   const [showResult, setShowResult] = useState(null);
   const [difficulty, setDifficulty] = useState(1);
   const gameRef = useRef(null);
-  const touchStartRef = useRef(null);
 
   useEffect(() => {
     if (!gameOver && !isKicking) {
@@ -20,16 +20,22 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       const interval = setInterval(() => {
         setGoalKeeperPosition(prev => {
           const speed = 2 + (difficulty * 0.5);
-          const newPos = prev + speed;
-          if (newPos >= 85 || newPos <= 15) {
-            return prev - speed;
+          const newPos = prev + (speed * goalKeeperDirection);
+          
+          // Change direction at boundaries
+          if (newPos >= 80) {
+            setGoalKeeperDirection(-1);
+            return 80;
+          } else if (newPos <= 20) {
+            setGoalKeeperDirection(1);
+            return 20;
           }
           return newPos;
         });
       }, 50);
       return () => clearInterval(interval);
     }
-  }, [gameOver, isKicking, difficulty]);
+  }, [gameOver, isKicking, difficulty, goalKeeperDirection]);
 
   const handleTouchStart = (e) => {
     if (isKicking || gameOver) return;
