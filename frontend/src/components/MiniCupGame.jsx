@@ -169,8 +169,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         {/* Instructions */}
         {!isKicking && !gameOver && score === 0 && (
           <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 text-white text-center animate-pulse">
-            <p className="font-semibold text-lg">Swipe up to shoot!</p>
-            <p className="text-sm">Swipe left/right to aim</p>
+            <p className="font-semibold text-lg">Click/Tap to shoot!</p>
+            <p className="text-sm">Aim for the goal and avoid the keeper</p>
           </div>
         )}
 
