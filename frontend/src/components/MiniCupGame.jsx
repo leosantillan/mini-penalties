@@ -165,6 +165,51 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           </div>
         </div>
 
+        {/* Aim Indicator */}
+        {aimPosition && !isKicking && !gameOver && (
+          <>
+            {/* Arrow from ball to aim position */}
+            <svg 
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              style={{ zIndex: 5 }}
+            >
+              <defs>
+                <marker
+                  id="arrowhead"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="9"
+                  refY="3"
+                  orient="auto"
+                >
+                  <polygon points="0 0, 10 3, 0 6" fill="white" opacity="0.8" />
+                </marker>
+              </defs>
+              <line
+                x1={`${ballPosition.x}%`}
+                y1={`${ballPosition.y}%`}
+                x2={`${aimPosition.x}%`}
+                y2={`${aimPosition.y}%`}
+                stroke="white"
+                strokeWidth="3"
+                strokeDasharray="8,4"
+                opacity="0.8"
+                markerEnd="url(#arrowhead)"
+              />
+            </svg>
+            {/* Target circle at aim position */}
+            <div
+              className="absolute w-8 h-8 border-4 border-white rounded-full pointer-events-none animate-pulse"
+              style={{
+                left: `${aimPosition.x}%`,
+                top: `${aimPosition.y}%`,
+                transform: 'translate(-50%, -50%)',
+                zIndex: 5
+              }}
+            />
+          </>
+        )}
+
         {/* Ball */}
         <div 
           className={`absolute w-12 h-12 transition-all ${
@@ -173,7 +218,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           style={{
             left: `${ballPosition.x}%`,
             top: `${ballPosition.y}%`,
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10
           }}
         >
           <div className="w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center text-2xl">
