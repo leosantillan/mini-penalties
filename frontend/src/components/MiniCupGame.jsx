@@ -155,33 +155,13 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           className="absolute transition-all duration-100"
           style={{
             left: `${goalKeeperPosition}%`,
-            top: '80px',
-            transform: 'translateX(-50%)'
+            top: '70px',
+            transform: 'translateX(-50%)',
+            fontSize: '4rem',
+            filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))'
           }}
         >
-          <div className="flex flex-col items-center">
-            {/* Goalkeeper person */}
-            <div className="relative">
-              {/* Head */}
-              <div className="w-8 h-8 bg-yellow-100 rounded-full border-2 border-yellow-600 flex items-center justify-center mb-1">
-                <div className="text-xs">😐</div>
-              </div>
-              {/* Body */}
-              <div className="w-12 h-16 bg-green-600 rounded-lg flex items-center justify-center relative">
-                {/* Arms spread out */}
-                <div className="absolute -left-6 top-2 w-6 h-3 bg-green-600 rounded-l-full transform -rotate-12"></div>
-                <div className="absolute -right-6 top-2 w-6 h-3 bg-green-600 rounded-r-full transform rotate-12"></div>
-                {/* Gloves */}
-                <div className="absolute -left-7 top-1 w-5 h-5 bg-yellow-400 rounded-full"></div>
-                <div className="absolute -right-7 top-1 w-5 h-5 bg-yellow-400 rounded-full"></div>
-              </div>
-              {/* Legs */}
-              <div className="flex gap-1 justify-center">
-                <div className="w-3 h-8 bg-green-700 rounded-b-lg"></div>
-                <div className="w-3 h-8 bg-green-700 rounded-b-lg"></div>
-              </div>
-            </div>
-          </div>
+          🧑‍⚕️
         </div>
 
         {/* Aim Indicator */}
