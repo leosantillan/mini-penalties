@@ -98,8 +98,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           setIsKicking(false);
         }, 1500);
       } else {
-        // Move ball to goalkeeper's position for visual blocking
-        setBallPosition({ x: goalKeeperPosition, y: 15 });
+        // Move ball to goalkeeper's exact position for visual blocking
+        setBallPosition({ x: goalKeeperPosition, y: 12 });
         setShowResult('miss');
         addGameHistory(selectedTeam.name, score);
         setTimeout(() => {
