@@ -31,14 +31,15 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
         <div className="mb-6">
           <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            Back to Countries
           </Button>
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-3">
-              <Trophy className="w-10 h-10 text-yellow-500" />
-              Choose Your Team
-            </h1>
-            <p className="text-gray-600">Select a team and score goals for the global leaderboard!</p>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <span className="text-5xl">{selectedCountry.flag}</span>
+              <h1 className="text-4xl font-bold text-gray-800">{selectedCountry.name}</h1>
+            </div>
+            <p className="text-gray-600 mb-2">Choose Your Team</p>
+            <p className="text-sm text-gray-500">Select a team and score goals for the global leaderboard!</p>
           </div>
         </div>
 
