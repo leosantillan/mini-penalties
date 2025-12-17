@@ -4,15 +4,19 @@ import { Card } from './ui/card';
 import { Trophy, TrendingUp, ArrowLeft } from 'lucide-react';
 import { mockTeams } from '../mock';
 
-const TeamSelection = ({ onTeamSelect, onBack }) => {
-  const [teams, setTeams] = useState(mockTeams);
+const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
+  const [teams, setTeams] = useState(mockTeams[selectedCountry.id] || []);
   const [sortedTeams, setSortedTeams] = useState([]);
 
   useEffect(() => {
+    // Get teams for selected country
+    const countryTeams = mockTeams[selectedCountry.id] || [];
+    setTeams(countryTeams);
+    
     // Sort teams by goals for leaderboard
-    const sorted = [...teams].sort((a, b) => b.goals - a.goals);
+    const sorted = [...countryTeams].sort((a, b) => b.goals - a.goals);
     setSortedTeams(sorted);
-  }, [teams]);
+  }, [selectedCountry]);
 
   const formatGoals = (goals) => {
     if (goals >= 1000000) {
