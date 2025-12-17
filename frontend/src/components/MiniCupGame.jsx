@@ -157,11 +157,11 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
             left: `${goalKeeperPosition}%`,
             top: '70px',
             transform: 'translateX(-50%)',
-            fontSize: '4rem',
+            fontSize: '4.5rem',
             filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))'
           }}
         >
-          🧑‍⚕️
+          🤾
         </div>
 
         {/* Aim Indicator */}
