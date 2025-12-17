@@ -69,7 +69,7 @@ const LandingPage = ({ onStart }) => {
             <div className="flex justify-center mb-3">
               <Trophy className="w-12 h-12 text-yellow-300" />
             </div>
-            <div className="text-4xl font-bold text-white mb-2">{mockTeams.length}</div>
+            <div className="text-4xl font-bold text-white mb-2">{totalTeams}</div>
             <div className="text-blue-100 font-medium">Teams Competing</div>
           </div>
           
