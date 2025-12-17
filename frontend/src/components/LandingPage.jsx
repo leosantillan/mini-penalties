@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Trophy, Users, TrendingUp, Play } from 'lucide-react';
-import { mockTeams } from '../mock';
+import { getAllTeams } from '../mock';
 
 const LandingPage = ({ onStart }) => {
   const [rotation, setRotation] = useState(0);
   const [totalGoals, setTotalGoals] = useState(0);
+  const [totalTeams, setTotalTeams] = useState(0);
 
   useEffect(() => {
     // Spinning ball animation
@@ -13,9 +14,11 @@ const LandingPage = ({ onStart }) => {
       setRotation(prev => (prev + 2) % 360);
     }, 30);
 
-    // Calculate total goals
-    const total = mockTeams.reduce((sum, team) => sum + team.goals, 0);
+    // Calculate total goals and teams
+    const allTeams = getAllTeams();
+    const total = allTeams.reduce((sum, team) => sum + team.goals, 0);
     setTotalGoals(total);
+    setTotalTeams(allTeams.length);
 
     return () => clearInterval(interval);
   }, []);
