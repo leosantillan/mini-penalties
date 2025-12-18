@@ -238,7 +238,7 @@ async def upload_shirt_design(team_id: str, file: UploadFile = File(...), curren
         shutil.copyfileobj(file.file, buffer)
     
     # Update team with shirt URL
-    shirt_url = f"/uploads/shirts/{filename}"
+    shirt_url = f"/api/uploads/shirts/{filename}"
     await teams_collection.update_one(
         {"team_id": team_id},
         {"$set": {"shirt_design_url": shirt_url}}
