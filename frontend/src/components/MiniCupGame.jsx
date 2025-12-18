@@ -166,6 +166,23 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       setIsKicking(false);
       setShowResult(null);
       setDifficulty(1.5);
+      setGameStarted(true);
+    }
+  };
+
+  const handleAdWatched = () => {
+    setShowAdModal(false);
+    if (usePlay()) {
+      if (gameOver) {
+        // Restart after ad
+        setScore(0);
+        setGameOver(false);
+        setBallPosition({ x: 50, y: 85 });
+        setIsKicking(false);
+        setShowResult(null);
+        setDifficulty(1.5);
+      }
+      setGameStarted(true);
     }
   };
 
