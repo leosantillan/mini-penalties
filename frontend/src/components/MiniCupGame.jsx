@@ -319,7 +319,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         )}
 
         {/* Ad Modal */}
-        <AdModal isOpen={showAdModal} onClose={() => setShowAdModal(false)} />
+        <AdModal isOpen={showAdModal} onClose={handleAdWatched} onCancel={onBack} />
 
         {/* Game Over Screen */}
         {gameOver && (
