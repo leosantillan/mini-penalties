@@ -83,6 +83,9 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
+      {/* Ad Modal */}
+      <AdModal isOpen={showAdModal} onClose={handleAdWatched} onCancel={handleAdCancel} />
+      
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
           <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
