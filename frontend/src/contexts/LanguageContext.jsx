@@ -1,0 +1,530 @@
+import React, { createContext, useState, useContext, useEffect } from 'react';
+
+const LanguageContext = createContext();
+
+const translations = {
+  en: {
+    // Landing Page
+    miniCup: 'Mini Cup',
+    clubWorldCup: 'Club World Cup 2025',
+    tagline: 'Score goals. Beat the keeper. Top the leaderboard.',
+    startPlaying: 'Start Playing',
+    stats: 'Stats',
+    adminPanel: 'Admin Panel',
+    teamsCompeting: 'Teams Competing',
+    totalGoals: 'Total Goals Scored',
+    playersWorldwide: 'Players Worldwide',
+    howToPlay: 'How to Play',
+    step1Title: '1. Choose Team',
+    step1Desc: 'Pick your favorite team from the Club World Cup',
+    step2Title: '2. Click to Shoot',
+    step2Desc: 'Click on the screen to take a penalty kick',
+    step3Title: '3. Score Goals',
+    step3Desc: 'Beat the keeper and climb the global leaderboard!',
+    
+    // Country Selection
+    chooseCountry: 'Choose Your Country',
+    selectCountryDesc: 'Select a country to see available teams',
+    back: 'Back',
+    select: 'Select',
+    
+    // Team Selection
+    chooseTeam: 'Choose Your Team',
+    selectTeamDesc: 'Select a team and score goals for the global leaderboard!',
+    backToCountries: 'Back to Countries',
+    rank: 'Rank',
+    goals: 'goals',
+    playAs: 'Play as',
+    globalStandings: 'Global Standings',
+    goalsScored: 'goals scored',
+    
+    // Game
+    clickToShoot: 'Click/Tap to shoot!',
+    aimInstructions: 'Aim for the goal and avoid the keeper',
+    goal: 'GOAL!',
+    saved: 'SAVED!',
+    gameOver: 'Game Over!',
+    finalScore: 'Final Score',
+    goalsContributed: 'Goals contributed to',
+    playAgain: 'Play Again',
+    chooseDifferentTeam: 'Choose Different Team',
+    watchAdToPlay: 'Watch Ad to Play Again',
+    backToMenu: 'Back to Menu',
+    dailyLimitReached: 'Daily Limit Reached!',
+    comeBackTomorrow: "You've used all your plays for today. Come back tomorrow to play again!",
+    
+    // Play Limit
+    playsRemaining: 'Plays Remaining',
+    adViewsUsed: 'Ad Views Used',
+    totalToday: 'Total Today',
+    playsRemainingToday: 'plays remaining today',
+    
+    // Ad Modal
+    watchAdTitle: 'Watch a Short Ad to Continue Playing',
+    watchAdDesc: "You've used your free plays. Watch a short ad to unlock 2 more plays!",
+    adViewsToday: 'Ad Views Today',
+    willUnlock: 'Will Unlock',
+    plays: 'Plays',
+    advertisement: 'Advertisement',
+    pleaseWait: 'Please wait',
+    seconds: 'seconds',
+    readyToPlay: 'Ready to Play!',
+    unlockedPlays: "You've unlocked 2 more plays",
+    continuePlaying: 'Continue Playing',
+    wait: 'Wait',
+    exitGame: 'Exit Game',
+    afterAdViews: 'After',
+    morePlays: 'more plays',
+    needReturnTomorrow: "you'll need to return tomorrow",
+    
+    // Stats
+    gameStats: 'Game Statistics',
+    statsDesc: 'Goals scored by teams over different periods',
+    today: 'Today',
+    thisMonth: 'This Month',
+    thisYear: 'This Year',
+    todayGoals: "Today's Goals",
+    todayGoalsDesc: 'Goals scored by teams today',
+    monthGoals: "This Month's Goals",
+    monthGoalsDesc: 'Goals scored in',
+    yearGoals: "This Year's Goals",
+    yearGoalsDesc: 'Goals scored in',
+    noGoalsToday: 'No goals scored today yet. Be the first!',
+    noGoalsMonth: 'No goals scored this month yet.',
+    noGoalsYear: 'No goals scored this year yet.',
+    teamsToday: 'Teams Today',
+    teamsThisMonth: 'Teams This Month',
+    teamsThisYear: 'Teams This Year',
+    games: 'games',
+    avg: 'Avg',
+    best: 'Best',
+  },
+  es: {
+    // Landing Page
+    miniCup: 'Mini Copa',
+    clubWorldCup: 'Copa Mundial de Clubes 2025',
+    tagline: 'Marca goles. Vence al portero. Lidera la tabla.',
+    startPlaying: 'Comenzar a Jugar',
+    stats: 'Estadísticas',
+    adminPanel: 'Panel Admin',
+    teamsCompeting: 'Equipos Compitiendo',
+    totalGoals: 'Goles Totales Marcados',
+    playersWorldwide: 'Jugadores en el Mundo',
+    howToPlay: 'Cómo Jugar',
+    step1Title: '1. Elige Equipo',
+    step1Desc: 'Elige tu equipo favorito de la Copa Mundial de Clubes',
+    step2Title: '2. Click para Disparar',
+    step2Desc: 'Haz clic en la pantalla para lanzar un penalti',
+    step3Title: '3. Marca Goles',
+    step3Desc: '¡Vence al portero y escala en la tabla global!',
+    
+    // Country Selection
+    chooseCountry: 'Elige Tu País',
+    selectCountryDesc: 'Selecciona un país para ver los equipos disponibles',
+    back: 'Atrás',
+    select: 'Seleccionar',
+    
+    // Team Selection
+    chooseTeam: 'Elige Tu Equipo',
+    selectTeamDesc: '¡Selecciona un equipo y marca goles para la tabla global!',
+    backToCountries: 'Volver a Países',
+    rank: 'Puesto',
+    goals: 'goles',
+    playAs: 'Jugar como',
+    globalStandings: 'Clasificación Global',
+    goalsScored: 'goles marcados',
+    
+    // Game
+    clickToShoot: '¡Haz clic para disparar!',
+    aimInstructions: 'Apunta al gol y evita al portero',
+    goal: '¡GOL!',
+    saved: '¡ATAJADO!',
+    gameOver: '¡Juego Terminado!',
+    finalScore: 'Puntuación Final',
+    goalsContributed: 'Goles contribuidos a',
+    playAgain: 'Jugar de Nuevo',
+    chooseDifferentTeam: 'Elegir Otro Equipo',
+    watchAdToPlay: 'Ver Anuncio para Jugar',
+    backToMenu: 'Volver al Menú',
+    dailyLimitReached: '¡Límite Diario Alcanzado!',
+    comeBackTomorrow: 'Has usado todas tus jugadas de hoy. ¡Vuelve mañana para jugar de nuevo!',
+    
+    // Play Limit
+    playsRemaining: 'Jugadas Restantes',
+    adViewsUsed: 'Anuncios Vistos',
+    totalToday: 'Total Hoy',
+    playsRemainingToday: 'jugadas restantes hoy',
+    
+    // Ad Modal
+    watchAdTitle: 'Mira un Anuncio Corto para Continuar Jugando',
+    watchAdDesc: 'Has usado tus jugadas gratis. ¡Mira un anuncio corto para desbloquear 2 jugadas más!',
+    adViewsToday: 'Anuncios Hoy',
+    willUnlock: 'Desbloqueará',
+    plays: 'Jugadas',
+    advertisement: 'Publicidad',
+    pleaseWait: 'Por favor espera',
+    seconds: 'segundos',
+    readyToPlay: '¡Listo para Jugar!',
+    unlockedPlays: 'Has desbloqueado 2 jugadas más',
+    continuePlaying: 'Continuar Jugando',
+    wait: 'Espera',
+    exitGame: 'Salir del Juego',
+    afterAdViews: 'Después de',
+    morePlays: 'jugadas más',
+    needReturnTomorrow: 'deberás volver mañana',
+    
+    // Stats
+    gameStats: 'Estadísticas del Juego',
+    statsDesc: 'Goles marcados por equipos en diferentes períodos',
+    today: 'Hoy',
+    thisMonth: 'Este Mes',
+    thisYear: 'Este Año',
+    todayGoals: 'Goles de Hoy',
+    todayGoalsDesc: 'Goles marcados por equipos hoy',
+    monthGoals: 'Goles de Este Mes',
+    monthGoalsDesc: 'Goles marcados en',
+    yearGoals: 'Goles de Este Año',
+    yearGoalsDesc: 'Goles marcados en',
+    noGoalsToday: '¡No se han marcado goles hoy! ¡Sé el primero!',
+    noGoalsMonth: 'No se han marcado goles este mes.',
+    noGoalsYear: 'No se han marcado goles este año.',
+    teamsToday: 'Equipos Hoy',
+    teamsThisMonth: 'Equipos Este Mes',
+    teamsThisYear: 'Equipos Este Año',
+    games: 'partidos',
+    avg: 'Prom',
+    best: 'Mejor',
+  },
+  pt: {
+    // Landing Page
+    miniCup: 'Mini Copa',
+    clubWorldCup: 'Copa do Mundo de Clubes 2025',
+    tagline: 'Marque gols. Vença o goleiro. Lidere o ranking.',
+    startPlaying: 'Começar a Jogar',
+    stats: 'Estatísticas',
+    adminPanel: 'Painel Admin',
+    teamsCompeting: 'Equipes Competindo',
+    totalGoals: 'Total de Gols Marcados',
+    playersWorldwide: 'Jogadores no Mundo',
+    howToPlay: 'Como Jogar',
+    step1Title: '1. Escolher Time',
+    step1Desc: 'Escolha seu time favorito da Copa do Mundo de Clubes',
+    step2Title: '2. Clique para Chutar',
+    step2Desc: 'Clique na tela para cobrar um pênalti',
+    step3Title: '3. Marcar Gols',
+    step3Desc: 'Vença o goleiro e suba no ranking global!',
+    
+    // Country Selection
+    chooseCountry: 'Escolha Seu País',
+    selectCountryDesc: 'Selecione um país para ver os times disponíveis',
+    back: 'Voltar',
+    select: 'Selecionar',
+    
+    // Team Selection
+    chooseTeam: 'Escolha Seu Time',
+    selectTeamDesc: 'Selecione um time e marque gols para o ranking global!',
+    backToCountries: 'Voltar aos Países',
+    rank: 'Posição',
+    goals: 'gols',
+    playAs: 'Jogar como',
+    globalStandings: 'Classificação Global',
+    goalsScored: 'gols marcados',
+    
+    // Game
+    clickToShoot: 'Clique para chutar!',
+    aimInstructions: 'Mire no gol e evite o goleiro',
+    goal: 'GOL!',
+    saved: 'DEFENDEU!',
+    gameOver: 'Fim de Jogo!',
+    finalScore: 'Pontuação Final',
+    goalsContributed: 'Gols contribuídos para',
+    playAgain: 'Jogar Novamente',
+    chooseDifferentTeam: 'Escolher Outro Time',
+    watchAdToPlay: 'Assistir Anúncio para Jogar',
+    backToMenu: 'Voltar ao Menu',
+    dailyLimitReached: 'Limite Diário Alcançado!',
+    comeBackTomorrow: 'Você usou todas as suas jogadas hoje. Volte amanhã para jogar novamente!',
+    
+    // Play Limit
+    playsRemaining: 'Jogadas Restantes',
+    adViewsUsed: 'Anúncios Vistos',
+    totalToday: 'Total Hoje',
+    playsRemainingToday: 'jogadas restantes hoje',
+    
+    // Ad Modal
+    watchAdTitle: 'Assista um Anúncio Curto para Continuar Jogando',
+    watchAdDesc: 'Você usou suas jogadas grátis. Assista um anúncio curto para desbloquear 2 jogadas a mais!',
+    adViewsToday: 'Anúncios Hoje',
+    willUnlock: 'Desbloqueará',
+    plays: 'Jogadas',
+    advertisement: 'Publicidade',
+    pleaseWait: 'Por favor aguarde',
+    seconds: 'segundos',
+    readyToPlay: 'Pronto para Jogar!',
+    unlockedPlays: 'Você desbloqueou 2 jogadas a mais',
+    continuePlaying: 'Continuar Jogando',
+    wait: 'Aguarde',
+    exitGame: 'Sair do Jogo',
+    afterAdViews: 'Após',
+    morePlays: 'jogadas a mais',
+    needReturnTomorrow: 'você precisará voltar amanhã',
+    
+    // Stats
+    gameStats: 'Estatísticas do Jogo',
+    statsDesc: 'Gols marcados por times em diferentes períodos',
+    today: 'Hoje',
+    thisMonth: 'Este Mês',
+    thisYear: 'Este Ano',
+    todayGoals: 'Gols de Hoje',
+    todayGoalsDesc: 'Gols marcados por times hoje',
+    monthGoals: 'Gols Deste Mês',
+    monthGoalsDesc: 'Gols marcados em',
+    yearGoals: 'Gols Deste Ano',
+    yearGoalsDesc: 'Gols marcados em',
+    noGoalsToday: 'Nenhum gol marcado hoje ainda. Seja o primeiro!',
+    noGoalsMonth: 'Nenhum gol marcado este mês ainda.',
+    noGoalsYear: 'Nenhum gol marcado este ano ainda.',
+    teamsToday: 'Times Hoje',
+    teamsThisMonth: 'Times Este Mês',
+    teamsThisYear: 'Times Este Ano',
+    games: 'jogos',
+    avg: 'Méd',
+    best: 'Melhor',
+  },
+  fr: {
+    // Landing Page
+    miniCup: 'Mini Coupe',
+    clubWorldCup: 'Coupe du Monde des Clubs 2025',
+    tagline: 'Marquez des buts. Battez le gardien. Dominez le classement.',
+    startPlaying: 'Commencer à Jouer',
+    stats: 'Statistiques',
+    adminPanel: 'Panneau Admin',
+    teamsCompeting: 'Équipes en Compétition',
+    totalGoals: 'Total de Buts Marqués',
+    playersWorldwide: 'Joueurs dans le Monde',
+    howToPlay: 'Comment Jouer',
+    step1Title: '1. Choisir Équipe',
+    step1Desc: 'Choisissez votre équipe favorite de la Coupe du Monde des Clubs',
+    step2Title: '2. Cliquer pour Tirer',
+    step2Desc: 'Cliquez sur l\'écran pour tirer un penalty',
+    step3Title: '3. Marquer des Buts',
+    step3Desc: 'Battez le gardien et grimpez dans le classement mondial!',
+    
+    // Country Selection
+    chooseCountry: 'Choisissez Votre Pays',
+    selectCountryDesc: 'Sélectionnez un pays pour voir les équipes disponibles',
+    back: 'Retour',
+    select: 'Sélectionner',
+    
+    // Team Selection
+    chooseTeam: 'Choisissez Votre Équipe',
+    selectTeamDesc: 'Sélectionnez une équipe et marquez des buts pour le classement mondial!',
+    backToCountries: 'Retour aux Pays',
+    rank: 'Rang',
+    goals: 'buts',
+    playAs: 'Jouer comme',
+    globalStandings: 'Classement Mondial',
+    goalsScored: 'buts marqués',
+    
+    // Game
+    clickToShoot: 'Cliquez pour tirer!',
+    aimInstructions: 'Visez le but et évitez le gardien',
+    goal: 'BUT!',
+    saved: 'ARRÊTÉ!',
+    gameOver: 'Fin du Jeu!',
+    finalScore: 'Score Final',
+    goalsContributed: 'Buts contribués à',
+    playAgain: 'Rejouer',
+    chooseDifferentTeam: 'Choisir une Autre Équipe',
+    watchAdToPlay: 'Regarder une Pub pour Jouer',
+    backToMenu: 'Retour au Menu',
+    dailyLimitReached: 'Limite Quotidienne Atteinte!',
+    comeBackTomorrow: 'Vous avez utilisé toutes vos parties aujourd\'hui. Revenez demain pour rejouer!',
+    
+    // Play Limit
+    playsRemaining: 'Parties Restantes',
+    adViewsUsed: 'Pubs Vues',
+    totalToday: 'Total Aujourd\'hui',
+    playsRemainingToday: 'parties restantes aujourd\'hui',
+    
+    // Ad Modal
+    watchAdTitle: 'Regardez une Courte Pub pour Continuer à Jouer',
+    watchAdDesc: 'Vous avez utilisé vos parties gratuites. Regardez une courte pub pour débloquer 2 parties de plus!',
+    adViewsToday: 'Pubs Aujourd\'hui',
+    willUnlock: 'Débloquera',
+    plays: 'Parties',
+    advertisement: 'Publicité',
+    pleaseWait: 'Veuillez patienter',
+    seconds: 'secondes',
+    readyToPlay: 'Prêt à Jouer!',
+    unlockedPlays: 'Vous avez débloqué 2 parties de plus',
+    continuePlaying: 'Continuer à Jouer',
+    wait: 'Attendez',
+    exitGame: 'Quitter le Jeu',
+    afterAdViews: 'Après',
+    morePlays: 'parties de plus',
+    needReturnTomorrow: 'vous devrez revenir demain',
+    
+    // Stats
+    gameStats: 'Statistiques du Jeu',
+    statsDesc: 'Buts marqués par les équipes sur différentes périodes',
+    today: 'Aujourd\'hui',
+    thisMonth: 'Ce Mois',
+    thisYear: 'Cette Année',
+    todayGoals: 'Buts d\'Aujourd\'hui',
+    todayGoalsDesc: 'Buts marqués par les équipes aujourd\'hui',
+    monthGoals: 'Buts de Ce Mois',
+    monthGoalsDesc: 'Buts marqués en',
+    yearGoals: 'Buts de Cette Année',
+    yearGoalsDesc: 'Buts marqués en',
+    noGoalsToday: 'Aucun but marqué aujourd\'hui. Soyez le premier!',
+    noGoalsMonth: 'Aucun but marqué ce mois.',
+    noGoalsYear: 'Aucun but marqué cette année.',
+    teamsToday: 'Équipes Aujourd\'hui',
+    teamsThisMonth: 'Équipes Ce Mois',
+    teamsThisYear: 'Équipes Cette Année',
+    games: 'matchs',
+    avg: 'Moy',
+    best: 'Meilleur',
+  },
+  it: {
+    // Landing Page
+    miniCup: 'Mini Coppa',
+    clubWorldCup: 'Coppa del Mondo per Club 2025',
+    tagline: 'Segna gol. Batti il portiere. Scala la classifica.',
+    startPlaying: 'Inizia a Giocare',
+    stats: 'Statistiche',
+    adminPanel: 'Pannello Admin',
+    teamsCompeting: 'Squadre in Competizione',
+    totalGoals: 'Totale Gol Segnati',
+    playersWorldwide: 'Giocatori nel Mondo',
+    howToPlay: 'Come Giocare',
+    step1Title: '1. Scegli Squadra',
+    step1Desc: 'Scegli la tua squadra preferita dalla Coppa del Mondo per Club',
+    step2Title: '2. Clicca per Tirare',
+    step2Desc: 'Clicca sullo schermo per tirare un rigore',
+    step3Title: '3. Segna Gol',
+    step3Desc: 'Batti il portiere e scala la classifica globale!',
+    
+    // Country Selection
+    chooseCountry: 'Scegli il Tuo Paese',
+    selectCountryDesc: 'Seleziona un paese per vedere le squadre disponibili',
+    back: 'Indietro',
+    select: 'Seleziona',
+    
+    // Team Selection
+    chooseTeam: 'Scegli la Tua Squadra',
+    selectTeamDesc: 'Seleziona una squadra e segna gol per la classifica globale!',
+    backToCountries: 'Torna ai Paesi',
+    rank: 'Posizione',
+    goals: 'gol',
+    playAs: 'Gioca come',
+    globalStandings: 'Classifica Globale',
+    goalsScored: 'gol segnati',
+    
+    // Game
+    clickToShoot: 'Clicca per tirare!',
+    aimInstructions: 'Mira alla porta ed evita il portiere',
+    goal: 'GOL!',
+    saved: 'PARATO!',
+    gameOver: 'Fine Gioco!',
+    finalScore: 'Punteggio Finale',
+    goalsContributed: 'Gol contribuiti a',
+    playAgain: 'Gioca Ancora',
+    chooseDifferentTeam: 'Scegli un\'Altra Squadra',
+    watchAdToPlay: 'Guarda Annuncio per Giocare',
+    backToMenu: 'Torna al Menu',
+    dailyLimitReached: 'Limite Giornaliero Raggiunto!',
+    comeBackTomorrow: 'Hai usato tutte le tue partite oggi. Torna domani per giocare ancora!',
+    
+    // Play Limit
+    playsRemaining: 'Partite Rimanenti',
+    adViewsUsed: 'Annunci Visti',
+    totalToday: 'Totale Oggi',
+    playsRemainingToday: 'partite rimanenti oggi',
+    
+    // Ad Modal
+    watchAdTitle: 'Guarda un Breve Annuncio per Continuare a Giocare',
+    watchAdDesc: 'Hai usato le tue partite gratuite. Guarda un breve annuncio per sbloccare 2 partite in più!',
+    adViewsToday: 'Annunci Oggi',
+    willUnlock: 'Sbloccherà',
+    plays: 'Partite',
+    advertisement: 'Pubblicità',
+    pleaseWait: 'Attendere prego',
+    seconds: 'secondi',
+    readyToPlay: 'Pronto a Giocare!',
+    unlockedPlays: 'Hai sbloccato 2 partite in più',
+    continuePlaying: 'Continua a Giocare',
+    wait: 'Aspetta',
+    exitGame: 'Esci dal Gioco',
+    afterAdViews: 'Dopo',
+    morePlays: 'partite in più',
+    needReturnTomorrow: 'dovrai tornare domani',
+    
+    // Stats
+    gameStats: 'Statistiche del Gioco',
+    statsDesc: 'Gol segnati dalle squadre in diversi periodi',
+    today: 'Oggi',
+    thisMonth: 'Questo Mese',
+    thisYear: 'Quest\'Anno',
+    todayGoals: 'Gol di Oggi',
+    todayGoalsDesc: 'Gol segnati dalle squadre oggi',
+    monthGoals: 'Gol di Questo Mese',
+    monthGoalsDesc: 'Gol segnati in',
+    yearGoals: 'Gol di Quest\'Anno',
+    yearGoalsDesc: 'Gol segnati in',
+    noGoalsToday: 'Nessun gol segnato oggi. Sii il primo!',
+    noGoalsMonth: 'Nessun gol segnato questo mese.',
+    noGoalsYear: 'Nessun gol segnato quest\'anno.',
+    teamsToday: 'Squadre Oggi',
+    teamsThisMonth: 'Squadre Questo Mese',
+    teamsThisYear: 'Squadre Quest\'Anno',
+    games: 'partite',
+    avg: 'Media',
+    best: 'Migliore',
+  },
+};
+
+const LANGUAGES = [
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'pt', name: 'Português', flag: '🇧🇷' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+];
+
+export const LanguageProvider = ({ children }) => {
+  const [language, setLanguage] = useState('es'); // Spanish by default
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('gameLanguage');
+    if (savedLanguage && translations[savedLanguage]) {
+      setLanguage(savedLanguage);
+    }
+  }, []);
+
+  const changeLanguage = (lang) => {
+    if (translations[lang]) {
+      setLanguage(lang);
+      localStorage.setItem('gameLanguage', lang);
+    }
+  };
+
+  const t = (key) => {
+    return translations[language][key] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, changeLanguage, t, languages: LANGUAGES }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};
