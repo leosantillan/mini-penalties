@@ -20,7 +20,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       // Goalkeeper movement - gets faster with higher difficulty
       const interval = setInterval(() => {
         setGoalKeeperPosition(prev => {
-          const speed = 2 + (difficulty * 0.5);
+          const speed = 3 + (difficulty * 1);
           const newPos = prev + (speed * goalKeeperDirection);
           
           // Change direction at boundaries
