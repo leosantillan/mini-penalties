@@ -36,6 +36,36 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
     fetchTeams();
   }, [selectedCountry]);
 
+  const handleTeamClick = (team) => {
+    if (!canPlayMore()) {
+      // No more plays available
+      alert("You've reached your daily play limit. Come back tomorrow!");
+      return;
+    }
+
+    if (needsAd()) {
+      // Need to watch ad first
+      setPendingTeam(team);
+      setShowAdModal(true);
+    } else {
+      // Can play directly
+      onTeamSelect(team);
+    }
+  };
+
+  const handleAdWatched = () => {
+    setShowAdModal(false);
+    if (pendingTeam) {
+      onTeamSelect(pendingTeam);
+      setPendingTeam(null);
+    }
+  };
+
+  const handleAdCancel = () => {
+    setShowAdModal(false);
+    setPendingTeam(null);
+  };
+
   const formatGoals = (goals) => {
     if (goals >= 1000000) {
       return `${(goals / 1000000).toFixed(1)}M`;
