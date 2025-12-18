@@ -94,7 +94,7 @@ const LandingPage = ({ onStart, onStats }) => {
                 className="bg-white text-blue-600 hover:bg-blue-50 text-xl px-12 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold"
               >
                 <Play className="w-6 h-6 mr-2 fill-current" />
-                Start Playing
+                {t('startPlaying')}
               </Button>
               
               <Button 
@@ -104,7 +104,7 @@ const LandingPage = ({ onStart, onStats }) => {
                 className="bg-white/10 text-white hover:bg-white hover:text-blue-600 border-2 border-white text-xl px-8 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold backdrop-blur-sm"
               >
                 <BarChart3 className="w-6 h-6 mr-2" />
-                Stats
+                {t('stats')}
               </Button>
             </div>
             
