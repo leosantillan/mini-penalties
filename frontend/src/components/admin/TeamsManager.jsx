@@ -190,6 +190,7 @@ const TeamsManager = () => {
         name: '',
         country_id: '',
         color: '#000000',
+        color2: '#FFFFFF',
       });
       setShirtDesign(null);
     }
