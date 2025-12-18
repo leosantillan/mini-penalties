@@ -147,22 +147,22 @@ const LandingPage = ({ onStart, onStats }) => {
 
         {/* How to Play */}
         <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-30">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">How to Play</h2>
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">{t('howToPlay')}</h2>
           <div className="grid md:grid-cols-3 gap-6 text-center">
             <div>
               <div className="text-5xl mb-3">👆</div>
-              <h3 className="font-bold text-white mb-2">1. Choose Team</h3>
-              <p className="text-blue-100 text-sm">Pick your favorite team from the Club World Cup</p>
+              <h3 className="font-bold text-white mb-2">{t('step1Title')}</h3>
+              <p className="text-blue-100 text-sm">{t('step1Desc')}</p>
             </div>
             <div>
               <div className="text-5xl mb-3">⬆️</div>
-              <h3 className="font-bold text-white mb-2">2. Swipe to Shoot</h3>
-              <p className="text-blue-100 text-sm">Swipe up on the ball to take a penalty kick</p>
+              <h3 className="font-bold text-white mb-2">{t('step2Title')}</h3>
+              <p className="text-blue-100 text-sm">{t('step2Desc')}</p>
             </div>
             <div>
               <div className="text-5xl mb-3">🏆</div>
-              <h3 className="font-bold text-white mb-2">3. Score Goals</h3>
-              <p className="text-blue-100 text-sm">Beat the keeper and climb the global leaderboard!</p>
+              <h3 className="font-bold text-white mb-2">{t('step3Title')}</h3>
+              <p className="text-blue-100 text-sm">{t('step3Desc')}</p>
             </div>
           </div>
         </div>
