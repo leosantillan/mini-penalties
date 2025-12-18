@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Trophy, Users, TrendingUp, Play, Settings, BarChart3 } from 'lucide-react';
 import axios from 'axios';
+import { useLanguage } from '../contexts/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const LandingPage = ({ onStart, onStats }) => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [rotation, setRotation] = useState(0);
   const [totalGoals, setTotalGoals] = useState(0);
   const [totalTeams, setTotalTeams] = useState(0);
