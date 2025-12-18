@@ -154,6 +154,11 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-400 to-green-300 flex flex-col">
+      {/* Play Limit Banner */}
+      <div className="p-4">
+        <PlayLimitBanner />
+      </div>
+
       <div className="p-4 flex items-center justify-between">
         <Button variant="ghost" size="sm" onClick={onBack} className="text-white">
           <ArrowLeft className="w-4 h-4 mr-2" />
