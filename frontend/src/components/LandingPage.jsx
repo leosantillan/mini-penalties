@@ -79,14 +79,26 @@ const LandingPage = ({ onStart, onStats }) => {
           <p className="text-lg text-blue-200 mb-8">Score goals. Beat the keeper. Top the leaderboard.</p>
           
           <div className="flex flex-col gap-4 items-center">
-            <Button 
-              onClick={onStart}
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-blue-50 text-xl px-12 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold"
-            >
-              <Play className="w-6 h-6 mr-2 fill-current" />
-              Start Playing
-            </Button>
+            <div className="flex gap-4">
+              <Button 
+                onClick={onStart}
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-blue-50 text-xl px-12 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold"
+              >
+                <Play className="w-6 h-6 mr-2 fill-current" />
+                Start Playing
+              </Button>
+              
+              <Button 
+                onClick={onStats}
+                size="lg"
+                variant="outline"
+                className="bg-white/10 text-white hover:bg-white hover:text-blue-600 border-2 border-white text-xl px-8 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold backdrop-blur-sm"
+              >
+                <BarChart3 className="w-6 h-6 mr-2" />
+                Stats
+              </Button>
+            </div>
             
             <button
               onClick={() => navigate('/admin/login')}
