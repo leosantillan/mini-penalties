@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-route
 import "./App.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { PlayLimitProvider } from "./contexts/PlayLimitContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import { Toaster } from "./components/ui/toaster";
 import LandingPage from "./components/LandingPage";
 import CountrySelection from "./components/CountrySelection";
