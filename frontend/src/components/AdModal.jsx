@@ -46,9 +46,19 @@ const AdModal = ({ isOpen, onClose, onCancel }) => {
     }
   };
 
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="max-w-2xl" onPointerDownOutside={(e) => e.preventDefault()}>
+      <DialogContent 
+        className="max-w-2xl" 
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl">Watch a Short Ad to Continue Playing</DialogTitle>
           <DialogDescription>
