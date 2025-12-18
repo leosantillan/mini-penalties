@@ -270,7 +270,16 @@ const UsersManager = () => {
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">-</div>
+                  {user.team_id ? (
+                    <div className="flex items-center gap-2">
+                      <span>{getCountryInfo(user.country_id)?.flag}</span>
+                      <span className="text-sm text-gray-900">
+                        {getTeamInfo(user.team_id)?.name}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-gray-400">No favorite team</div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {new Date(user.created_at).toLocaleDateString()}
