@@ -363,25 +363,49 @@ const TeamsManager = () => {
                   </select>
                 </div>
 
-                <div>
-                  <Label htmlFor="color">Team Color</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="color"
-                      type="color"
-                      value={formData.color}
-                      onChange={(e) =>
-                        setFormData({ ...formData, color: e.target.value })
-                      }
-                      className="w-20"
-                    />
-                    <Input
-                      value={formData.color}
-                      onChange={(e) =>
-                        setFormData({ ...formData, color: e.target.value })
-                      }
-                      placeholder="#000000"
-                    />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="color">Primary Color</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="color"
+                        type="color"
+                        value={formData.color}
+                        onChange={(e) =>
+                          setFormData({ ...formData, color: e.target.value })
+                        }
+                        className="w-20"
+                      />
+                      <Input
+                        value={formData.color}
+                        onChange={(e) =>
+                          setFormData({ ...formData, color: e.target.value })
+                        }
+                        placeholder="#000000"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="color2">Secondary Color</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="color2"
+                        type="color"
+                        value={formData.color2}
+                        onChange={(e) =>
+                          setFormData({ ...formData, color2: e.target.value })
+                        }
+                        className="w-20"
+                      />
+                      <Input
+                        value={formData.color2}
+                        onChange={(e) =>
+                          setFormData({ ...formData, color2: e.target.value })
+                        }
+                        placeholder="#FFFFFF"
+                      />
+                    </div>
                   </div>
                 </div>
 
