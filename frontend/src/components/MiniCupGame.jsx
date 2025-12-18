@@ -91,7 +91,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         setShowResult('goal');
         setScore(prev => prev + 1);
         addGoalsToTeam(selectedTeam.id, 1);
-        setDifficulty(prev => prev + 0.3);
+        setDifficulty(prev => prev + 0.5);
         setTimeout(() => {
           setShowResult(null);
           setBallPosition({ x: 50, y: 85 });
