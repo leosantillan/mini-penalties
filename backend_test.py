@@ -38,7 +38,8 @@ class MiniCupAPITester:
         """Make HTTP request with error handling"""
         url = f"{self.base_url}{endpoint}"
         try:
-            response = self.session.request(
+            # Use a fresh request instead of session for problematic endpoints
+            response = requests.request(
                 method=method,
                 url=url,
                 headers=headers,
