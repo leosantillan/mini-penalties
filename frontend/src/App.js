@@ -114,10 +114,11 @@ function App() {
             </Route>
           </Routes>
           <Toaster />
-          </div>
-        </BrowserRouter>
-      </PlayLimitProvider>
-    </AuthProvider>
+            </div>
+          </BrowserRouter>
+        </PlayLimitProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 
