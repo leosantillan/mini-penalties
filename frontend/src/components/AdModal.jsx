@@ -136,6 +136,13 @@ const AdModal = ({ isOpen, onClose, onCancel }) => {
             >
               {adWatched ? 'Continue Playing' : `Wait ${countdown}s...`}
             </Button>
+            <Button
+              onClick={handleCancel}
+              variant="outline"
+              size="lg"
+            >
+              Exit Game
+            </Button>
           </div>
 
           {/* Info */}
