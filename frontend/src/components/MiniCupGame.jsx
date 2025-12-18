@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { Trophy, ArrowLeft } from 'lucide-react';
-import { mockTeams, addGoalsToTeam, addGameHistory } from '../mock';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [score, setScore] = useState(0);
