@@ -81,10 +81,10 @@ const LandingPage = ({ onStart, onStats }) => {
           </div>
           
           <h1 className="text-6xl font-bold text-white mb-4 drop-shadow-lg">
-            Mini Cup
+            {t('miniCup')}
           </h1>
-          <p className="text-2xl text-blue-100 mb-2">Club World Cup 2025</p>
-          <p className="text-lg text-blue-200 mb-8">Score goals. Beat the keeper. Top the leaderboard.</p>
+          <p className="text-2xl text-blue-100 mb-2">{t('clubWorldCup')}</p>
+          <p className="text-lg text-blue-200 mb-8">{t('tagline')}</p>
           
           <div className="flex flex-col gap-4 items-center">
             <div className="flex gap-4">
