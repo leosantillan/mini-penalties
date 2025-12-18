@@ -224,8 +224,8 @@ const ShirtBuilder = ({ initialDesign, onSave }) => {
                     key={`${rowIndex}-${colIndex}`}
                     className="cursor-pointer border border-gray-200 transition-all hover:opacity-80"
                     style={{
-                      width: '20px',
-                      height: '20px',
+                      width: '40px',
+                      height: '40px',
                       backgroundColor: color,
                     }}
                     onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
