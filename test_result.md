@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the Mini Cup backend API comprehensively including health check, public game endpoints, game session creation, authentication, admin country/team/user management, and statistics endpoints."
+user_problem_statement: "Test the Mini Cup Game frontend with API integration including landing page stats, country selection, team selection, game play mechanics, scoring system, game over functionality, and navigation flows."
 
 backend:
   - task: "Health Check API"
