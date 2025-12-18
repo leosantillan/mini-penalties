@@ -113,7 +113,7 @@ const LandingPage = ({ onStart, onStats }) => {
               className="text-blue-100 hover:text-white text-sm flex items-center gap-2 transition-colors"
             >
               <Settings className="w-4 h-4" />
-              Admin Panel
+              {t('adminPanel')}
             </button>
           </div>
         </div>
