@@ -13,6 +13,7 @@ import Dashboard from "./components/admin/Dashboard";
 import CountriesManager from "./components/admin/CountriesManager";
 import TeamsManager from "./components/admin/TeamsManager";
 import UsersManager from "./components/admin/UsersManager";
+import Statistics from "./components/admin/Statistics";
 import GameStats from "./components/GameStats";
 
 function GameFlow() {
