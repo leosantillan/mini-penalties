@@ -84,7 +84,7 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
                 <div className="text-right">
                   <div className="flex items-center gap-1 text-gray-500 text-xs mb-1">
                     <TrendingUp className="w-3 h-3" />
-                    <span>Rank #{sortedTeams.findIndex(t => t.id === team.id) + 1}</span>
+                    <span>Rank #{sortedTeams.findIndex(t => t.team_id === team.team_id) + 1}</span>
                   </div>
                   <div className="font-bold text-2xl" style={{ color: team.color }}>
                     {formatGoals(team.goals)}
