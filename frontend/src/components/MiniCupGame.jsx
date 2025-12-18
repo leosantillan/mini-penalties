@@ -93,7 +93,6 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       if (isGoal) {
         setShowResult('goal');
         setScore(prev => prev + 1);
-        addGoalsToTeam(selectedTeam.id, 1);
         setDifficulty(prev => prev + 0.5);
         setTimeout(() => {
           setShowResult(null);
@@ -104,7 +103,20 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         // Move ball to goalkeeper's exact position for visual blocking
         setBallPosition({ x: goalKeeperPosition, y: 12 });
         setShowResult('miss');
-        addGameHistory(selectedTeam.name, score);
+        
+        // Post game session to API
+        const postGameSession = async () => {
+          try {
+            await axios.post(`${API}/game/session`, {
+              team_id: selectedTeam.team_id,
+              score: score
+            });
+          } catch (error) {
+            console.error('Error posting game session:', error);
+          }
+        };
+        postGameSession();
+        
         setTimeout(() => {
           setGameOver(true);
         }, 1500);
