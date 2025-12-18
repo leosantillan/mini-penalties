@@ -96,8 +96,9 @@ function GameFlow() {
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <div className="App">
+      <PlayLimitProvider>
+        <BrowserRouter>
+          <div className="App">
           <Routes>
             <Route path="/" element={<GameFlow />} />
             <Route path="/admin/login" element={<AdminLogin onBack={() => window.location.href = '/'} />} />
