@@ -277,12 +277,23 @@ const TeamsManager = () => {
             )}
 
             <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-6 h-6 rounded-full border-2 border-gray-300"
-                  style={{ backgroundColor: team.color }}
-                />
-                <span className="text-sm text-gray-500">{team.color}</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-1">
+                  <div
+                    className="w-6 h-6 rounded-full border-2 border-gray-300"
+                    style={{ backgroundColor: team.color }}
+                  />
+                  <span className="text-xs text-gray-500">{team.color}</span>
+                </div>
+                {team.color2 && (
+                  <div className="flex items-center gap-1">
+                    <div
+                      className="w-6 h-6 rounded-full border-2 border-gray-300"
+                      style={{ backgroundColor: team.color2 }}
+                    />
+                    <span className="text-xs text-gray-500">{team.color2}</span>
+                  </div>
+                )}
               </div>
               <div>
                 <span className="text-2xl font-bold" style={{ color: team.color }}>
