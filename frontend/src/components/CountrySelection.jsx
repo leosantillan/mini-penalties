@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Trophy, ArrowLeft, Globe } from 'lucide-react';
-import { mockCountries } from '../mock';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const CountrySelection = ({ onCountrySelect, onBack }) => {
+  const [countries, setCountries] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(`${API}/countries`);
+        setCountries(response.data);
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+        <div className="text-gray-800 text-2xl">Loading countries...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
       <div className="max-w-4xl mx-auto">
@@ -23,7 +52,7 @@ const CountrySelection = ({ onCountrySelect, onBack }) => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockCountries.map((country) => (
+          {countries.map((country) => (
             <Card 
               key={country.id}
               className="p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl group"
