@@ -129,12 +129,27 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   };
 
   const handleRestart = () => {
-    setScore(0);
-    setGameOver(false);
-    setBallPosition({ x: 50, y: 85 });
-    setIsKicking(false);
-    setShowResult(null);
-    setDifficulty(1.5);
+    // Check if player can play more
+    if (!canPlayMore()) {
+      // No more plays available today
+      return;
+    }
+
+    if (needsAd()) {
+      // Show ad modal
+      setShowAdModal(true);
+      return;
+    }
+
+    // Use a play
+    if (usePlay()) {
+      setScore(0);
+      setGameOver(false);
+      setBallPosition({ x: 50, y: 85 });
+      setIsKicking(false);
+      setShowResult(null);
+      setDifficulty(1.5);
+    }
   };
 
   return (
