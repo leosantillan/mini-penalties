@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { Trophy, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
+import { usePlayLimit } from '../contexts/PlayLimitContext';
+import AdModal from './AdModal';
+import PlayLimitBanner from './PlayLimitBanner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -9,6 +12,7 @@ const API = `${BACKEND_URL}/api`;
 const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const { usePlay, needsAd, canPlayMore, showAdModal, setShowAdModal } = usePlayLimit();
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 85 });
   const [isKicking, setIsKicking] = useState(false);
   const [goalKeeperPosition, setGoalKeeperPosition] = useState(50);
