@@ -84,6 +84,8 @@ const UsersManager = () => {
           username: formData.username,
           email: formData.email,
           role: formData.role,
+          country_id: formData.country_id || null,
+          team_id: formData.team_id || null,
         };
         
         // Only include password if it was changed
@@ -106,6 +108,8 @@ const UsersManager = () => {
             email: formData.email,
             password: formData.password,
             role: formData.role,
+            country_id: formData.country_id || null,
+            team_id: formData.team_id || null,
           }
         );
         toast({ title: 'Success', description: 'User created successfully' });
