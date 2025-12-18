@@ -88,15 +88,13 @@ const LandingPage = ({ onStart }) => {
               Start Playing
             </Button>
             
-            <a 
-              href={`${BACKEND_URL}/docs`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => navigate('/admin/login')}
               className="text-blue-100 hover:text-white text-sm flex items-center gap-2 transition-colors"
             >
               <Settings className="w-4 h-4" />
-              Admin Panel / API Docs
-            </a>
+              Admin Panel
+            </button>
           </div>
         </div>
 
