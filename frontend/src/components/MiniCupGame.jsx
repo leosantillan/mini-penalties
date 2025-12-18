@@ -115,7 +115,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     setBallPosition({ x: 50, y: 85 });
     setIsKicking(false);
     setShowResult(null);
-    setDifficulty(1);
+    setDifficulty(1.5);
   };
 
   return (
