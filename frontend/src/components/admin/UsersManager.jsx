@@ -161,8 +161,8 @@ const UsersManager = () => {
         email: user.email,
         password: '',
         role: user.role,
-        country_id: '',
-        team_id: '',
+        country_id: user.country_id || '',
+        team_id: user.team_id || '',
       });
     } else {
       setEditingUser(null);
