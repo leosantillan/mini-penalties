@@ -63,7 +63,10 @@ function GameFlow() {
   return (
     <>
       {currentScreen === 'landing' && (
-        <LandingPage onStart={handleStart} onAdminClick={handleAdminNav} />
+        <LandingPage onStart={handleStart} onStats={handleStats} onAdminClick={handleAdminNav} />
+      )}
+      {currentScreen === 'stats' && (
+        <GameStats onBack={handleBackToLanding} />
       )}
       {currentScreen === 'countries' && (
         <CountrySelection 
