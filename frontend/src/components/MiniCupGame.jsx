@@ -306,12 +306,28 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
                 </div>
               </div>
               <div className="flex flex-col gap-3">
-                <Button onClick={handleRestart} className="w-full" size="lg">
-                  Play Again
-                </Button>
-                <Button onClick={onBack} variant="outline" className="w-full" size="lg">
-                  Choose Different Team
-                </Button>
+                {canPlayMore() ? (
+                  <>
+                    <Button onClick={handleRestart} className="w-full" size="lg">
+                      {needsAd() ? 'Watch Ad to Play Again' : 'Play Again'}
+                    </Button>
+                    <Button onClick={onBack} variant="outline" className="w-full" size="lg">
+                      Choose Different Team
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <div className="mb-4 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-lg">
+                      <p className="text-yellow-800 font-semibold mb-2">Daily Limit Reached!</p>
+                      <p className="text-yellow-700 text-sm">
+                        You've used all your plays for today. Come back tomorrow to play again!
+                      </p>
+                    </div>
+                    <Button onClick={onBack} className="w-full" size="lg">
+                      Back to Menu
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
