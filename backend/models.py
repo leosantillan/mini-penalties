@@ -71,6 +71,8 @@ class User(BaseModel):
     username: str
     email: EmailStr
     role: UserRole = UserRole.USER
+    country_id: Optional[str] = None
+    team_id: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class UserInDB(User):
@@ -81,12 +83,16 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str
     role: UserRole = UserRole.USER
+    country_id: Optional[str] = None
+    team_id: Optional[str] = None
 
 class UserUpdate(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
     role: Optional[UserRole] = None
     password: Optional[str] = None
+    country_id: Optional[str] = None
+    team_id: Optional[str] = None
 
 # Auth Models
 class Token(BaseModel):
