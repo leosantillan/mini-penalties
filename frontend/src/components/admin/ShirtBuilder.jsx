@@ -4,7 +4,7 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Undo, Redo, Trash2, Download } from 'lucide-react';
 
-const GRID_SIZE = 24;
+const GRID_SIZE = 12;
 
 const ShirtBuilder = ({ initialDesign, onSave }) => {
   const [grid, setGrid] = useState([]);
