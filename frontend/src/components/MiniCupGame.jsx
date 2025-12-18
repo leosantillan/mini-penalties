@@ -12,7 +12,24 @@ const API = `${BACKEND_URL}/api`;
 const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
   const { usePlay, needsAd, canPlayMore, showAdModal, setShowAdModal } = usePlayLimit();
+
+  // Use a play when component mounts (game starts)
+  useEffect(() => {
+    if (!gameStarted) {
+      if (needsAd()) {
+        // Need to watch ad first
+        setShowAdModal(true);
+      } else if (usePlay()) {
+        // Successfully used a play
+        setGameStarted(true);
+      } else {
+        // No plays available
+        setGameOver(true);
+      }
+    }
+  }, [gameStarted]);
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 85 });
   const [isKicking, setIsKicking] = useState(false);
   const [goalKeeperPosition, setGoalKeeperPosition] = useState(50);
