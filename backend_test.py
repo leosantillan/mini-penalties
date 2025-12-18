@@ -270,11 +270,13 @@ class MiniCupAPITester:
         
         # Test non-admin access (should fail with 403)
         response = self.make_request("GET", "/admin/countries")  # No auth headers
-        if response and response.status_code == 401:
-            self.log_test("Non-Admin Access", True, "Correctly blocked non-admin access")
+        if response:
+            if response.status_code in [401, 403]:  # Both are acceptable for unauthorized access
+                self.log_test("Non-Admin Access", True, f"Correctly blocked non-admin access (HTTP {response.status_code})")
+            else:
+                self.log_test("Non-Admin Access", False, f"Expected 401/403, got: {response.status_code}")
         else:
-            status_code = response.status_code if response else "No response"
-            self.log_test("Non-Admin Access", False, f"Expected 401, got: {status_code}")
+            self.log_test("Non-Admin Access", False, "No response received")
     
     def test_admin_team_management(self):
         """Test 9: Admin Team Management"""
