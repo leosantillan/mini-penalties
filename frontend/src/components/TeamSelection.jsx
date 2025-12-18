@@ -108,7 +108,7 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
               key={team.id}
               className="p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
               style={{ borderLeft: `6px solid ${team.color}` }}
-              onClick={() => onTeamSelect(team)}
+              onClick={() => handleTeamClick(team)}
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
