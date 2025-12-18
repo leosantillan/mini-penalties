@@ -1,14 +1,22 @@
 import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "./App.css";
+import { AuthProvider } from "./contexts/AuthContext";
+import { Toaster } from "./components/ui/toaster";
 import LandingPage from "./components/LandingPage";
 import CountrySelection from "./components/CountrySelection";
 import TeamSelection from "./components/TeamSelection";
 import MiniCupGame from "./components/MiniCupGame";
+import AdminLogin from "./components/admin/AdminLogin";
+import AdminLayout from "./components/admin/AdminLayout";
+import Dashboard from "./components/admin/Dashboard";
+import CountriesManager from "./components/admin/CountriesManager";
 
-function App() {
-  const [currentScreen, setCurrentScreen] = useState('landing'); // 'landing', 'countries', 'teams', 'game'
+function GameFlow() {
+  const [currentScreen, setCurrentScreen] = useState('landing');
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const navigate = useNavigate();
 
   const handleStart = () => {
     setCurrentScreen('countries');
@@ -41,10 +49,14 @@ function App() {
     setSelectedTeam(null);
   };
 
+  const handleAdminNav = () => {
+    navigate('/admin/login');
+  };
+
   return (
-    <div className="App">
+    <>
       {currentScreen === 'landing' && (
-        <LandingPage onStart={handleStart} />
+        <LandingPage onStart={handleStart} onAdminClick={handleAdminNav} />
       )}
       {currentScreen === 'countries' && (
         <CountrySelection 
@@ -65,7 +77,31 @@ function App() {
           onBack={handleBackToTeams}
         />
       )}
-    </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<GameFlow />} />
+            <Route path="/admin/login" element={<AdminLogin onBack={() => window.location.href = '/'} />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Navigate to="/admin/dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="countries" element={<CountriesManager />} />
+              <Route path="teams" element={<div className="p-8"><h1 className="text-3xl font-bold">Teams Manager (Coming Soon)</h1></div>} />
+              <Route path="users" element={<div className="p-8"><h1 className="text-3xl font-bold">Users Manager (Coming Soon)</h1></div>} />
+              <Route path="statistics" element={<div className="p-8"><h1 className="text-3xl font-bold">Statistics (Coming Soon)</h1></div>} />
+            </Route>
+          </Routes>
+          <Toaster />
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
