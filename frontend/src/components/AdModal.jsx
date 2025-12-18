@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Clock, Play } from 'lucide-react';
 import { usePlayLimit } from '../contexts/PlayLimitContext';
 
-const AdModal = ({ isOpen, onClose }) => {
+const AdModal = ({ isOpen, onClose, onCancel }) => {
   const { watchAd, adViewsUsed, maxAdViews } = usePlayLimit();
   const [adWatched, setAdWatched] = useState(false);
   const [countdown, setCountdown] = useState(5);
