@@ -2,20 +2,34 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Trophy, TrendingUp, ArrowLeft } from 'lucide-react';
-import { mockTeams } from '../mock';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
-  const [teams, setTeams] = useState(mockTeams[selectedCountry.id] || []);
+  const [teams, setTeams] = useState([]);
   const [sortedTeams, setSortedTeams] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get teams for selected country
-    const countryTeams = mockTeams[selectedCountry.id] || [];
-    setTeams(countryTeams);
-    
-    // Sort teams by goals for leaderboard
-    const sorted = [...countryTeams].sort((a, b) => b.goals - a.goals);
-    setSortedTeams(sorted);
+    const fetchTeams = async () => {
+      try {
+        const response = await axios.get(`${API}/countries/${selectedCountry.country_id}/teams`);
+        const countryTeams = response.data;
+        setTeams(countryTeams);
+        
+        // Sort teams by goals for leaderboard
+        const sorted = [...countryTeams].sort((a, b) => b.goals - a.goals);
+        setSortedTeams(sorted);
+      } catch (error) {
+        console.error('Error fetching teams:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeams();
   }, [selectedCountry]);
 
   const formatGoals = (goals) => {
