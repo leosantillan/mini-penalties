@@ -96,7 +96,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="countries" element={<CountriesManager />} />
               <Route path="teams" element={<TeamsManager />} />
-              <Route path="users" element={<div className="p-8"><h1 className="text-3xl font-bold">Users Manager (Coming Soon)</h1></div>} />
+              <Route path="users" element={<UsersManager />} />
               <Route path="statistics" element={<div className="p-8"><h1 className="text-3xl font-bold">Statistics (Coming Soon)</h1></div>} />
             </Route>
           </Routes>
