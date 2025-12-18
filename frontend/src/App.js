@@ -13,6 +13,7 @@ import Dashboard from "./components/admin/Dashboard";
 import CountriesManager from "./components/admin/CountriesManager";
 import TeamsManager from "./components/admin/TeamsManager";
 import UsersManager from "./components/admin/UsersManager";
+import GameStats from "./components/GameStats";
 
 function GameFlow() {
   const [currentScreen, setCurrentScreen] = useState('landing');
