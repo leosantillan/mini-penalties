@@ -6,9 +6,9 @@ import { Undo, Redo, Trash2, Download } from 'lucide-react';
 
 const GRID_SIZE = 12;
 
-const ShirtBuilder = ({ initialDesign, onSave }) => {
+const ShirtBuilder = ({ initialDesign, onSave, teamColors }) => {
   const [grid, setGrid] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('#FF0000');
+  const [selectedColor, setSelectedColor] = useState(teamColors?.color || '#FF0000');
   const [isDrawing, setIsDrawing] = useState(false);
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
