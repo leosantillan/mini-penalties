@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Trophy, Users, TrendingUp, Play, Settings } from 'lucide-react';
 import axios from 'axios';
@@ -7,6 +8,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const LandingPage = ({ onStart }) => {
+  const navigate = useNavigate();
   const [rotation, setRotation] = useState(0);
   const [totalGoals, setTotalGoals] = useState(0);
   const [totalTeams, setTotalTeams] = useState(0);
