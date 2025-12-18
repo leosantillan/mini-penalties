@@ -87,9 +87,10 @@ const TeamsManager = () => {
     try {
       // Convert grid to canvas and create blob
       const canvas = document.createElement('canvas');
-      const cellSize = 20;
-      canvas.width = 24 * cellSize;
-      canvas.height = 24 * cellSize;
+      const cellSize = 40;
+      const gridSize = design.grid.length; // Get actual grid size
+      canvas.width = gridSize * cellSize;
+      canvas.height = gridSize * cellSize;
       const ctx = canvas.getContext('2d');
 
       design.grid.forEach((row, rowIndex) => {
