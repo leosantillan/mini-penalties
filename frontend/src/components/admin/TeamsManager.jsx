@@ -174,6 +174,7 @@ const TeamsManager = () => {
         name: team.name,
         country_id: team.country_id,
         color: team.color,
+        color2: team.color2 || '#FFFFFF',
       });
       // Load saved shirt design if exists
       const savedDesign = localStorage.getItem(`shirt_design_${team.team_id}`);
