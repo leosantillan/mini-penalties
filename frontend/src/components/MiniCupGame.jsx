@@ -284,6 +284,9 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           </div>
         )}
 
+        {/* Ad Modal */}
+        <AdModal isOpen={showAdModal} onClose={() => setShowAdModal(false)} />
+
         {/* Game Over Screen */}
         {gameOver && (
           <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
