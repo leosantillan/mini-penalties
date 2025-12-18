@@ -91,7 +91,7 @@ const ShirtBuilder = ({ initialDesign, onSave }) => {
 
   const handleExportImage = () => {
     const canvas = document.createElement('canvas');
-    const cellSize = 20;
+    const cellSize = 40;
     canvas.width = GRID_SIZE * cellSize;
     canvas.height = GRID_SIZE * cellSize;
     const ctx = canvas.getContext('2d');
