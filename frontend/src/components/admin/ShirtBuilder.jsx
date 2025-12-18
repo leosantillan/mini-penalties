@@ -118,11 +118,16 @@ const ShirtBuilder = ({ initialDesign, onSave, teamColors }) => {
     });
   };
 
-  const presetColors = [
+  // Include team colors at the beginning of presets
+  const baseColors = [
     '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
     '#FFA500', '#800080', '#008000', '#000080', '#808080', '#000000',
     '#FFFFFF', '#FFC0CB', '#A52A2A', '#FFD700', '#C0C0C0', '#FF6347'
   ];
+  
+  const presetColors = teamColors 
+    ? [teamColors.color, teamColors.color2, ...baseColors.filter(c => c !== teamColors.color && c !== teamColors.color2)]
+    : baseColors;
 
   return (
     <div className="space-y-4">
