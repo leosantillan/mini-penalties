@@ -39,6 +39,14 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
     return goals.toLocaleString();
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+        <div className="text-gray-800 text-2xl">Loading teams...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
       <div className="max-w-4xl mx-auto">
