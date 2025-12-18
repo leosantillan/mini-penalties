@@ -384,7 +384,110 @@ async def get_leaderboard():
     
     return leaderboard
 
-# ==================== STATS ROUTES ====================
+# ==================== PUBLIC STATS ROUTES ====================
+
+@api_router.get("/stats/goals/today", response_model=List[TeamStats])
+async def get_goals_today():
+    today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+    
+    pipeline = [
+        {"$match": {"timestamp": {"$gte": today_start}}},
+        {"$group": {
+            "_id": "$team_id",
+            "total_goals": {"$sum": "$score"},
+            "total_games": {"$sum": 1}
+        }}
+    ]
+    
+    results = await game_sessions_collection.aggregate(pipeline).to_list(1000)
+    
+    stats = []
+    for result in results:
+        team = await teams_collection.find_one({"team_id": result['_id']})
+        if team:
+            country = await countries_collection.find_one({"country_id": team['country_id']})
+            stats.append(TeamStats(
+                team_id=team['team_id'],
+                team_name=team['name'],
+                country_name=country['name'] if country else '',
+                total_goals=result['total_goals'],
+                total_games=result['total_games'],
+                average_score=round(result['total_goals'] / result['total_games'], 2),
+                best_score=0
+            ))
+    
+    stats.sort(key=lambda x: x.total_goals, reverse=True)
+    return stats
+
+@api_router.get("/stats/goals/month", response_model=List[TeamStats])
+async def get_goals_month():
+    month_start = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    
+    pipeline = [
+        {"$match": {"timestamp": {"$gte": month_start}}},
+        {"$group": {
+            "_id": "$team_id",
+            "total_goals": {"$sum": "$score"},
+            "total_games": {"$sum": 1},
+            "max_score": {"$max": "$score"}
+        }}
+    ]
+    
+    results = await game_sessions_collection.aggregate(pipeline).to_list(1000)
+    
+    stats = []
+    for result in results:
+        team = await teams_collection.find_one({"team_id": result['_id']})
+        if team:
+            country = await countries_collection.find_one({"country_id": team['country_id']})
+            stats.append(TeamStats(
+                team_id=team['team_id'],
+                team_name=team['name'],
+                country_name=country['name'] if country else '',
+                total_goals=result['total_goals'],
+                total_games=result['total_games'],
+                average_score=round(result['total_goals'] / result['total_games'], 2),
+                best_score=result['max_score']
+            ))
+    
+    stats.sort(key=lambda x: x.total_goals, reverse=True)
+    return stats
+
+@api_router.get("/stats/goals/year", response_model=List[TeamStats])
+async def get_goals_year():
+    year_start = datetime.utcnow().replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+    
+    pipeline = [
+        {"$match": {"timestamp": {"$gte": year_start}}},
+        {"$group": {
+            "_id": "$team_id",
+            "total_goals": {"$sum": "$score"},
+            "total_games": {"$sum": 1},
+            "max_score": {"$max": "$score"}
+        }}
+    ]
+    
+    results = await game_sessions_collection.aggregate(pipeline).to_list(1000)
+    
+    stats = []
+    for result in results:
+        team = await teams_collection.find_one({"team_id": result['_id']})
+        if team:
+            country = await countries_collection.find_one({"country_id": team['country_id']})
+            stats.append(TeamStats(
+                team_id=team['team_id'],
+                team_name=team['name'],
+                country_name=country['name'] if country else '',
+                total_goals=result['total_goals'],
+                total_games=result['total_games'],
+                average_score=round(result['total_goals'] / result['total_games'], 2),
+                best_score=result['max_score']
+            ))
+    
+    stats.sort(key=lambda x: x.total_goals, reverse=True)
+    return stats
+
+# ==================== ADMIN STATS ROUTES ====================
 
 @api_router.get("/stats/teams", response_model=List[TeamStats])
 async def get_team_stats(current_user: dict = Depends(get_admin_user)):
