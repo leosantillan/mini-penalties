@@ -436,6 +436,7 @@ const TeamsManager = () => {
                 <ShirtBuilder
                   initialDesign={shirtDesign}
                   onSave={handleSaveShirtDesign}
+                  teamColors={{ color: formData.color, color2: formData.color2 }}
                 />
               )}
             </TabsContent>
