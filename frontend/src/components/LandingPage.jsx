@@ -68,14 +68,26 @@ const LandingPage = ({ onStart }) => {
           <p className="text-2xl text-blue-100 mb-2">Club World Cup 2025</p>
           <p className="text-lg text-blue-200 mb-8">Score goals. Beat the keeper. Top the leaderboard.</p>
           
-          <Button 
-            onClick={onStart}
-            size="lg"
-            className="bg-white text-blue-600 hover:bg-blue-50 text-xl px-12 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold"
-          >
-            <Play className="w-6 h-6 mr-2 fill-current" />
-            Start Playing
-          </Button>
+          <div className="flex flex-col gap-4 items-center">
+            <Button 
+              onClick={onStart}
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-blue-50 text-xl px-12 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold"
+            >
+              <Play className="w-6 h-6 mr-2 fill-current" />
+              Start Playing
+            </Button>
+            
+            <a 
+              href={`${BACKEND_URL}/docs`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-100 hover:text-white text-sm flex items-center gap-2 transition-colors"
+            >
+              <Settings className="w-4 h-4" />
+              Admin Panel / API Docs
+            </a>
+          </div>
         </div>
 
         {/* Stats Section */}
