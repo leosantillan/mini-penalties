@@ -25,6 +25,10 @@ function GameFlow() {
     setCurrentScreen('countries');
   };
 
+  const handleStats = () => {
+    setCurrentScreen('stats');
+  };
+
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
     setCurrentScreen('teams');
