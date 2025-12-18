@@ -35,6 +35,7 @@ class Team(BaseModel):
     flag: Optional[str] = None
     shirt_design_url: Optional[str] = None
     color: str
+    color2: Optional[str] = None
     goals: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -43,12 +44,14 @@ class TeamCreate(BaseModel):
     name: str
     country_id: str
     color: str
+    color2: Optional[str] = None
     shirt_design_url: Optional[str] = None
 
 class TeamUpdate(BaseModel):
     name: Optional[str] = None
     country_id: Optional[str] = None
     color: Optional[str] = None
+    color2: Optional[str] = None
     shirt_design_url: Optional[str] = None
 
 # Goal Models
