@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { Trophy, Users, TrendingUp, Play } from 'lucide-react';
-import { getAllTeams } from '../mock';
+import { Trophy, Users, TrendingUp, Play, Settings } from 'lucide-react';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const LandingPage = ({ onStart }) => {
   const [rotation, setRotation] = useState(0);
   const [totalGoals, setTotalGoals] = useState(0);
   const [totalTeams, setTotalTeams] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Spinning ball animation
@@ -14,11 +18,22 @@ const LandingPage = ({ onStart }) => {
       setRotation(prev => (prev + 2) % 360);
     }, 30);
 
-    // Calculate total goals and teams
-    const allTeams = getAllTeams();
-    const total = allTeams.reduce((sum, team) => sum + team.goals, 0);
-    setTotalGoals(total);
-    setTotalTeams(allTeams.length);
+    // Fetch real data from API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API}/teams`);
+        const teams = response.data;
+        const total = teams.reduce((sum, team) => sum + team.goals, 0);
+        setTotalGoals(total);
+        setTotalTeams(teams.length);
+      } catch (error) {
+        console.error('Error fetching teams:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
 
     return () => clearInterval(interval);
   }, []);
