@@ -96,10 +96,11 @@ function GameFlow() {
 
 function App() {
   return (
-    <AuthProvider>
-      <PlayLimitProvider>
-        <BrowserRouter>
-          <div className="App">
+    <LanguageProvider>
+      <AuthProvider>
+        <PlayLimitProvider>
+          <BrowserRouter>
+            <div className="App">
           <Routes>
             <Route path="/" element={<GameFlow />} />
             <Route path="/admin/login" element={<AdminLogin onBack={() => window.location.href = '/'} />} />
