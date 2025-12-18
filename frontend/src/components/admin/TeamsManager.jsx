@@ -261,9 +261,13 @@ const TeamsManager = () => {
             {team.shirt_design_url && (
               <div className="mb-3">
                 <img
-                  src={`${BACKEND_URL}${team.shirt_design_url}`}
+                  src={team.shirt_design_url}
                   alt="Shirt design"
                   className="w-24 h-24 object-contain border-2 border-gray-200 rounded"
+                  onError={(e) => {
+                    console.error('Failed to load shirt image:', team.shirt_design_url);
+                    e.target.style.display = 'none';
+                  }}
                 />
               </div>
             )}
