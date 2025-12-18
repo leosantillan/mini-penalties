@@ -125,7 +125,7 @@ const LandingPage = ({ onStart, onStats }) => {
               <Trophy className="w-12 h-12 text-yellow-300" />
             </div>
             <div className="text-4xl font-bold text-white mb-2">{totalTeams}</div>
-            <div className="text-blue-100 font-medium">Teams Competing</div>
+            <div className="text-blue-100 font-medium">{t('teamsCompeting')}</div>
           </div>
           
           <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 text-center border border-white border-opacity-30">
@@ -133,7 +133,7 @@ const LandingPage = ({ onStart, onStats }) => {
               <TrendingUp className="w-12 h-12 text-green-300" />
             </div>
             <div className="text-4xl font-bold text-white mb-2">{formatGoals(totalGoals)}</div>
-            <div className="text-blue-100 font-medium">Total Goals Scored</div>
+            <div className="text-blue-100 font-medium">{t('totalGoals')}</div>
           </div>
           
           <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 text-center border border-white border-opacity-30">
@@ -141,7 +141,7 @@ const LandingPage = ({ onStart, onStats }) => {
               <Users className="w-12 h-12 text-purple-300" />
             </div>
             <div className="text-4xl font-bold text-white mb-2">∞</div>
-            <div className="text-blue-100 font-medium">Players Worldwide</div>
+            <div className="text-blue-100 font-medium">{t('playersWorldwide')}</div>
           </div>
         </div>
 
