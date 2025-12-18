@@ -11,6 +11,7 @@ import AdminLogin from "./components/admin/AdminLogin";
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./components/admin/Dashboard";
 import CountriesManager from "./components/admin/CountriesManager";
+import TeamsManager from "./components/admin/TeamsManager";
 
 function GameFlow() {
   const [currentScreen, setCurrentScreen] = useState('landing');
