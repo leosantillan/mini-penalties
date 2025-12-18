@@ -3,6 +3,8 @@ import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Trophy, TrendingUp, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
+import { usePlayLimit } from '../contexts/PlayLimitContext';
+import AdModal from './AdModal';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -11,6 +13,8 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
   const [teams, setTeams] = useState([]);
   const [sortedTeams, setSortedTeams] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { needsAd, canPlayMore, showAdModal, setShowAdModal } = usePlayLimit();
+  const [pendingTeam, setPendingTeam] = useState(null);
 
   useEffect(() => {
     const fetchTeams = async () => {
