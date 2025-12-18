@@ -189,11 +189,13 @@ class MiniCupAPITester:
         }
         
         response = self.make_request("POST", "/auth/login", json_data=wrong_login)
-        if response and response.status_code == 401:
-            self.log_test("Wrong Credentials", True, "Correctly rejected wrong credentials")
+        if response:
+            if response.status_code == 401:
+                self.log_test("Wrong Credentials", True, "Correctly rejected wrong credentials")
+            else:
+                self.log_test("Wrong Credentials", False, f"Expected 401, got: {response.status_code}")
         else:
-            status_code = response.status_code if response else "No response"
-            self.log_test("Wrong Credentials", False, f"Expected 401, got: {status_code}")
+            self.log_test("Wrong Credentials", False, "No response received")
         
         # Test GET /api/auth/me with valid token
         if self.admin_token:
