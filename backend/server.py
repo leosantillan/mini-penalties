@@ -62,6 +62,17 @@ async def register(user_data: UserCreate):
     if existing_username:
         raise HTTPException(status_code=400, detail="Username already taken")
     
+    # Verify country and team if provided
+    if user_data.country_id:
+        country = await countries_collection.find_one({"country_id": user_data.country_id})
+        if not country:
+            raise HTTPException(status_code=404, detail="Country not found")
+    
+    if user_data.team_id:
+        team = await teams_collection.find_one({"team_id": user_data.team_id})
+        if not team:
+            raise HTTPException(status_code=404, detail="Team not found")
+    
     # Create user
     user_id = str(uuid.uuid4())
     user_dict = user_data.dict()
