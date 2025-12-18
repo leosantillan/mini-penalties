@@ -39,11 +39,11 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 # Create the main app
 app = FastAPI(title="Mini Cup API", version="1.0.0")
 
+# Mount static files for shirt designs
+app.mount("/uploads", StaticFiles(directory=str(ROOT_DIR / 'uploads')), name="uploads")
+
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
-
-# Mount static files for shirt designs under /api
-api_router.mount("/uploads", StaticFiles(directory=str(ROOT_DIR / 'uploads')), name="uploads")
 
 # Configure logging
 logging.basicConfig(
