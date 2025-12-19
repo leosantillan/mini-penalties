@@ -44,16 +44,17 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       // Goalkeeper movement - gets faster with higher difficulty
       const interval = setInterval(() => {
         setGoalKeeperPosition(prev => {
-          const speed = 3 + (difficulty * 1);
+          const speed = 1.5 + (difficulty * 0.5);
           const newPos = prev + (speed * goalKeeperDirection);
           
-          // Change direction at boundaries (35% to 65% to stay within goal)
-          if (newPos >= 65) {
+          // Keep goalkeeper within goal posts (43% to 57% matches goal width)
+          // Goal is w-64 (256px) centered at 50%, so it spans ~43.3% to ~56.7% on a wide screen
+          if (newPos >= 56) {
             setGoalKeeperDirection(-1);
-            return 65;
-          } else if (newPos <= 35) {
+            return 56;
+          } else if (newPos <= 44) {
             setGoalKeeperDirection(1);
-            return 35;
+            return 44;
           }
           return newPos;
         });
