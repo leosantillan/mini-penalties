@@ -199,7 +199,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       <div className="p-4 flex items-center justify-between">
         <Button variant="ghost" size="sm" onClick={onBack} className="text-white">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
+          {t('back')}
         </Button>
         <div className="text-white text-center">
           <div className="flex items-center gap-2">
