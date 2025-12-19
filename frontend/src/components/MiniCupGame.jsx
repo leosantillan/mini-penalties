@@ -41,29 +41,41 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [aimPosition, setAimPosition] = useState(null);
   const gameRef = useRef(null);
 
+  // Random target selection - picks new random position periodically
   useEffect(() => {
     if (!gameOver && !isKicking) {
-      // Goalkeeper movement - gets faster with higher difficulty
+      const pickNewTarget = () => {
+        // Random position between 40% and 60% (just outside goal posts)
+        const newTarget = 40 + Math.random() * 20;
+        setTargetPosition(newTarget);
+      };
+      
+      // Pick new random target every 0.5-1.5 seconds (faster with difficulty)
+      const interval = setInterval(pickNewTarget, Math.max(500, 1500 - difficulty * 100));
+      pickNewTarget(); // Initial target
+      
+      return () => clearInterval(interval);
+    }
+  }, [gameOver, isKicking, difficulty]);
+
+  // Smooth movement towards target position
+  useEffect(() => {
+    if (!gameOver && !isKicking) {
       const interval = setInterval(() => {
         setGoalKeeperPosition(prev => {
           const speed = 2 + (difficulty * 0.5);
-          const newPos = prev + (speed * goalKeeperDirection);
+          const diff = targetPosition - prev;
           
-          // Goalkeeper moves just outside the goal posts (one body width on each side)
-          // Goal spans ~43% to ~57%, so we extend to ~40% to ~60% for slight overshoot
-          if (newPos >= 60) {
-            setGoalKeeperDirection(-1);
-            return 60;
-          } else if (newPos <= 40) {
-            setGoalKeeperDirection(1);
-            return 40;
+          // Move towards target
+          if (Math.abs(diff) < speed) {
+            return targetPosition;
           }
-          return newPos;
+          return prev + (diff > 0 ? speed : -speed);
         });
       }, 50);
       return () => clearInterval(interval);
     }
-  }, [gameOver, isKicking, difficulty, goalKeeperDirection]);
+  }, [gameOver, isKicking, difficulty, targetPosition]);
 
   const handleMouseMove = (e) => {
     if (isKicking || gameOver) return;
