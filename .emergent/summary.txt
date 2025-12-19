@@ -1,0 +1,163 @@
+<analysis>**original_problem_statement:**
+The user wants to clone the Google Mini Cup game from the Club World Cup 2025.
+
+**PRODUCT REQUIREMENTS:**
+- Create a clone of the Google Mini Cup penalty shootout game.
+- Implement a two-step team selection: first country, then team. The specific countries and teams were provided by the user.
+- Develop a comprehensive backend and admin panel (initially requested in Laravel, but implemented in FastAPI due to platform constraints).
+  - Admin should be able to manage Countries, Teams (including a 12x12 pixel art shirt builder and two-color selection), and Users (email, pass, country, team).
+  - The backend should store goals per team with dates and provide statistics with graphics.
+- Create a public Stats page showing goals per team for today, this month, and this year.
+- Implement a Google AdSense integration:
+  - Players get 2 free plays.
+  - After that, a modal appears requiring them to watch an ad to get 2 more plays, up to 5 times.
+  - After the limit is reached, they must wait until the next day.
+  - This limit should be enforced globally, preventing bypass by changing teams or navigating away.
+- The game pages should be multilingual (English, Spanish, Portuguese, French, Italian), with Spanish as the default and a language selector on the home page.
+- Visual/gameplay adjustments:
+  - Goalkeeper should be a person, not a yellow box.
+  - The ball shouldn't have a white circle around it.
+  - When saved, the ball should be close to the goalkeeper.
+  - The goalkeeper should move faster.
+  - The goalkeeper's movement should be constrained to just outside the goalposts.
+
+**User's preferred language**: English
+
+**what currently exists?**
+A full-stack application cloning the Google Mini Cup game.
+- **Frontend (React)**: Includes the game itself, a country/team selection flow, a public stats page, and a complete admin UI with login, dashboard, charts, and CRUD management for users, countries, and teams. It also features an interactive 12x12 shirt builder and a system to manage play limits with a (mocked) Google AdSense integration. A multilingual context has been set up with a language selector, and Spanish is the default language.
+- **Backend (FastAPI & MongoDB)**: A comprehensive API supports all frontend features, including authentication, admin CRUD operations, game session tracking, and statistics aggregation. It serves the team shirt images as static files. The database has been seeded with initial country and team data.
+
+**Last working item**:
+    - Last item agent was working: The user reported that the goalkeeper moves too far outside the goalposts. The agent adjusted the movement boundaries in  to constrain its horizontal path and centered its initial position.
+    - Status: IN PROGRESS
+    - Agent Testing Done: N
+    - Which testing method agent to use? screenshot tool
+    - User Testing Done: N
+
+**All Pending/In progress Issue list**:
+  - Issue 1: Verify the fix for the goalkeeper's movement range. (P0)
+
+  **Issues Detail**:
+  - **Issue 1**: Verify the fix for the goalkeeper's movement range.
+     - **Attempted fixes**: The agent edited  to clamp the goalkeeper's  position to a narrower range ( to ) to keep it closer to the goal.
+     - **Next debug checklist**:
+         1. Run the application and navigate to the game screen.
+         2. Use the  with multiple captures over a few seconds to observe the goalkeeper's full range of motion.
+         3. Confirm that the goalkeeper does not move more than approximately one body width outside the goalposts on either side.
+     - **Why fix this issue and what will be achieved with the fix?**: To make the game feel more realistic and polished, as requested by the user.
+     - **Status**: IN PROGRESS
+     - **Is recurring issue?** N
+     - **Should Test frontend/backend/both after fix?**: Frontend
+     - **Blocked on other issue**: None
+
+**In progress Task List**:
+  - Task 1: Complete the multilingual implementation. (P1)
+
+  **Task Detail**:
+  - **Task 1**: Complete the multilingual implementation.
+     - **Where to resume**: The  and  are created, and the  is partially translated. The next step is to apply the translation hook () to all other components with user-facing text and replace hardcoded strings with translation keys from .
+        - Files to update: , , , , , , and all admin components (, , , , , ).
+     - **What will be achieved with this?**: The entire application will be available in English, Spanish, Portuguese, French, and Italian, as requested.
+     - **Status**: IN PROGRESS
+     - **Should Test frontend/backend/both after fix?**: Frontend
+     - **Blocked on something**: None
+
+**Upcoming and Future Tasks**
+    - None. All user requests have been started.
+
+**Completed work in this session**
+- **Core Game Logic**: Implemented the penalty shootout game with click-to-shoot controls, an aiming arrow, and score tracking.
+- **Backend API**: Built a full FastAPI backend with MongoDB for managing countries, teams, users, and game sessions, including JWT authentication.
+- **Admin Panel UI**: Created a complete React admin section with login, a statistics dashboard with charts, and full CRUD interfaces for countries, teams, and users.
+- **Shirt Builder**: Implemented an interactive 12x12 pixel grid for designing team shirts, with two selectable colors per team.
+- **Stats Page**: Created a public page showing leaderboards for today, this month, and this year.
+- **AdSense Integration**: Built the logic for limiting plays and showing a modal to watch an ad (currently mocked) to continue playing. The limits are enforced globally across the app.
+- **Internationalization (i18n)**: Set up the context and provider for multilingual support, with a language selector on the homepage and Spanish as the default.
+
+**Earlier issues found/mentioned but not fixed**
+   - None.
+
+**Known issue recurrence from previous fork**
+  - No previous fork summary available.
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+- **Frontend**: React, React Router, React Hooks (useState, useEffect, useContext), Axios, TailwindCSS, shadcn/ui components, Recharts for charts.
+- **Backend**: FastAPI, Pydantic, MongoDB (with Motor), JWT for authentication, Passlib for password hashing.
+- **Architecture**: Full-stack with a decoupled frontend and backend communicating via a REST API. State management via React Context for Auth, Language, and Play Limits.
+
+**key DB schema**
+  - **countries**: 
+  - **teams**: 
+  - **users**: 
+  - **game_sessions**: 
+
+**changes in tech stack**
+  - The user requested to use Laravel for the backend, but was informed of platform limitations. The agent proceeded with the platform's standard FastAPI stack, which the user approved.
+
+**All files of reference**
+- : Core game logic, recently edited for goalkeeper movement.
+- : Contains translation strings and logic for multilingual support. A key file for the pending translation task.
+- : Manages the ad-based play limit system.
+- : Directory containing all components for the admin UI panel.
+- : The main FastAPI application file with all API endpoints.
+- : Pydantic models defining the database schema and API request/response bodies.
+
+**Areas that need refactoring**:
+- The internationalization (i18n) implementation is incomplete. Most components still contain hardcoded English text. These need to be updated to use the  to become fully multilingual.
+
+**key api endpoints**
+- **Auth**: , 
+- **Game**: , , , 
+- **Public Stats**:  (period = today, month, year)
+- **Admin (protected)**:
+  - 
+  - 
+  - 
+  - 
+- **Static Files**: 
+
+**Critical Info for New Agent**
+- **AdSense is Mocked**: The AdSense implementation is frontend-only. The ad modal appears, but it does not connect to a real AdSense account. The  placeholder is in .
+- **Admin Credentials**: The default admin user is  with password .
+- **Stateless Backend**: The backend is stateless, relying on JWT tokens for authenticating protected routes.
+- **I18n Task**: A major pending task is to finish translating the entire application. The groundwork is laid, but most components are not yet updated.
+
+**documents and test_reports created in this job**
+  - 
+
+**Last 10 User Messages and any pending HUMAN messages**
+- now I want the game pages to be multilingual: english, spanish, portuguese, french and italian. the player should choose the language in the home page. spanish by default
+- there is no language selector in the home page
+- in the game, the goalkeeper moves very far from the goal rectangle. it should start one body off on the left, and end one body off on the right
+- now the users admin page: crud, fields: email, pass, country, team
+- the user crud is not storing the team, or it doesn't show it in the list and the form
+- in the team crud form, I want to select two colors per team
+- now, in the game home page I want a Stats button. Inside I want three lists: goals per team today, goals per team this month, goals per team this year, order by amount of goals
+- now build the admin -> statistics page, with graphics
+- now I want to add google ad sense to the game. It should work like this: - the player enters and can play twice - after that if he wants to play again, a modal should appear telling he needs to watch a small ad in order to play two more times, and like this for 5 times in total - after that, he should return the next day in order to play again
+- if the player doesn't want to watch the ad, he shouldn't be allow to choose another team or go to home and play again. if he goes to home, and want to play again, and the two free games are already played, he should be allow to watch the add in order to continue
+
+**Project Health Check:**
+- **Broken**: Nothing is critically broken.
+- **Mocked**: The Google AdSense functionality is mocked. The modal appears, and play counts are managed, but no real ad is served or tracked.
+
+**3rd Party Integrations**
+- Google AdSense (mocked implementation, requires user's publisher ID to be functional).
+
+**Testing status**
+  - Testing agent used after significant changes: YES
+  - Troubleshoot agent used after agent stuck in loop: NO
+  - Test files created: []
+  - Known regressions: None.
+
+**Credentials to test flow:**
+- **Admin User**:
+  - **Email**: 
+  - **Password**: 
+
+**What agent forgot to execute**
+- The agent started the multilingual feature but did not complete it. The  was created and the  was partially updated, but the rest of the application's components still have hardcoded English text and need to be refactored to use the translation system.</analysis>
