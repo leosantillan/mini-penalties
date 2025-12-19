@@ -47,13 +47,13 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           const speed = 3 + (difficulty * 1);
           const newPos = prev + (speed * goalKeeperDirection);
           
-          // Change direction at boundaries
-          if (newPos >= 80) {
+          // Change direction at boundaries (35% to 65% to stay within goal)
+          if (newPos >= 65) {
             setGoalKeeperDirection(-1);
-            return 80;
-          } else if (newPos <= 20) {
+            return 65;
+          } else if (newPos <= 35) {
             setGoalKeeperDirection(1);
-            return 20;
+            return 35;
           }
           return newPos;
         });
