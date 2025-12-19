@@ -99,8 +99,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     setIsKicking(true);
     setAimPosition(null);
     
-    // Clamp target position to goal area
-    const clampedX = Math.max(25, Math.min(75, targetX));
+    // Clamp target position to goal area (matches goalkeeper boundaries)
+    const clampedX = Math.max(35, Math.min(65, targetX));
     
     // Animate ball to target position
     setBallPosition({ x: clampedX, y: 15 });
