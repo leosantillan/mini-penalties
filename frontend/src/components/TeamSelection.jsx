@@ -4,6 +4,7 @@ import { Card } from './ui/card';
 import { Trophy, TrendingUp, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 import { usePlayLimit } from '../contexts/PlayLimitContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import AdModal from './AdModal';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -14,6 +15,7 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
   const [sortedTeams, setSortedTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const { needsAd, canPlayMore, showAdModal, setShowAdModal } = usePlayLimit();
+  const { t } = useLanguage();
   const [pendingTeam, setPendingTeam] = useState(null);
 
   useEffect(() => {
@@ -38,17 +40,14 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
 
   const handleTeamClick = (team) => {
     if (!canPlayMore()) {
-      // No more plays available
-      alert("You've reached your daily play limit. Come back tomorrow!");
+      alert(t('comeBackTomorrow'));
       return;
     }
 
     if (needsAd()) {
-      // Need to watch ad first
       setPendingTeam(team);
       setShowAdModal(true);
     } else {
-      // Can play directly
       onTeamSelect(team);
     }
   };
@@ -76,7 +75,7 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-        <div className="text-gray-800 text-2xl">Loading teams...</div>
+        <div className="text-gray-800 text-2xl">Loading...</div>
       </div>
     );
   }
@@ -90,22 +89,22 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
         <div className="mb-6">
           <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Countries
+            {t('backToCountries')}
           </Button>
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
               <span className="text-5xl">{selectedCountry.flag}</span>
               <h1 className="text-4xl font-bold text-gray-800">{selectedCountry.name}</h1>
             </div>
-            <p className="text-gray-600 mb-2">Choose Your Team</p>
-            <p className="text-sm text-gray-500">Select a team and score goals for the global leaderboard!</p>
+            <p className="text-gray-600 mb-2">{t('chooseTeam')}</p>
+            <p className="text-sm text-gray-500">{t('selectTeamDesc')}</p>
           </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4 mb-8">
           {teams.map((team, index) => (
             <Card 
-              key={team.id}
+              key={team.team_id}
               className="p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
               style={{ borderLeft: `6px solid ${team.color}` }}
               onClick={() => handleTeamClick(team)}
@@ -121,16 +120,16 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
                 <div className="text-right">
                   <div className="flex items-center gap-1 text-gray-500 text-xs mb-1">
                     <TrendingUp className="w-3 h-3" />
-                    <span>Rank #{sortedTeams.findIndex(t => t.team_id === team.team_id) + 1}</span>
+                    <span>{t('rank')} #{sortedTeams.findIndex(t => t.team_id === team.team_id) + 1}</span>
                   </div>
                   <div className="font-bold text-2xl" style={{ color: team.color }}>
                     {formatGoals(team.goals)}
                   </div>
-                  <div className="text-xs text-gray-500">goals</div>
+                  <div className="text-xs text-gray-500">{t('goals')}</div>
                 </div>
               </div>
               <Button className="w-full" style={{ backgroundColor: team.color }}>
-                Play as {team.name}
+                {t('playAs')} {team.name}
               </Button>
             </Card>
           ))}
@@ -140,12 +139,12 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
         <div className="bg-white rounded-2xl p-6 shadow-lg">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
             <Trophy className="w-6 h-6 text-yellow-500" />
-            Global Standings
+            {t('globalStandings')}
           </h2>
           <div className="space-y-3">
             {sortedTeams.map((team, index) => (
               <div 
-                key={team.id}
+                key={team.team_id}
                 className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -159,7 +158,7 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
                   <div className="font-bold text-lg" style={{ color: team.color }}>
                     {formatGoals(team.goals)}
                   </div>
-                  <div className="text-xs text-gray-500">goals scored</div>
+                  <div className="text-xs text-gray-500">{t('goalsScored')}</div>
                 </div>
               </div>
             ))}

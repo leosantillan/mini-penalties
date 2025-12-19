@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from './ui/card';
 import { Trophy, Calendar, Eye } from 'lucide-react';
 import { usePlayLimit } from '../contexts/PlayLimitContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const PlayLimitBanner = () => {
   const {
@@ -11,6 +12,7 @@ const PlayLimitBanner = () => {
     getTotalPlaysUsed,
     getTotalPlaysAvailable,
   } = usePlayLimit();
+  const { t } = useLanguage();
 
   const totalUsed = getTotalPlaysUsed();
   const totalAvailable = getTotalPlaysAvailable();
@@ -24,14 +26,14 @@ const PlayLimitBanner = () => {
             <Trophy className="w-6 h-6 text-blue-600" />
           </div>
           <div>
-            <p className="text-sm text-gray-600">Plays Remaining</p>
+            <p className="text-sm text-gray-600">{t('playsRemaining')}</p>
             <p className="text-2xl font-bold text-blue-600">{playsRemaining}</p>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className="text-sm text-gray-600">Ad Views Used</p>
+            <p className="text-sm text-gray-600">{t('adViewsUsed')}</p>
             <p className="text-xl font-bold text-purple-600">
               {adViewsUsed} / {maxAdViews}
             </p>
@@ -43,7 +45,7 @@ const PlayLimitBanner = () => {
 
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className="text-sm text-gray-600">Total Today</p>
+            <p className="text-sm text-gray-600">{t('totalToday')}</p>
             <p className="text-xl font-bold text-green-600">
               {totalUsed} / {totalAvailable}
             </p>
@@ -63,7 +65,7 @@ const PlayLimitBanner = () => {
           />
         </div>
         <p className="text-xs text-gray-500 mt-1 text-center">
-          {totalAvailable - totalUsed} plays remaining today
+          {totalAvailable - totalUsed} {t('playsRemainingToday')}
         </p>
       </div>
     </Card>

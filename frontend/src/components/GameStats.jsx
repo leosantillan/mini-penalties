@@ -4,6 +4,7 @@ import { Card } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { ArrowLeft, Trophy, TrendingUp, Calendar, CalendarDays } from 'lucide-react';
 import axios from 'axios';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -14,6 +15,7 @@ const GameStats = ({ onBack }) => {
   const [yearStats, setYearStats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('today');
+  const { t } = useLanguage();
 
   useEffect(() => {
     fetchStats();
@@ -87,11 +89,11 @@ const GameStats = ({ onBack }) => {
                   <span className="text-3xl font-bold text-blue-600">
                     {formatGoals(stat.total_goals)}
                   </span>
-                  <span className="text-sm text-gray-500">goals</span>
+                  <span className="text-sm text-gray-500">{t('goals')}</span>
                 </div>
                 <div className="text-xs text-gray-400 mt-1">
-                  {stat.total_games} games • Avg: {stat.average_score.toFixed(1)}
-                  {stat.best_score > 0 && ` • Best: ${stat.best_score}`}
+                  {stat.total_games} {t('games')} • {t('avg')}: {stat.average_score.toFixed(1)}
+                  {stat.best_score > 0 && ` • ${t('best')}: ${stat.best_score}`}
                 </div>
               </div>
             </div>
@@ -104,7 +106,7 @@ const GameStats = ({ onBack }) => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-        <div className="text-2xl text-gray-600">Loading statistics...</div>
+        <div className="text-2xl text-gray-600">Loading...</div>
       </div>
     );
   }
@@ -115,14 +117,14 @@ const GameStats = ({ onBack }) => {
         <div className="mb-6">
           <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            {t('back')}
           </Button>
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Trophy className="w-10 h-10 text-yellow-500" />
-              <h1 className="text-4xl font-bold text-gray-800">Game Statistics</h1>
+              <h1 className="text-4xl font-bold text-gray-800">{t('gameStats')}</h1>
             </div>
-            <p className="text-gray-600">Goals scored by teams over different periods</p>
+            <p className="text-gray-600">{t('statsDesc')}</p>
           </div>
         </div>
 
@@ -130,46 +132,46 @@ const GameStats = ({ onBack }) => {
           <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="today" className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              Today
+              {t('today')}
             </TabsTrigger>
             <TabsTrigger value="month" className="flex items-center gap-2">
               <CalendarDays className="w-4 h-4" />
-              This Month
+              {t('thisMonth')}
             </TabsTrigger>
             <TabsTrigger value="year" className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
-              This Year
+              {t('thisYear')}
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="today">
             <div className="mb-4">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Today's Goals</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('todayGoals')}</h2>
               <p className="text-gray-600">
-                Goals scored by teams today ({new Date().toLocaleDateString()})
+                {t('todayGoalsDesc')}
               </p>
             </div>
-            {renderStatsList(todayStats, '⚽', 'No goals scored today yet. Be the first!')}
+            {renderStatsList(todayStats, '⚽', t('noGoalsToday'))}
           </TabsContent>
 
           <TabsContent value="month">
             <div className="mb-4">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">This Month's Goals</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('monthGoals')}</h2>
               <p className="text-gray-600">
-                Goals scored in {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}
+                {t('monthGoalsDesc')} {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}
               </p>
             </div>
-            {renderStatsList(monthStats, '🏆', 'No goals scored this month yet.')}
+            {renderStatsList(monthStats, '🏆', t('noGoalsMonth'))}
           </TabsContent>
 
           <TabsContent value="year">
             <div className="mb-4">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">This Year's Goals</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('yearGoals')}</h2>
               <p className="text-gray-600">
-                Goals scored in {new Date().getFullYear()}
+                {t('yearGoalsDesc')} {new Date().getFullYear()}
               </p>
             </div>
-            {renderStatsList(yearStats, '🌟', 'No goals scored this year yet.')}
+            {renderStatsList(yearStats, '🌟', t('noGoalsYear'))}
           </TabsContent>
         </Tabs>
 
@@ -178,15 +180,15 @@ const GameStats = ({ onBack }) => {
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <div className="text-3xl font-bold mb-1">{todayStats.length}</div>
-              <div className="text-blue-100 text-sm">Teams Today</div>
+              <div className="text-blue-100 text-sm">{t('teamsToday')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold mb-1">{monthStats.length}</div>
-              <div className="text-blue-100 text-sm">Teams This Month</div>
+              <div className="text-blue-100 text-sm">{t('teamsThisMonth')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold mb-1">{yearStats.length}</div>
-              <div className="text-blue-100 text-sm">Teams This Year</div>
+              <div className="text-blue-100 text-sm">{t('teamsThisYear')}</div>
             </div>
           </div>
         </Card>

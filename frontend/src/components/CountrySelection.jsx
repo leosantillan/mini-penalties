@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Trophy, ArrowLeft, Globe } from 'lucide-react';
 import axios from 'axios';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -10,6 +11,7 @@ const API = `${BACKEND_URL}/api`;
 const CountrySelection = ({ onCountrySelect, onBack }) => {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -29,7 +31,7 @@ const CountrySelection = ({ onCountrySelect, onBack }) => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
-        <div className="text-gray-800 text-2xl">Loading countries...</div>
+        <div className="text-gray-800 text-2xl">Loading...</div>
       </div>
     );
   }
@@ -40,21 +42,21 @@ const CountrySelection = ({ onCountrySelect, onBack }) => {
         <div className="mb-8">
           <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            {t('back')}
           </Button>
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Globe className="w-10 h-10 text-blue-600" />
-              <h1 className="text-4xl font-bold text-gray-800">Choose Your Country</h1>
+              <h1 className="text-4xl font-bold text-gray-800">{t('chooseCountry')}</h1>
             </div>
-            <p className="text-gray-600">Select a country to see available teams</p>
+            <p className="text-gray-600">{t('selectCountryDesc')}</p>
           </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {countries.map((country) => (
             <Card 
-              key={country.id}
+              key={country.country_id}
               className="p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl group"
               style={{ borderTop: `6px solid ${country.color}` }}
               onClick={() => onCountrySelect(country)}
@@ -68,7 +70,7 @@ const CountrySelection = ({ onCountrySelect, onBack }) => {
                   className="w-full" 
                   style={{ backgroundColor: country.color }}
                 >
-                  Select {country.name}
+                  {t('select')} {country.name}
                 </Button>
               </div>
             </Card>

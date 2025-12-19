@@ -3,9 +3,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from './ui/button';
 import { Clock, Play } from 'lucide-react';
 import { usePlayLimit } from '../contexts/PlayLimitContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const AdModal = ({ isOpen, onClose, onCancel }) => {
   const { watchAd, adViewsUsed, maxAdViews } = usePlayLimit();
+  const { t } = useLanguage();
   const [adWatched, setAdWatched] = useState(false);
   const [countdown, setCountdown] = useState(5);
 
@@ -60,9 +62,9 @@ const AdModal = ({ isOpen, onClose, onCancel }) => {
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle className="text-2xl">Watch a Short Ad to Continue Playing</DialogTitle>
+          <DialogTitle className="text-2xl">{t('watchAdTitle')}</DialogTitle>
           <DialogDescription>
-            You've used your free plays. Watch a short ad to unlock 2 more plays!
+            {t('watchAdDesc')}
           </DialogDescription>
         </DialogHeader>
 
@@ -71,14 +73,14 @@ const AdModal = ({ isOpen, onClose, onCancel }) => {
           <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Ad Views Today</p>
+                <p className="text-sm text-gray-600">{t('adViewsToday')}</p>
                 <p className="text-2xl font-bold text-blue-600">
                   {adViewsUsed} / {maxAdViews}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-sm text-gray-600">Will Unlock</p>
-                <p className="text-2xl font-bold text-green-600">2 Plays</p>
+                <p className="text-sm text-gray-600">{t('willUnlock')}</p>
+                <p className="text-2xl font-bold text-green-600">2 {t('plays')}</p>
               </div>
             </div>
           </div>
@@ -92,8 +94,8 @@ const AdModal = ({ isOpen, onClose, onCancel }) => {
                     <Clock className="w-10 h-10 text-blue-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Advertisement</h3>
-                <p className="text-gray-600 mb-4">Please wait {countdown} seconds...</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">{t('advertisement')}</h3>
+                <p className="text-gray-600 mb-4">{t('pleaseWait')} {countdown} {t('seconds')}...</p>
                 <div className="w-48 h-2 bg-gray-300 rounded-full mx-auto overflow-hidden">
                   <div
                     className="h-full bg-blue-600 transition-all duration-1000"
@@ -120,8 +122,8 @@ const AdModal = ({ isOpen, onClose, onCancel }) => {
                     <Play className="w-10 h-10 text-green-600" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-green-600 mb-2">Ready to Play!</h3>
-                <p className="text-gray-600">You've unlocked 2 more plays</p>
+                <h3 className="text-2xl font-bold text-green-600 mb-2">{t('readyToPlay')}</h3>
+                <p className="text-gray-600">{t('unlockedPlays')}</p>
               </div>
             )}
           </div>
@@ -134,21 +136,21 @@ const AdModal = ({ isOpen, onClose, onCancel }) => {
               className="flex-1"
               size="lg"
             >
-              {adWatched ? 'Continue Playing' : `Wait ${countdown}s...`}
+              {adWatched ? t('continuePlaying') : `${t('wait')} ${countdown}s...`}
             </Button>
             <Button
               onClick={handleCancel}
               variant="outline"
               size="lg"
             >
-              Exit Game
+              {t('exitGame')}
             </Button>
           </div>
 
           {/* Info */}
           <div className="text-center text-sm text-gray-500">
             <p>
-              After {maxAdViews} ad views ({maxAdViews * 2} more plays), you'll need to return tomorrow
+              {t('afterAdViews')} {maxAdViews} ({maxAdViews * 2} {t('morePlays')}), {t('needReturnTomorrow')}
             </p>
           </div>
         </div>
