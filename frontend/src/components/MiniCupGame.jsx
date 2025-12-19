@@ -125,6 +125,20 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       // If ball is outside the goal posts, it's always a miss
       if (!isInsideGoal) {
         setShowResult('miss');
+        
+        // Post game session to API
+        const postGameSession = async () => {
+          try {
+            await axios.post(`${API}/game/session`, {
+              team_id: selectedTeam.team_id,
+              score: score
+            });
+          } catch (error) {
+            console.error('Error posting game session:', error);
+          }
+        };
+        postGameSession();
+        
         setTimeout(() => {
           setGameOver(true);
         }, 1500);
