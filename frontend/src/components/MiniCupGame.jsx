@@ -41,36 +41,32 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [aimPosition, setAimPosition] = useState(null);
   const gameRef = useRef(null);
 
-  // Random target selection - picks new random position periodically
-  useEffect(() => {
-    if (!gameOver && !isKicking) {
-      const pickNewTarget = () => {
-        // Random position between 40% and 60% (just outside goal posts)
-        const newTarget = 40 + Math.random() * 20;
-        setTargetPosition(newTarget);
-      };
-      
-      // Pick new random target every 0.5-1.5 seconds (faster with difficulty)
-      const interval = setInterval(pickNewTarget, Math.max(500, 1500 - difficulty * 100));
-      pickNewTarget(); // Initial target
-      
-      return () => clearInterval(interval);
-    }
-  }, [gameOver, isKicking, difficulty]);
-
-  // Smooth movement towards target position
+  // Continuous random movement - goalkeeper never stops
   useEffect(() => {
     if (!gameOver && !isKicking) {
       const interval = setInterval(() => {
         setGoalKeeperPosition(prev => {
-          const speed = 2 + (difficulty * 0.5);
-          const diff = targetPosition - prev;
+          const speed = 1.5 + (difficulty * 0.4);
           
-          // Move towards target
-          if (Math.abs(diff) < speed) {
-            return targetPosition;
+          // Add randomness to movement direction
+          const randomChange = (Math.random() - 0.5) * 4; // Random value between -2 and 2
+          let newPos = prev + randomChange + (targetPosition > prev ? speed * 0.5 : -speed * 0.5);
+          
+          // Keep within bounds (40% to 60%)
+          if (newPos >= 60) {
+            newPos = 60;
+            setTargetPosition(40 + Math.random() * 10); // New target on left side
+          } else if (newPos <= 40) {
+            newPos = 40;
+            setTargetPosition(50 + Math.random() * 10); // New target on right side
           }
-          return prev + (diff > 0 ? speed : -speed);
+          
+          // Occasionally pick a completely new random target
+          if (Math.random() < 0.02) {
+            setTargetPosition(40 + Math.random() * 20);
+          }
+          
+          return newPos;
         });
       }, 50);
       return () => clearInterval(interval);
