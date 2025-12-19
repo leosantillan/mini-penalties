@@ -32,7 +32,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   }, [gameStarted]);
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 85 });
   const [isKicking, setIsKicking] = useState(false);
-  const [goalKeeperPosition, setGoalKeeperPosition] = useState(50);
+  const [goalKeeperPosition, setGoalKeeperPosition] = useState(50); // Start at center
   const [goalKeeperDirection, setGoalKeeperDirection] = useState(1);
   const [showResult, setShowResult] = useState(null);
   const [difficulty, setDifficulty] = useState(1.5);
