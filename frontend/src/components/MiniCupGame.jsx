@@ -102,15 +102,16 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     setIsKicking(true);
     setAimPosition(null);
     
-    // Clamp target position to goal area (matches goalkeeper boundaries)
+    // Clamp target position to goal area
     const clampedX = Math.max(35, Math.min(65, targetX));
     
     // Animate ball to target position
     setBallPosition({ x: clampedX, y: 15 });
     
     setTimeout(() => {
-      // Check if goal - goalkeeper should visually block the ball
-      const goalKeeperRange = Math.max(10, 16 - difficulty);
+      // Check if goal - goalkeeper only saves if ball is close (within ~5% of position)
+      // Range decreases with difficulty to make it harder
+      const goalKeeperRange = Math.max(4, 6 - (difficulty * 0.3));
       const distance = Math.abs(clampedX - goalKeeperPosition);
       const isGoal = distance > goalKeeperRange;
       
