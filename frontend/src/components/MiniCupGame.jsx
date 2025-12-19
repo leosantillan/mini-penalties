@@ -306,9 +306,9 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         {showResult && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold animate-bounce">
             {showResult === 'goal' ? (
-              <span className="text-green-500 drop-shadow-lg">GOAL! 🎉</span>
+              <span className="text-green-500 drop-shadow-lg">{t('goal')} 🎉</span>
             ) : (
-              <span className="text-red-500 drop-shadow-lg">SAVED! 😮</span>
+              <span className="text-red-500 drop-shadow-lg">{t('saved')} 😮</span>
             )}
           </div>
         )}
@@ -316,8 +316,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         {/* Instructions */}
         {!isKicking && !gameOver && score === 0 && (
           <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 text-white text-center animate-pulse">
-            <p className="font-semibold text-lg">Click/Tap to shoot!</p>
-            <p className="text-sm">Aim for the goal and avoid the keeper</p>
+            <p className="font-semibold text-lg">{t('clickToShoot')}</p>
+            <p className="text-sm">{t('aimInstructions')}</p>
           </div>
         )}
 
@@ -328,15 +328,15 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         {gameOver && (
           <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
             <div className="bg-white rounded-2xl p-8 text-center max-w-sm mx-4">
-              <h2 className="text-3xl font-bold mb-4 text-gray-800">Game Over!</h2>
+              <h2 className="text-3xl font-bold mb-4 text-gray-800">{t('gameOver')}</h2>
               <div className="mb-6">
-                <p className="text-gray-600 mb-2">Final Score</p>
+                <p className="text-gray-600 mb-2">{t('finalScore')}</p>
                 <p className="text-6xl font-bold" style={{ color: selectedTeam.color }}>
                   {score}
                 </p>
               </div>
               <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-gray-600 mb-1">Goals contributed to</p>
+                <p className="text-sm text-gray-600 mb-1">{t('goalsContributed')}</p>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-2xl">{selectedTeam.flag}</span>
                   <span className="font-bold text-lg">{selectedTeam.name}</span>
@@ -346,22 +346,22 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
                 {canPlayMore() ? (
                   <>
                     <Button onClick={handleRestart} className="w-full" size="lg">
-                      {needsAd() ? 'Watch Ad to Play Again' : 'Play Again'}
+                      {needsAd() ? t('watchAdToPlay') : t('playAgain')}
                     </Button>
                     <Button onClick={onBack} variant="outline" className="w-full" size="lg">
-                      Choose Different Team
+                      {t('chooseDifferentTeam')}
                     </Button>
                   </>
                 ) : (
                   <>
                     <div className="mb-4 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-lg">
-                      <p className="text-yellow-800 font-semibold mb-2">Daily Limit Reached!</p>
+                      <p className="text-yellow-800 font-semibold mb-2">{t('dailyLimitReached')}</p>
                       <p className="text-yellow-700 text-sm">
-                        You've used all your plays for today. Come back tomorrow to play again!
+                        {t('comeBackTomorrow')}
                       </p>
                     </div>
                     <Button onClick={onBack} className="w-full" size="lg">
-                      Back to Menu
+                      {t('backToMenu')}
                     </Button>
                   </>
                 )}
