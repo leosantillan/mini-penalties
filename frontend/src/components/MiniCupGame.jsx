@@ -257,7 +257,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         onMouseLeave={handleMouseLeave}
       >
         {/* Goal */}
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-64 h-32 border-4 border-white rounded-t-lg">
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-80 h-32 border-4 border-white rounded-t-lg">
           {/* Goal Net */}
           <div className="w-full h-full bg-white bg-opacity-10 backdrop-blur-sm"></div>
         </div>
