@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Trophy, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 import { usePlayLimit } from '../contexts/PlayLimitContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import AdModal from './AdModal';
 import PlayLimitBanner from './PlayLimitBanner';
 
