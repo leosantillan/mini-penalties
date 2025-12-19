@@ -110,15 +110,28 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     setIsKicking(true);
     setAimPosition(null);
     
-    // Clamp target position to goal area
-    const clampedX = Math.max(35, Math.min(65, targetX));
+    // Ball goes where player clicks (within reasonable bounds)
+    const clampedX = Math.max(30, Math.min(70, targetX));
     
     // Animate ball to target position
     setBallPosition({ x: clampedX, y: 15 });
     
     setTimeout(() => {
-      // Check if goal - goalkeeper only saves if ball is close (within ~5% of position)
-      // Range decreases with difficulty to make it harder
+      // Goal posts are at ~43% and ~57% (w-64 centered at 50%)
+      const goalLeftPost = 43;
+      const goalRightPost = 57;
+      const isInsideGoal = clampedX >= goalLeftPost && clampedX <= goalRightPost;
+      
+      // If ball is outside the goal posts, it's always a miss
+      if (!isInsideGoal) {
+        setShowResult('miss');
+        setTimeout(() => {
+          setGameOver(true);
+        }, 1500);
+        return;
+      }
+      
+      // Ball is inside goal - check if goalkeeper saves it
       const goalKeeperRange = Math.max(4, 6 - (difficulty * 0.3));
       const distance = Math.abs(clampedX - goalKeeperPosition);
       const isGoal = distance > goalKeeperRange;
