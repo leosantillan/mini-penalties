@@ -117,9 +117,9 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     setBallPosition({ x: clampedX, y: 15 });
     
     setTimeout(() => {
-      // Goal posts are at ~43% and ~57% (w-64 centered at 50%)
-      const goalLeftPost = 43;
-      const goalRightPost = 57;
+      // Goal posts are at ~40% and ~60% (w-80 centered at 50%, 30% wider)
+      const goalLeftPost = 40;
+      const goalRightPost = 60;
       const isInsideGoal = clampedX >= goalLeftPost && clampedX <= goalRightPost;
       
       // If ball is outside the goal posts, it's always a miss
