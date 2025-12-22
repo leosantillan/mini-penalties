@@ -210,6 +210,29 @@ const GameStats = ({ onBack }) => {
             </div>
           </div>
         </Card>
+
+        {/* Share Call-to-Action */}
+        <Card className="mt-6 p-8 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 text-white overflow-hidden relative">
+          <div className="absolute top-0 right-0 text-9xl opacity-20 transform translate-x-8 -translate-y-4">
+            📣
+          </div>
+          <div className="relative z-10 text-center">
+            <h3 className="text-2xl font-bold mb-2">{t('helpYourTeam')}</h3>
+            <p className="text-white/90 mb-6 max-w-md mx-auto">
+              {t('helpYourTeamDesc')}
+            </p>
+            <ShareButtons 
+              shareText={generateShareText()} 
+              customButton={
+                <button className="inline-flex items-center gap-3 bg-white text-orange-600 font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                  <span className="text-2xl">🚀</span>
+                  <span className="text-lg">{t('spreadTheWord')}</span>
+                  <span className="text-2xl">⚽</span>
+                </button>
+              }
+            />
+          </div>
+        </Card>
       </div>
     </div>
   );
