@@ -48,6 +48,7 @@ const translations = {
     goalsContributed: 'Goals contributed to',
     playAgain: 'Play Again',
     chooseDifferentTeam: 'Choose Different Team',
+    goToHome: 'Go to Home',
     watchAdToPlay: 'Watch Ad to Play Again',
     backToMenu: 'Back to Menu',
     dailyLimitReached: 'Daily Limit Reached!',
