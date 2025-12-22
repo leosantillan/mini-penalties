@@ -145,6 +145,7 @@ const translations = {
     goalsContributed: 'Goles contribuidos a',
     playAgain: 'Jugar de Nuevo',
     chooseDifferentTeam: 'Elegir Otro Equipo',
+    goToHome: 'Ir al Inicio',
     watchAdToPlay: 'Ver Anuncio para Jugar',
     backToMenu: 'Volver al Menú',
     dailyLimitReached: '¡Límite Diario Alcanzado!',
