@@ -436,6 +436,7 @@ const translations = {
     goalsContributed: 'Gol contribuiti a',
     playAgain: 'Gioca Ancora',
     chooseDifferentTeam: 'Scegli un\'Altra Squadra',
+    goToHome: 'Vai alla Home',
     watchAdToPlay: 'Guarda Annuncio per Giocare',
     backToMenu: 'Torna al Menu',
     dailyLimitReached: 'Limite Giornaliero Raggiunto!',
