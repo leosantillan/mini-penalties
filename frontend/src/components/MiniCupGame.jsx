@@ -6,6 +6,7 @@ import { usePlayLimit } from '../contexts/PlayLimitContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import AdModal from './AdModal';
 import PlayLimitBanner from './PlayLimitBanner';
+import ShareButtons from './ShareButtons';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
