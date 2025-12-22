@@ -260,7 +260,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         <div className="text-white text-center">
           <div className="flex items-center gap-2">
             <span className="text-2xl">{selectedTeam.flag}</span>
-            <span className="font-bold">{selectedTeam.name}</span>
+            <span className="font-bold text-sm sm:text-base">{selectedTeam.name}</span>
           </div>
         </div>
         <div className="text-white font-bold text-xl flex items-center gap-2">
@@ -276,8 +276,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Goal */}
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-80 h-32 border-4 border-white rounded-t-lg">
+        {/* Goal - responsive width */}
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-[70%] sm:w-80 max-w-xs sm:max-w-none h-24 sm:h-32 border-4 border-white rounded-t-lg">
           {/* Goal Net */}
           <div className="w-full h-full bg-white bg-opacity-10 backdrop-blur-sm"></div>
         </div>
