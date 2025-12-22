@@ -112,6 +112,7 @@ function App() {
               <Route path="teams" element={<TeamsManager />} />
               <Route path="users" element={<UsersManager />} />
               <Route path="statistics" element={<Statistics />} />
+              <Route path="configuration" element={<ConfigurationManager />} />
             </Route>
           </Routes>
           <Toaster />
