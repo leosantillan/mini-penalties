@@ -87,13 +87,13 @@ const LandingPage = ({ onStart, onStats }) => {
           <p className="text-lg text-blue-200 mb-8">{t('tagline')}</p>
           
           <div className="flex flex-col gap-4 items-center">
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0">
               <Button 
                 onClick={onStart}
                 size="lg"
-                className="bg-white text-blue-600 hover:bg-blue-50 text-xl px-12 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold"
+                className="bg-white text-blue-600 hover:bg-blue-50 text-lg sm:text-xl px-8 sm:px-12 py-5 sm:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold w-full sm:w-auto"
               >
-                <Play className="w-6 h-6 mr-2 fill-current" />
+                <Play className="w-5 h-5 sm:w-6 sm:h-6 mr-2 fill-current" />
                 {t('startPlaying')}
               </Button>
               
@@ -101,9 +101,9 @@ const LandingPage = ({ onStart, onStats }) => {
                 onClick={onStats}
                 size="lg"
                 variant="outline"
-                className="bg-white/10 text-white hover:bg-white hover:text-blue-600 border-2 border-white text-xl px-8 py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold backdrop-blur-sm"
+                className="bg-white/10 text-white hover:bg-white hover:text-blue-600 border-2 border-white text-lg sm:text-xl px-8 py-5 sm:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold backdrop-blur-sm w-full sm:w-auto"
               >
-                <BarChart3 className="w-6 h-6 mr-2" />
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                 {t('stats')}
               </Button>
             </div>
