@@ -31,7 +31,8 @@ const ConfigurationManager = () => {
 
   const fetchConfig = async () => {
     try {
-      const token = localStorage.getItem('adminToken');
+      // Token is stored as 'token' by AuthContext
+      const token = localStorage.getItem('token');
       if (!token) {
         // Try again after a short delay if token not found
         setTimeout(fetchConfig, 500);
@@ -58,7 +59,7 @@ const ConfigurationManager = () => {
     setMessage({ type: '', text: '' });
     
     try {
-      const token = localStorage.getItem('adminToken');
+      const token = localStorage.getItem('token');
       // Only send the configurable fields, not config_id or updated_at
       const updateData = {
         free_plays: config.free_plays,
