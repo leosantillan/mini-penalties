@@ -339,6 +339,7 @@ const translations = {
     goalsContributed: 'Buts contribués à',
     playAgain: 'Rejouer',
     chooseDifferentTeam: 'Choisir une Autre Équipe',
+    goToHome: 'Aller à l\'Accueil',
     watchAdToPlay: 'Regarder une Pub pour Jouer',
     backToMenu: 'Retour au Menu',
     dailyLimitReached: 'Limite Quotidienne Atteinte!',
