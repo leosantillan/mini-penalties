@@ -443,6 +443,9 @@ const translations = {
     cancel: 'Annuler',
     shareLeaderboard: 'Consultez le classement Mini Coupe!',
     shareScore: 'J\'ai marqué {score} buts en jouant pour {team} dans Mini Coupe!',
+    helpYourTeam: '📣 Ralliez vos Supporters!',
+    helpYourTeamDesc: 'Partagez le classement et invitez vos amis à aider votre équipe favorite à atteindre le sommet!',
+    spreadTheWord: 'Faites Passer le Mot!',
   },
   it: {
     // Landing Page
