@@ -63,10 +63,11 @@ const ShareButtons = ({ shareText, shareUrl, onShareComplete, showReward = false
           variant={showReward ? "default" : "outline"}
           className={showReward ? "bg-green-600 hover:bg-green-700" : ""}
           size="lg"
-      >
-        <Share2 className="w-4 h-4 mr-2" />
-        {showReward ? t('shareToPlay') : t('share')}
-      </Button>
+        >
+          <Share2 className="w-4 h-4 mr-2" />
+          {showReward ? t('shareToPlay') : t('share')}
+        </Button>
+      )}
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-md">
