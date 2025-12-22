@@ -59,7 +59,15 @@ const ConfigurationManager = () => {
     
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await axios.put(`${API}/admin/config`, config, {
+      // Only send the configurable fields, not config_id or updated_at
+      const updateData = {
+        free_plays: config.free_plays,
+        plays_per_ad: config.plays_per_ad,
+        plays_per_share: config.plays_per_share,
+        max_ad_views: config.max_ad_views,
+        max_share_rewards: config.max_share_rewards,
+      };
+      const response = await axios.put(`${API}/admin/config`, updateData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setConfig(response.data);
