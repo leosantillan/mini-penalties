@@ -531,6 +531,17 @@ const translations = {
     games: 'partite',
     avg: 'Media',
     best: 'Migliore',
+    
+    // Share
+    share: 'Condividi',
+    shareOn: 'Condividi su',
+    shareToPlay: 'Condividi per Giocare',
+    shareReward: 'Condividi e ottieni 2 partite in più!',
+    thankYouSharing: 'Grazie per aver condiviso!',
+    moreOptions: 'Altre Opzioni',
+    cancel: 'Annulla',
+    shareLeaderboard: 'Guarda la classifica Mini Coppa!',
+    shareScore: 'Ho segnato {score} gol giocando per {team} in Mini Coppa!',
   },
 };
 
