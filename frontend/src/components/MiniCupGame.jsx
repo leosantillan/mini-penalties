@@ -387,7 +387,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
                       {needsAd() ? t('watchAdToPlay') : t('playAgain')}
                     </Button>
                     <Button onClick={onBack} variant="outline" className="w-full" size="lg">
-                      {t('chooseDifferentTeam')}
+                      {t('goToHome')}
                     </Button>
                   </>
                 ) : (
@@ -399,7 +399,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
                       </p>
                     </div>
                     <Button onClick={onBack} className="w-full" size="lg">
-                      {t('backToMenu')}
+                      {t('goToHome')}
                     </Button>
                   </>
                 )}
