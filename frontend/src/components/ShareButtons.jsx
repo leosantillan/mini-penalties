@@ -4,7 +4,7 @@ import { Share2, MessageCircle, Twitter, Facebook, X, Check } from 'lucide-react
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const ShareButtons = ({ shareText, shareUrl, onShareComplete, showReward = false }) => {
+const ShareButtons = ({ shareText, shareUrl, onShareComplete, showReward = false, customButton = null }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [shared, setShared] = useState(false);
   const { t } = useLanguage();
@@ -53,11 +53,16 @@ const ShareButtons = ({ shareText, shareUrl, onShareComplete, showReward = false
 
   return (
     <>
-      <Button
-        onClick={() => setIsOpen(true)}
-        variant={showReward ? "default" : "outline"}
-        className={showReward ? "bg-green-600 hover:bg-green-700" : ""}
-        size="lg"
+      {customButton ? (
+        <div onClick={() => setIsOpen(true)}>
+          {customButton}
+        </div>
+      ) : (
+        <Button
+          onClick={() => setIsOpen(true)}
+          variant={showReward ? "default" : "outline"}
+          className={showReward ? "bg-green-600 hover:bg-green-700" : ""}
+          size="lg"
       >
         <Share2 className="w-4 h-4 mr-2" />
         {showReward ? t('shareToPlay') : t('share')}
