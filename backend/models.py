@@ -155,3 +155,20 @@ class LeaderboardEntry(BaseModel):
     flag: str
     goals: int
     color: str
+
+# Game Configuration Models
+class GameConfig(BaseModel):
+    config_id: str = "default"
+    free_plays: int = 2  # Free plays without ad/share
+    plays_per_ad: int = 2  # Plays given after watching ad
+    plays_per_share: int = 2  # Plays given after sharing
+    max_ad_views: int = 5  # Max times can watch ads per day
+    max_share_rewards: int = 3  # Max times can share for plays per day
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class GameConfigUpdate(BaseModel):
+    free_plays: Optional[int] = None
+    plays_per_ad: Optional[int] = None
+    plays_per_share: Optional[int] = None
+    max_ad_views: Optional[int] = None
+    max_share_rewards: Optional[int] = None
