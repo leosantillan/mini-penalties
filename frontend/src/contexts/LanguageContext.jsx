@@ -554,6 +554,9 @@ const translations = {
     cancel: 'Annulla',
     shareLeaderboard: 'Guarda la classifica Mini Coppa!',
     shareScore: 'Ho segnato {score} gol giocando per {team} in Mini Coppa!',
+    helpYourTeam: '📣 Raduna i tuoi Tifosi!',
+    helpYourTeamDesc: 'Condividi la classifica e invita gli amici ad aiutare la tua squadra preferita a raggiungere la vetta!',
+    spreadTheWord: 'Diffondi la Voce!',
   },
 };
 
