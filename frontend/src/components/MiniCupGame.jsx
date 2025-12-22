@@ -228,6 +228,23 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     }
   };
 
+  const handleShareComplete = () => {
+    if (shareForPlays()) {
+      // Restart after sharing
+      setScore(0);
+      setGameOver(false);
+      setBallPosition({ x: 50, y: 85 });
+      setIsKicking(false);
+      setShowResult(null);
+      setDifficulty(1.5);
+      setGameStarted(true);
+    }
+  };
+
+  const getShareText = () => {
+    return t('shareScore').replace('{score}', score).replace('{team}', selectedTeam.name);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-400 to-green-300 flex flex-col">
       {/* Play Limit Banner */}
