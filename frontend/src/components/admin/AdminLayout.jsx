@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, NavLink, Outlet } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { LayoutDashboard, Globe, Users, Trophy, BarChart3, LogOut, Home } from 'lucide-react';
+import { LayoutDashboard, Globe, Users, Trophy, BarChart3, LogOut, Home, Settings } from 'lucide-react';
 
 const AdminLayout = () => {
   const { user, logout, isAdmin } = useAuth();
@@ -25,6 +25,7 @@ const AdminLayout = () => {
     { icon: Trophy, label: 'Teams', path: '/admin/teams' },
     { icon: Users, label: 'Users', path: '/admin/users' },
     { icon: BarChart3, label: 'Statistics', path: '/admin/statistics' },
+    { icon: Settings, label: 'Configuration', path: '/admin/configuration' },
   ];
 
   if (!isAdmin()) {
