@@ -61,8 +61,10 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
             setTargetPosition(50 + Math.random() * 13); // New target on right side
           }
           
-          // Occasionally pick a completely new random target
-          if (Math.random() < 0.02) {
+          // Sudden random moves - more frequent as difficulty increases
+          // Higher difficulty = more sudden direction changes
+          const suddenMoveChance = 0.02 + (difficulty * 0.02);
+          if (Math.random() < suddenMoveChance) {
             setTargetPosition(37 + Math.random() * 26);
           }
           
