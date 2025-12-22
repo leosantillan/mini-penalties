@@ -133,10 +133,13 @@ const GameStats = ({ onBack }) => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
-          <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            {t('back')}
-          </Button>
+          <div className="flex justify-between items-center mb-4">
+            <Button variant="ghost" size="sm" onClick={onBack}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t('back')}
+            </Button>
+            <ShareButtons shareText={generateShareText()} />
+          </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Trophy className="w-10 h-10 text-yellow-500" />
