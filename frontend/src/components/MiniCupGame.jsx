@@ -401,9 +401,18 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
               <div className="flex flex-col gap-3">
                 {canPlayMore() ? (
                   <>
-                    <Button onClick={handleRestart} className="w-full" size="lg">
-                      {needsAd() ? t('watchAdToPlay') : t('playAgain')}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button onClick={handleRestart} className="flex-1" size="lg">
+                        {needsAd() ? t('watchAdToPlay') : t('playAgain')}
+                      </Button>
+                      {canShareForPlays() && (
+                        <ShareButtons 
+                          shareText={getShareText()}
+                          onShareComplete={handleShareComplete}
+                          showReward={true}
+                        />
+                      )}
+                    </div>
                     <Button onClick={onBack} variant="outline" className="w-full" size="lg">
                       {t('goToHome')}
                     </Button>
