@@ -113,6 +113,10 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     setIsKicking(true);
     setAimPosition(null);
     
+    // IMPORTANT: Capture goalkeeper position at moment of shot
+    // This prevents the goalkeeper from "cheating" by moving during ball flight
+    const keeperPosAtShot = goalKeeperPosition;
+    
     // Ball goes where player clicks (within reasonable bounds)
     const clampedX = Math.max(25, Math.min(75, targetX));
     
@@ -150,9 +154,9 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       }
       
       // Ball is inside goal - check if goalkeeper saves it
-      // Reduced save range for fairer gameplay, especially on mobile
+      // Use the goalkeeper position at moment of shot (not current position)
       const goalKeeperRange = Math.max(2, 3.5 - (difficulty * 0.2));
-      const distance = Math.abs(clampedX - goalKeeperPosition);
+      const distance = Math.abs(clampedX - keeperPosAtShot);
       const isGoal = distance > goalKeeperRange;
       
       if (isGoal) {
@@ -165,8 +169,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           setIsKicking(false);
         }, 1500);
       } else {
-        // Move ball to goalkeeper's exact position for visual blocking
-        setBallPosition({ x: goalKeeperPosition, y: 12 });
+        // Move ball to goalkeeper's position at shot for visual blocking
+        setBallPosition({ x: keeperPosAtShot, y: 12 });
         setShowResult('miss');
         
         // Post game session to API
