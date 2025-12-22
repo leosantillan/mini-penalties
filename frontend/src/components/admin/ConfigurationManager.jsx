@@ -22,19 +22,32 @@ const ConfigurationManager = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
-    fetchConfig();
+    // Small delay to ensure token is available after login redirect
+    const timer = setTimeout(() => {
+      fetchConfig();
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const fetchConfig = async () => {
     try {
       const token = localStorage.getItem('adminToken');
+      if (!token) {
+        // Try again after a short delay if token not found
+        setTimeout(fetchConfig, 500);
+        return;
+      }
       const response = await axios.get(`${API}/admin/config`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setConfig(response.data);
+      setMessage({ type: '', text: '' });
     } catch (error) {
       console.error('Error fetching config:', error);
-      setMessage({ type: 'error', text: 'Failed to load configuration' });
+      // If unauthorized, the config will still show defaults
+      if (error.response?.status !== 401) {
+        setMessage({ type: 'error', text: 'Failed to load configuration. Using default values.' });
+      }
     } finally {
       setLoading(false);
     }
