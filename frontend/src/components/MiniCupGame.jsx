@@ -114,15 +114,16 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     setAimPosition(null);
     
     // Ball goes where player clicks (within reasonable bounds)
-    const clampedX = Math.max(30, Math.min(70, targetX));
+    const clampedX = Math.max(25, Math.min(75, targetX));
     
     // Animate ball to target position
     setBallPosition({ x: clampedX, y: 15 });
     
     setTimeout(() => {
-      // Goal posts are at ~40% and ~60% (w-80 centered at 50%, 30% wider)
-      const goalLeftPost = 40;
-      const goalRightPost = 60;
+      // Goal posts - wider range (35% to 65%) for easier scoring especially on mobile
+      // Visual goal is 70% width on mobile, centered at 50%
+      const goalLeftPost = 35;
+      const goalRightPost = 65;
       const isInsideGoal = clampedX >= goalLeftPost && clampedX <= goalRightPost;
       
       // If ball is outside the goal posts, it's always a miss
