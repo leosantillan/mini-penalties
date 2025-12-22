@@ -46,6 +46,23 @@ const GameStats = ({ onBack }) => {
     return goals.toLocaleString();
   };
 
+  const generateShareText = () => {
+    const currentStats = activeTab === 'today' ? todayStats : activeTab === 'month' ? monthStats : yearStats;
+    const top5 = currentStats.slice(0, 5);
+    
+    if (top5.length === 0) return t('shareLeaderboard');
+    
+    const periodName = activeTab === 'today' ? t('today') : activeTab === 'month' ? t('thisMonth') : t('thisYear');
+    let text = `🏆 Mini Cup - ${periodName}\n\n`;
+    
+    top5.forEach((stat, index) => {
+      const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+      text += `${medal} ${stat.team_name}: ${formatGoals(stat.total_goals)} ${t('goals')}\n`;
+    });
+    
+    return text;
+  };
+
   const renderStatsList = (stats, icon, emptyMessage) => {
     if (stats.length === 0) {
       return (
