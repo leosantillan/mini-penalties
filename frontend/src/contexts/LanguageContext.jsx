@@ -99,6 +99,17 @@ const translations = {
     games: 'games',
     avg: 'Avg',
     best: 'Best',
+    
+    // Share
+    share: 'Share',
+    shareOn: 'Share on',
+    shareToPlay: 'Share to Play',
+    shareReward: 'Share and get 2 more plays!',
+    thankYouSharing: 'Thanks for sharing!',
+    moreOptions: 'More Options',
+    cancel: 'Cancel',
+    shareLeaderboard: 'Check out the Mini Cup leaderboard!',
+    shareScore: 'I scored {score} goals playing for {team} in Mini Cup!',
   },
   es: {
     // Landing Page
