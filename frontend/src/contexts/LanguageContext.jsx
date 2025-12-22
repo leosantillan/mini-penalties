@@ -207,6 +207,17 @@ const translations = {
     games: 'partidos',
     avg: 'Prom',
     best: 'Mejor',
+    
+    // Share
+    share: 'Compartir',
+    shareOn: 'Compartir en',
+    shareToPlay: 'Compartir para Jugar',
+    shareReward: '¡Comparte y obtén 2 jugadas más!',
+    thankYouSharing: '¡Gracias por compartir!',
+    moreOptions: 'Más Opciones',
+    cancel: 'Cancelar',
+    shareLeaderboard: '¡Mira la tabla de posiciones de Mini Copa!',
+    shareScore: '¡Marqué {score} goles jugando para {team} en Mini Copa!',
   },
   pt: {
     // Landing Page
