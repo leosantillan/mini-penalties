@@ -110,6 +110,9 @@ const translations = {
     cancel: 'Cancel',
     shareLeaderboard: 'Check out the Mini Cup leaderboard!',
     shareScore: 'I scored {score} goals playing for {team} in Mini Cup!',
+    helpYourTeam: '📣 Rally Your Fans!',
+    helpYourTeamDesc: 'Share the leaderboard and invite friends to help your favorite team climb to the top!',
+    spreadTheWord: 'Spread the Word!',
   },
   es: {
     // Landing Page
