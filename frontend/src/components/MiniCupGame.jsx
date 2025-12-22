@@ -53,20 +53,20 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           const randomChange = (Math.random() - 0.5) * 4; // Random value between -2 and 2
           let newPos = prev + randomChange + (targetPosition > prev ? speed * 0.5 : -speed * 0.5);
           
-          // Keep within bounds (37% to 63% - just outside the wider goal posts)
-          if (newPos >= 63) {
-            newPos = 63;
-            setTargetPosition(37 + Math.random() * 13); // New target on left side
-          } else if (newPos <= 37) {
-            newPos = 37;
-            setTargetPosition(50 + Math.random() * 13); // New target on right side
+          // Keep within bounds (33% to 67% - just outside the wider goal posts 35-65%)
+          if (newPos >= 67) {
+            newPos = 67;
+            setTargetPosition(33 + Math.random() * 17); // New target on left side
+          } else if (newPos <= 33) {
+            newPos = 33;
+            setTargetPosition(50 + Math.random() * 17); // New target on right side
           }
           
           // Sudden random moves - more frequent as difficulty increases
           // Higher difficulty = more sudden direction changes
           const suddenMoveChance = 0.02 + (difficulty * 0.02);
           if (Math.random() < suddenMoveChance) {
-            setTargetPosition(37 + Math.random() * 26);
+            setTargetPosition(33 + Math.random() * 34);
           }
           
           return newPos;
