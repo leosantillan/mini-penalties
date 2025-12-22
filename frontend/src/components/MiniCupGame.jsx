@@ -150,7 +150,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       }
       
       // Ball is inside goal - check if goalkeeper saves it
-      const goalKeeperRange = Math.max(4, 6 - (difficulty * 0.3));
+      // Reduced save range for fairer gameplay, especially on mobile
+      const goalKeeperRange = Math.max(2, 3.5 - (difficulty * 0.2));
       const distance = Math.abs(clampedX - goalKeeperPosition);
       const isGoal = distance > goalKeeperRange;
       
