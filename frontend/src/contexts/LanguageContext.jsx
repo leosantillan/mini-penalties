@@ -423,6 +423,17 @@ const translations = {
     games: 'matchs',
     avg: 'Moy',
     best: 'Meilleur',
+    
+    // Share
+    share: 'Partager',
+    shareOn: 'Partager sur',
+    shareToPlay: 'Partager pour Jouer',
+    shareReward: 'Partagez et obtenez 2 parties de plus!',
+    thankYouSharing: 'Merci d\'avoir partagé!',
+    moreOptions: 'Plus d\'Options',
+    cancel: 'Annuler',
+    shareLeaderboard: 'Consultez le classement Mini Coupe!',
+    shareScore: 'J\'ai marqué {score} buts en jouant pour {team} dans Mini Coupe!',
   },
   it: {
     // Landing Page
