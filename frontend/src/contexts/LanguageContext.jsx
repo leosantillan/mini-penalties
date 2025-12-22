@@ -332,6 +332,9 @@ const translations = {
     cancel: 'Cancelar',
     shareLeaderboard: 'Confira o ranking da Mini Copa!',
     shareScore: 'Marquei {score} gols jogando pelo {team} na Mini Copa!',
+    helpYourTeam: '📣 Convoque seus Torcedores!',
+    helpYourTeamDesc: 'Compartilhe o ranking e convide amigos para ajudar seu time favorito a chegar ao topo!',
+    spreadTheWord: 'Espalhe a Notícia!',
   },
   fr: {
     // Landing Page
