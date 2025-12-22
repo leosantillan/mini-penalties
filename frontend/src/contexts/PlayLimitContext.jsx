@@ -1,21 +1,50 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 
 const PlayLimitContext = createContext();
 
-const PLAYS_PER_SESSION = 2;
-const MAX_AD_VIEWS = 5;
-const MAX_SHARE_REWARDS = 3; // Limit share rewards per day
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
+
+// Default values (used before config is loaded)
+const DEFAULT_CONFIG = {
+  free_plays: 2,
+  plays_per_ad: 2,
+  plays_per_share: 2,
+  max_ad_views: 5,
+  max_share_rewards: 3,
+};
 
 export const PlayLimitProvider = ({ children }) => {
-  const [playsRemaining, setPlaysRemaining] = useState(PLAYS_PER_SESSION);
+  const [config, setConfig] = useState(DEFAULT_CONFIG);
+  const [configLoaded, setConfigLoaded] = useState(false);
+  const [playsRemaining, setPlaysRemaining] = useState(DEFAULT_CONFIG.free_plays);
   const [adViewsUsed, setAdViewsUsed] = useState(0);
   const [shareRewardsUsed, setShareRewardsUsed] = useState(0);
   const [lastResetDate, setLastResetDate] = useState(null);
   const [showAdModal, setShowAdModal] = useState(false);
 
+  // Fetch configuration from backend
   useEffect(() => {
-    loadPlayData();
+    const fetchConfig = async () => {
+      try {
+        const response = await axios.get(`${API}/config`);
+        setConfig(response.data);
+        setConfigLoaded(true);
+      } catch (error) {
+        console.error('Error fetching config, using defaults:', error);
+        setConfigLoaded(true);
+      }
+    };
+    fetchConfig();
   }, []);
+
+  // Load play data after config is loaded
+  useEffect(() => {
+    if (configLoaded) {
+      loadPlayData();
+    }
+  }, [configLoaded, config]);
 
   const loadPlayData = () => {
     const savedData = localStorage.getItem('playLimitData');
@@ -28,9 +57,9 @@ export const PlayLimitProvider = ({ children }) => {
         if (data.lastResetDate !== today) {
           resetPlayData();
         } else {
-          setPlaysRemaining(data.playsRemaining || 0);
-          setAdViewsUsed(data.adViewsUsed || 0);
-          setShareRewardsUsed(data.shareRewardsUsed || 0);
+          setPlaysRemaining(data.playsRemaining ?? 0);
+          setAdViewsUsed(data.adViewsUsed ?? 0);
+          setShareRewardsUsed(data.shareRewardsUsed ?? 0);
           setLastResetDate(data.lastResetDate);
         }
       } catch (error) {
@@ -54,11 +83,11 @@ export const PlayLimitProvider = ({ children }) => {
 
   const resetPlayData = () => {
     const today = new Date().toDateString();
-    setPlaysRemaining(PLAYS_PER_SESSION);
+    setPlaysRemaining(config.free_plays);
     setAdViewsUsed(0);
     setShareRewardsUsed(0);
     setLastResetDate(today);
-    savePlayData(PLAYS_PER_SESSION, 0, 0);
+    savePlayData(config.free_plays, 0, 0);
   };
 
   const usePlay = () => {
@@ -72,21 +101,21 @@ export const PlayLimitProvider = ({ children }) => {
   };
 
   const canPlayMore = () => {
-    return playsRemaining > 0 || (adViewsUsed < MAX_AD_VIEWS) || (shareRewardsUsed < MAX_SHARE_REWARDS);
+    return playsRemaining > 0 || (adViewsUsed < config.max_ad_views) || (shareRewardsUsed < config.max_share_rewards);
   };
 
   const needsAd = () => {
-    return playsRemaining === 0 && adViewsUsed < MAX_AD_VIEWS;
+    return playsRemaining === 0 && adViewsUsed < config.max_ad_views;
   };
 
   const canShareForPlays = () => {
-    return playsRemaining === 0 && shareRewardsUsed < MAX_SHARE_REWARDS;
+    return playsRemaining === 0 && shareRewardsUsed < config.max_share_rewards;
   };
 
   const shareForPlays = () => {
-    if (shareRewardsUsed < MAX_SHARE_REWARDS) {
+    if (shareRewardsUsed < config.max_share_rewards) {
       const newShareRewards = shareRewardsUsed + 1;
-      const newPlays = PLAYS_PER_SESSION;
+      const newPlays = config.plays_per_share;
       setShareRewardsUsed(newShareRewards);
       setPlaysRemaining(newPlays);
       savePlayData(newPlays, adViewsUsed, newShareRewards);
@@ -96,9 +125,9 @@ export const PlayLimitProvider = ({ children }) => {
   };
 
   const watchAd = () => {
-    if (adViewsUsed < MAX_AD_VIEWS) {
+    if (adViewsUsed < config.max_ad_views) {
       const newAdViews = adViewsUsed + 1;
-      const newPlays = PLAYS_PER_SESSION;
+      const newPlays = config.plays_per_ad;
       setAdViewsUsed(newAdViews);
       setPlaysRemaining(newPlays);
       savePlayData(newPlays, newAdViews, shareRewardsUsed);
@@ -109,11 +138,11 @@ export const PlayLimitProvider = ({ children }) => {
   };
 
   const getTotalPlaysUsed = () => {
-    return (adViewsUsed * PLAYS_PER_SESSION) + (shareRewardsUsed * PLAYS_PER_SESSION) + (PLAYS_PER_SESSION - playsRemaining);
+    return (adViewsUsed * config.plays_per_ad) + (shareRewardsUsed * config.plays_per_share) + (config.free_plays - playsRemaining);
   };
 
   const getTotalPlaysAvailable = () => {
-    return (MAX_AD_VIEWS + MAX_SHARE_REWARDS + 1) * PLAYS_PER_SESSION;
+    return config.free_plays + (config.max_ad_views * config.plays_per_ad) + (config.max_share_rewards * config.plays_per_share);
   };
 
   const getPlaysUntilNextAd = () => {
@@ -137,8 +166,9 @@ export const PlayLimitProvider = ({ children }) => {
         getTotalPlaysUsed,
         getTotalPlaysAvailable,
         getPlaysUntilNextAd,
-        maxAdViews: MAX_AD_VIEWS,
-        maxShareRewards: MAX_SHARE_REWARDS,
+        maxAdViews: config.max_ad_views,
+        maxShareRewards: config.max_share_rewards,
+        config,
       }}
     >
       {children}
