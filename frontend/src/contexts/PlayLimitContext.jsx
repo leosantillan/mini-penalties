@@ -4,10 +4,12 @@ const PlayLimitContext = createContext();
 
 const PLAYS_PER_SESSION = 2;
 const MAX_AD_VIEWS = 5;
+const MAX_SHARE_REWARDS = 3; // Limit share rewards per day
 
 export const PlayLimitProvider = ({ children }) => {
   const [playsRemaining, setPlaysRemaining] = useState(PLAYS_PER_SESSION);
   const [adViewsUsed, setAdViewsUsed] = useState(0);
+  const [shareRewardsUsed, setShareRewardsUsed] = useState(0);
   const [lastResetDate, setLastResetDate] = useState(null);
   const [showAdModal, setShowAdModal] = useState(false);
 
@@ -28,6 +30,7 @@ export const PlayLimitProvider = ({ children }) => {
         } else {
           setPlaysRemaining(data.playsRemaining || 0);
           setAdViewsUsed(data.adViewsUsed || 0);
+          setShareRewardsUsed(data.shareRewardsUsed || 0);
           setLastResetDate(data.lastResetDate);
         }
       } catch (error) {
@@ -39,10 +42,11 @@ export const PlayLimitProvider = ({ children }) => {
     }
   };
 
-  const savePlayData = (plays, adViews) => {
+  const savePlayData = (plays, adViews, shares = shareRewardsUsed) => {
     const data = {
       playsRemaining: plays,
       adViewsUsed: adViews,
+      shareRewardsUsed: shares,
       lastResetDate: new Date().toDateString(),
     };
     localStorage.setItem('playLimitData', JSON.stringify(data));
@@ -52,26 +56,43 @@ export const PlayLimitProvider = ({ children }) => {
     const today = new Date().toDateString();
     setPlaysRemaining(PLAYS_PER_SESSION);
     setAdViewsUsed(0);
+    setShareRewardsUsed(0);
     setLastResetDate(today);
-    savePlayData(PLAYS_PER_SESSION, 0);
+    savePlayData(PLAYS_PER_SESSION, 0, 0);
   };
 
   const usePlay = () => {
     if (playsRemaining > 0) {
       const newPlays = playsRemaining - 1;
       setPlaysRemaining(newPlays);
-      savePlayData(newPlays, adViewsUsed);
+      savePlayData(newPlays, adViewsUsed, shareRewardsUsed);
       return true;
     }
     return false;
   };
 
   const canPlayMore = () => {
-    return playsRemaining > 0 || (adViewsUsed < MAX_AD_VIEWS);
+    return playsRemaining > 0 || (adViewsUsed < MAX_AD_VIEWS) || (shareRewardsUsed < MAX_SHARE_REWARDS);
   };
 
   const needsAd = () => {
     return playsRemaining === 0 && adViewsUsed < MAX_AD_VIEWS;
+  };
+
+  const canShareForPlays = () => {
+    return playsRemaining === 0 && shareRewardsUsed < MAX_SHARE_REWARDS;
+  };
+
+  const shareForPlays = () => {
+    if (shareRewardsUsed < MAX_SHARE_REWARDS) {
+      const newShareRewards = shareRewardsUsed + 1;
+      const newPlays = PLAYS_PER_SESSION;
+      setShareRewardsUsed(newShareRewards);
+      setPlaysRemaining(newPlays);
+      savePlayData(newPlays, adViewsUsed, newShareRewards);
+      return true;
+    }
+    return false;
   };
 
   const watchAd = () => {
@@ -80,7 +101,7 @@ export const PlayLimitProvider = ({ children }) => {
       const newPlays = PLAYS_PER_SESSION;
       setAdViewsUsed(newAdViews);
       setPlaysRemaining(newPlays);
-      savePlayData(newPlays, newAdViews);
+      savePlayData(newPlays, newAdViews, shareRewardsUsed);
       setShowAdModal(false);
       return true;
     }
@@ -88,11 +109,11 @@ export const PlayLimitProvider = ({ children }) => {
   };
 
   const getTotalPlaysUsed = () => {
-    return (adViewsUsed * PLAYS_PER_SESSION) + (PLAYS_PER_SESSION - playsRemaining);
+    return (adViewsUsed * PLAYS_PER_SESSION) + (shareRewardsUsed * PLAYS_PER_SESSION) + (PLAYS_PER_SESSION - playsRemaining);
   };
 
   const getTotalPlaysAvailable = () => {
-    return (MAX_AD_VIEWS + 1) * PLAYS_PER_SESSION; // 5 ad views + initial 2 plays = 12 total
+    return (MAX_AD_VIEWS + MAX_SHARE_REWARDS + 1) * PLAYS_PER_SESSION;
   };
 
   const getPlaysUntilNextAd = () => {
@@ -104,16 +125,20 @@ export const PlayLimitProvider = ({ children }) => {
       value={{
         playsRemaining,
         adViewsUsed,
+        shareRewardsUsed,
         showAdModal,
         setShowAdModal,
         usePlay,
         canPlayMore,
         needsAd,
+        canShareForPlays,
+        shareForPlays,
         watchAd,
         getTotalPlaysUsed,
         getTotalPlaysAvailable,
         getPlaysUntilNextAd,
         maxAdViews: MAX_AD_VIEWS,
+        maxShareRewards: MAX_SHARE_REWARDS,
       }}
     >
       {children}
