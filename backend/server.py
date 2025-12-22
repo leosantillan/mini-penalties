@@ -563,6 +563,62 @@ async def get_monthly_stats(months: int = 12, current_user: dict = Depends(get_a
     results = await game_sessions_collection.aggregate(pipeline).to_list(1000)
     return [MonthlyStats(**{k: v for k, v in r.items() if k != '_id'}) for r in results]
 
+# ==================== GAME CONFIGURATION ROUTES ====================
+
+# Default configuration values
+DEFAULT_CONFIG = {
+    "config_id": "default",
+    "free_plays": 2,
+    "plays_per_ad": 2,
+    "plays_per_share": 2,
+    "max_ad_views": 5,
+    "max_share_rewards": 3
+}
+
+@api_router.get("/config", response_model=GameConfig)
+async def get_game_config():
+    """Public endpoint to get game configuration"""
+    config = await config_collection.find_one({"config_id": "default"}, {"_id": 0})
+    if not config:
+        # Create default config if it doesn't exist
+        config = {**DEFAULT_CONFIG, "updated_at": datetime.utcnow()}
+        await config_collection.insert_one(config)
+    return GameConfig(**config)
+
+@api_router.get("/admin/config", response_model=GameConfig)
+async def get_admin_config(current_user: dict = Depends(get_admin_user)):
+    """Admin endpoint to get game configuration"""
+    config = await config_collection.find_one({"config_id": "default"}, {"_id": 0})
+    if not config:
+        config = {**DEFAULT_CONFIG, "updated_at": datetime.utcnow()}
+        await config_collection.insert_one(config)
+    return GameConfig(**config)
+
+@api_router.put("/admin/config", response_model=GameConfig)
+async def update_game_config(
+    config_update: GameConfigUpdate,
+    current_user: dict = Depends(get_admin_user)
+):
+    """Admin endpoint to update game configuration"""
+    # Get existing config or create default
+    existing = await config_collection.find_one({"config_id": "default"})
+    if not existing:
+        existing = {**DEFAULT_CONFIG}
+    
+    # Update only provided fields
+    update_data = {k: v for k, v in config_update.dict().items() if v is not None}
+    update_data["updated_at"] = datetime.utcnow()
+    
+    await config_collection.update_one(
+        {"config_id": "default"},
+        {"$set": update_data},
+        upsert=True
+    )
+    
+    # Return updated config
+    config = await config_collection.find_one({"config_id": "default"}, {"_id": 0})
+    return GameConfig(**config)
+
 # ==================== ROOT & HEALTH CHECK ====================
 
 @api_router.get("/")
