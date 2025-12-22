@@ -15,7 +15,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const { usePlay, needsAd, canPlayMore, showAdModal, setShowAdModal } = usePlayLimit();
+  const { usePlay, needsAd, canPlayMore, canShareForPlays, shareForPlays, showAdModal, setShowAdModal } = usePlayLimit();
   const { t } = useLanguage();
 
   // Use a play when component mounts (game starts)
