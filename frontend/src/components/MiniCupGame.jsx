@@ -315,9 +315,9 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
             <button
               onClick={handleShoot}
               disabled={!selectedDestination || gameOver}
-              className={`text-5xl sm:text-6xl transition-all ${
+              className={`text-5xl sm:text-6xl transition-transform ${
                 selectedDestination && !gameOver
-                  ? 'cursor-pointer hover:scale-110 animate-bounce'
+                  ? 'cursor-pointer hover:scale-110'
                   : 'opacity-50 cursor-not-allowed'
               }`}
             >
