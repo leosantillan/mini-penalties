@@ -491,6 +491,7 @@ const translations = {
     aimInstructions: 'Mira alla porta ed evita il portiere',
     goal: 'GOL!',
     saved: 'PARATO!',
+    out: 'FUORI!',
     gameOver: 'Fine Gioco!',
     finalScore: 'Punteggio Finale',
     goalsContributed: 'Gol contribuiti a',
