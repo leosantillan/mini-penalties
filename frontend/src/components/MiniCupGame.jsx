@@ -47,11 +47,12 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     if (!gameOver && !isKicking) {
       const interval = setInterval(() => {
         setGoalKeeperPosition(prev => {
-          const speed = 1.5 + (difficulty * 0.4);
+          // Faster movement for more dynamic gameplay
+          const speed = 2.5 + (difficulty * 0.5);
           
           // Add randomness to movement direction
-          const randomChange = (Math.random() - 0.5) * 4; // Random value between -2 and 2
-          let newPos = prev + randomChange + (targetPosition > prev ? speed * 0.5 : -speed * 0.5);
+          const randomChange = (Math.random() - 0.5) * 6; // Random value between -3 and 3
+          let newPos = prev + randomChange + (targetPosition > prev ? speed * 0.6 : -speed * 0.6);
           
           // Keep within bounds (33% to 67% - just outside the wider goal posts 35-65%)
           if (newPos >= 67) {
@@ -64,14 +65,14 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           
           // Sudden random moves - more frequent as difficulty increases
           // Higher difficulty = more sudden direction changes
-          const suddenMoveChance = 0.02 + (difficulty * 0.02);
+          const suddenMoveChance = 0.03 + (difficulty * 0.025);
           if (Math.random() < suddenMoveChance) {
             setTargetPosition(33 + Math.random() * 34);
           }
           
           return newPos;
         });
-      }, 50);
+      }, 40); // Faster interval for smoother movement
       return () => clearInterval(interval);
     }
   }, [gameOver, isKicking, difficulty, targetPosition]);
