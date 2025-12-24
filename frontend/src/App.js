@@ -89,6 +89,7 @@ function GameFlow() {
         <MiniCupGame 
           selectedTeam={selectedTeam}
           onBack={handleBackToTeams}
+          onGoHome={handleBackToLanding}
         />
       )}
     </>

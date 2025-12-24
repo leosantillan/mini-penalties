@@ -29,7 +29,7 @@ const DESTINATION_POSITIONS = {
   [DESTINATIONS.BOTTOM_RIGHT]: { ball: { x: 75, y: 75 }, keeper: { x: 80, y: 70 } },
 };
 
-const MiniCupGame = ({ selectedTeam, onBack }) => {
+const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
