@@ -308,21 +308,6 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
             style={getKeeperStyle()}
           >
             <div className="relative flex flex-col items-center">
-              {/* Arms container - this rotates like clock hands */}
-              <div 
-                className="absolute top-3 sm:top-4 left-1/2 -translate-x-1/2 transition-transform duration-500"
-                style={{ transform: `translateX(-50%) rotate(${getArmRotation()}deg)` }}
-              >
-                {/* Left Glove */}
-                <div className="absolute -left-12 sm:-left-14 -top-1 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md"></div>
-                {/* Left Arm (green sleeve) */}
-                <div className="absolute -left-12 sm:-left-14 top-0 w-12 sm:w-14 h-3 sm:h-4 bg-green-600 rounded-full"></div>
-                {/* Right Arm (green sleeve) */}
-                <div className="absolute -right-12 sm:-right-14 top-0 w-12 sm:w-14 h-3 sm:h-4 bg-green-600 rounded-full"></div>
-                {/* Right Glove */}
-                <div className="absolute -right-12 sm:-right-14 -top-1 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md"></div>
-              </div>
-              
               {/* Head */}
               <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-200 rounded-full border-2 border-amber-300 z-10 relative">
                 {/* Face details */}
@@ -330,11 +315,38 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
                 <div className="absolute top-1.5 sm:top-2 right-1 w-1 h-1 bg-gray-800 rounded-full"></div>
               </div>
               
-              {/* Torso - Yellow vest over green */}
+              {/* Torso - Yellow vest over green with arms attached */}
               <div className="relative -mt-0.5">
                 {/* Green undershirt showing at sides */}
                 <div className="absolute -left-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-l-md"></div>
                 <div className="absolute -right-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-r-md"></div>
+                
+                {/* Left Arm - rotates from shoulder (right edge of arm is pivot point) */}
+                <div 
+                  className="absolute top-0 right-full transition-transform duration-500 origin-right"
+                  style={{ transform: `rotate(${-90 - getArmRotation()}deg)` }}
+                >
+                  <div className="flex items-center">
+                    {/* Left Glove */}
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md z-10"></div>
+                    {/* Left Arm (green sleeve) */}
+                    <div className="w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full -ml-1"></div>
+                  </div>
+                </div>
+                
+                {/* Right Arm - rotates from shoulder (left edge of arm is pivot point) */}
+                <div 
+                  className="absolute top-0 left-full transition-transform duration-500 origin-left"
+                  style={{ transform: `rotate(${-90 + getArmRotation()}deg)` }}
+                >
+                  <div className="flex items-center">
+                    {/* Right Arm (green sleeve) */}
+                    <div className="w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full -mr-1"></div>
+                    {/* Right Glove */}
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md z-10"></div>
+                  </div>
+                </div>
+                
                 {/* Yellow vest */}
                 <div className="w-6 h-8 sm:w-7 sm:h-10 bg-yellow-400 rounded-md border-2 border-yellow-500 relative z-10">
                   {/* Vest details */}
