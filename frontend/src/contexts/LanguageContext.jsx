@@ -383,6 +383,8 @@ const translations = {
     // Game
     clickToShoot: 'Cliquez pour tirer!',
     aimInstructions: 'Visez le but et évitez le gardien',
+    selectDestination: 'Sélectionnez où tirer',
+    clickBallToShoot: 'Cliquez sur le ballon pour tirer!',
     goal: 'BUT!',
     saved: 'ARRÊTÉ!',
     out: 'DEHORS!',
