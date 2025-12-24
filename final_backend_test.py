@@ -7,7 +7,7 @@ import requests
 import json
 import uuid
 
-BASE_URL = "https://goalie-challenge-8.preview.emergentagent.com/api"
+BASE_URL = "https://goal-keeper-30.preview.emergentagent.com/api"
 ADMIN_EMAIL = "admin@minicup.com"
 ADMIN_PASSWORD = "admin123"
 

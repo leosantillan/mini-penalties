@@ -2,7 +2,7 @@
 import requests
 import json
 
-BASE_URL = "https://goalie-challenge-8.preview.emergentagent.com/api"
+BASE_URL = "https://goal-keeper-30.preview.emergentagent.com/api"
 
 def test_wrong_credentials():
     print("Testing wrong credentials...")
