@@ -155,6 +155,7 @@ const translations = {
     aimInstructions: 'Apunta al gol y evita al portero',
     goal: '¡GOL!',
     saved: '¡ATAJADO!',
+    out: '¡FUERA!',
     gameOver: '¡Juego Terminado!',
     finalScore: 'Puntuación Final',
     goalsContributed: 'Goles contribuidos a',
