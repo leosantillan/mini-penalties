@@ -43,6 +43,7 @@ const translations = {
     aimInstructions: 'Aim for the goal and avoid the keeper',
     goal: 'GOAL!',
     saved: 'SAVED!',
+    out: 'OUT!',
     gameOver: 'Game Over!',
     finalScore: 'Final Score',
     goalsContributed: 'Goals contributed to',
