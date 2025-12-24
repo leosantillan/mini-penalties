@@ -465,7 +465,7 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
                         {t('comeBackTomorrow')}
                       </p>
                     </div>
-                    <Button onClick={onBack} className="w-full" size="lg">
+                    <Button onClick={onGoHome} className="w-full" size="lg">
                       {t('goToHome')}
                     </Button>
                   </>
