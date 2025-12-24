@@ -288,10 +288,28 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
 
           {/* Goalkeeper */}
           <div 
-            className="absolute transition-all duration-500 ease-out text-4xl sm:text-5xl"
+            className="absolute transition-all duration-500 ease-out"
             style={getKeeperStyle()}
           >
-            🧤
+            {/* Goalkeeper figure with outstretched arms */}
+            <div className="relative flex flex-col items-center">
+              {/* Head */}
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-yellow-400 rounded-full border-2 border-yellow-600"></div>
+              {/* Body with arms */}
+              <div className="relative">
+                {/* Left arm */}
+                <div className="absolute -left-8 sm:-left-10 top-1 w-8 sm:w-10 h-2 sm:h-3 bg-yellow-400 rounded-full border border-yellow-600 -rotate-12"></div>
+                {/* Right arm */}
+                <div className="absolute -right-8 sm:-right-10 top-1 w-8 sm:w-10 h-2 sm:h-3 bg-yellow-400 rounded-full border border-yellow-600 rotate-12"></div>
+                {/* Torso */}
+                <div className="w-5 h-8 sm:w-6 sm:h-10 bg-yellow-400 rounded-md border-2 border-yellow-600 mt-0.5"></div>
+              </div>
+              {/* Legs */}
+              <div className="flex gap-1">
+                <div className="w-2 h-6 sm:w-2.5 sm:h-8 bg-gray-800 rounded-b-md"></div>
+                <div className="w-2 h-6 sm:w-2.5 sm:h-8 bg-gray-800 rounded-b-md"></div>
+              </div>
+            </div>
           </div>
 
           {/* Ball when kicked into goal */}
