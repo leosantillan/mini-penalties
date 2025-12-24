@@ -367,9 +367,11 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
 
         {/* Result Message */}
         {showResult && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold animate-bounce">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-6xl font-bold animate-bounce">
             {showResult === 'goal' ? (
               <span className="text-green-500 drop-shadow-lg">{t('goal')} 🎉</span>
+            ) : showResult === 'out' ? (
+              <span className="text-orange-500 drop-shadow-lg">{t('out')} 😬</span>
             ) : (
               <span className="text-red-500 drop-shadow-lg">{t('saved')} 😮</span>
             )}
