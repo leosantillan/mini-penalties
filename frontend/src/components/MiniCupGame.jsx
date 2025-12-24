@@ -156,10 +156,13 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       
       // Ball is inside goal - check if goalkeeper saves it
       // Use the goalkeeper position at moment of shot (not current position)
-      // Very small range - goalkeeper only saves if ball is RIGHT at them
-      const goalKeeperRange = 1.5;
+      // Very small range - goalkeeper only saves if ball is VERY close (within 1%)
+      const goalKeeperRange = 1;
       const distance = Math.abs(clampedX - keeperPosAtShot);
       const isGoal = distance > goalKeeperRange;
+      
+      // Debug log for troubleshooting
+      console.log(`Shot: ball=${clampedX.toFixed(1)}%, keeper=${keeperPosAtShot.toFixed(1)}%, distance=${distance.toFixed(1)}%, range=${goalKeeperRange}, isGoal=${isGoal}`);
       
       if (isGoal) {
         setShowResult('goal');
