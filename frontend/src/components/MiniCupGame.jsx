@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Trophy, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
@@ -11,6 +11,24 @@ import ShareButtons from './ShareButtons';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// 5 possible destinations for the ball/goalkeeper
+const DESTINATIONS = {
+  BOTTOM_LEFT: 'bottom-left',
+  UPPER_LEFT: 'upper-left',
+  UPPER_CENTER: 'upper-center',
+  UPPER_RIGHT: 'upper-right',
+  BOTTOM_RIGHT: 'bottom-right',
+};
+
+// Position coordinates for each destination (as percentages)
+const DESTINATION_POSITIONS = {
+  [DESTINATIONS.BOTTOM_LEFT]: { ball: { x: 25, y: 75 }, keeper: { x: 20, y: 70 } },
+  [DESTINATIONS.UPPER_LEFT]: { ball: { x: 25, y: 25 }, keeper: { x: 20, y: 25 } },
+  [DESTINATIONS.UPPER_CENTER]: { ball: { x: 50, y: 15 }, keeper: { x: 50, y: 20 } },
+  [DESTINATIONS.UPPER_RIGHT]: { ball: { x: 75, y: 25 }, keeper: { x: 80, y: 25 } },
+  [DESTINATIONS.BOTTOM_RIGHT]: { ball: { x: 75, y: 75 }, keeper: { x: 80, y: 70 } },
+};
+
 const MiniCupGame = ({ selectedTeam, onBack }) => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
@@ -18,161 +36,91 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
   const { usePlay, needsAd, canPlayMore, canShareForPlays, shareForPlays, showAdModal, setShowAdModal } = usePlayLimit();
   const { t } = useLanguage();
 
+  // Game state
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [isKicking, setIsKicking] = useState(false);
+  const [showResult, setShowResult] = useState(null);
+  const [ballPosition, setBallPosition] = useState({ x: 50, y: 85 });
+  const [keeperPosition, setKeeperPosition] = useState({ x: 50, y: 50 });
+  const [keeperDestination, setKeeperDestination] = useState(null);
+
   // Use a play when component mounts (game starts)
   useEffect(() => {
     if (!gameStarted) {
       if (needsAd()) {
-        // Need to watch ad first
         setShowAdModal(true);
       } else if (usePlay()) {
-        // Successfully used a play
         setGameStarted(true);
       } else {
-        // No plays available
         setGameOver(true);
       }
     }
   }, [gameStarted]);
-  const [ballPosition, setBallPosition] = useState({ x: 50, y: 85 });
-  const [isKicking, setIsKicking] = useState(false);
-  const [goalKeeperPosition, setGoalKeeperPosition] = useState(50); // Start at center
-  const [targetPosition, setTargetPosition] = useState(50); // Random target position
-  const [showResult, setShowResult] = useState(null);
-  const [difficulty, setDifficulty] = useState(1.5);
-  const [aimPosition, setAimPosition] = useState(null);
-  const gameRef = useRef(null);
 
-  // Continuous random movement - goalkeeper never stops
-  useEffect(() => {
-    if (!gameOver && !isKicking) {
-      const interval = setInterval(() => {
-        setGoalKeeperPosition(prev => {
-          // Faster movement for more dynamic gameplay
-          const speed = 2.5 + (difficulty * 0.5);
-          
-          // Add randomness to movement direction
-          const randomChange = (Math.random() - 0.5) * 6; // Random value between -3 and 3
-          let newPos = prev + randomChange + (targetPosition > prev ? speed * 0.6 : -speed * 0.6);
-          
-          // Keep within bounds (33% to 67% - just outside the wider goal posts 35-65%)
-          if (newPos >= 67) {
-            newPos = 67;
-            setTargetPosition(33 + Math.random() * 17); // New target on left side
-          } else if (newPos <= 33) {
-            newPos = 33;
-            setTargetPosition(50 + Math.random() * 17); // New target on right side
-          }
-          
-          // Sudden random moves - more frequent as difficulty increases
-          // Higher difficulty = more sudden direction changes
-          const suddenMoveChance = 0.03 + (difficulty * 0.025);
-          if (Math.random() < suddenMoveChance) {
-            setTargetPosition(33 + Math.random() * 34);
-          }
-          
-          return newPos;
-        });
-      }, 40); // Faster interval for smoother movement
-      return () => clearInterval(interval);
-    }
-  }, [gameOver, isKicking, difficulty, targetPosition]);
-
-  const handleMouseMove = (e) => {
-    if (isKicking || gameOver) return;
-    
-    const rect = gameRef.current.getBoundingClientRect();
-    const mouseX = ((e.clientX - rect.left) / rect.width) * 100;
-    const mouseY = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    // Only show aim indicator when mouse is above the ball
-    if (mouseY < 80) {
-      setAimPosition({ x: mouseX, y: mouseY });
-    } else {
-      setAimPosition(null);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setAimPosition(null);
-  };
-
-  const handleClick = (e) => {
-    if (isKicking || gameOver) return;
-    
-    // Get click position relative to the game area
-    const rect = gameRef.current.getBoundingClientRect();
-    const clickX = ((e.clientX - rect.left) / rect.width) * 100;
-    const clickY = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    // Only shoot if clicking on upper part of the screen (above the ball)
-    if (clickY < 80) {
-      shootBall(clickX);
-    }
-  };
-
-  const shootBall = (targetX) => {
-    setIsKicking(true);
-    setAimPosition(null);
-    
-    // IMPORTANT: Capture goalkeeper position at moment of shot
-    // This prevents the goalkeeper from "cheating" by moving during ball flight
-    const keeperPosAtShot = goalKeeperPosition;
-    
-    // Ball goes where player clicks (within reasonable bounds)
-    const clampedX = Math.max(25, Math.min(75, targetX));
-    
-    // Animate ball to target position
-    setBallPosition({ x: clampedX, y: 15 });
-    
-    setTimeout(() => {
-      // Goal posts - wider range (35% to 65%) for easier scoring especially on mobile
-      // Visual goal is 70% width on mobile, centered at 50%
-      const goalLeftPost = 35;
-      const goalRightPost = 65;
-      const isInsideGoal = clampedX >= goalLeftPost && clampedX <= goalRightPost;
-      
-      // If ball is outside the goal posts, it's OUT (not saved)
-      if (!isInsideGoal) {
-        setShowResult('out');
-        
-        // Post game session to API
-        const postGameSession = async () => {
-          try {
-            await axios.post(`${API}/game/session`, {
-              team_id: selectedTeam.team_id,
-              score: score
-            });
-          } catch (error) {
-            console.error('Error posting game session:', error);
-          }
-        };
-        postGameSession();
-        
-        setTimeout(() => {
-          setGameOver(true);
-        }, 1500);
-        return;
+  const handleAdWatched = () => {
+    setShowAdModal(false);
+    if (usePlay()) {
+      if (gameOver) {
+        // Restart after ad
+        setScore(0);
+        setGameOver(false);
+        setBallPosition({ x: 50, y: 85 });
+        setKeeperPosition({ x: 50, y: 50 });
+        setSelectedDestination(null);
+        setKeeperDestination(null);
+        setIsKicking(false);
+        setShowResult(null);
       }
-      
-      // Ball is inside goal - check if goalkeeper saves it
-      // Use the goalkeeper position at moment of shot (not current position)
-      // Very small range - goalkeeper only saves if ball is VERY close (within 1%)
-      const goalKeeperRange = 1;
-      const distance = Math.abs(clampedX - keeperPosAtShot);
-      const isGoal = distance > goalKeeperRange;
-      
-      if (isGoal) {
-        setShowResult('goal');
-        setScore(prev => prev + 1);
-        setDifficulty(prev => prev + 0.5);
-        setTimeout(() => {
-          setShowResult(null);
-          setBallPosition({ x: 50, y: 85 });
-          setIsKicking(false);
-        }, 1500);
-      } else {
-        // Move ball to goalkeeper's position at shot for visual blocking
-        setBallPosition({ x: keeperPosAtShot, y: 12 });
+      setGameStarted(true);
+    }
+  };
+
+  const handleShareComplete = () => {
+    if (shareForPlays()) {
+      setScore(0);
+      setGameOver(false);
+      setBallPosition({ x: 50, y: 85 });
+      setKeeperPosition({ x: 50, y: 50 });
+      setSelectedDestination(null);
+      setKeeperDestination(null);
+      setIsKicking(false);
+      setShowResult(null);
+      setGameStarted(true);
+    }
+  };
+
+  const getShareText = () => {
+    return t('shareScore').replace('{score}', score).replace('{team}', selectedTeam.name);
+  };
+
+  const handleDestinationSelect = (destination) => {
+    if (isKicking || gameOver) return;
+    setSelectedDestination(destination);
+  };
+
+  const handleShoot = () => {
+    if (!selectedDestination || isKicking || gameOver) return;
+
+    setIsKicking(true);
+
+    // Goalkeeper randomly picks a destination
+    const destinations = Object.values(DESTINATIONS);
+    const randomKeeperDest = destinations[Math.floor(Math.random() * destinations.length)];
+    setKeeperDestination(randomKeeperDest);
+
+    // Get positions
+    const playerPos = DESTINATION_POSITIONS[selectedDestination];
+    const keeperPos = DESTINATION_POSITIONS[randomKeeperDest];
+
+    // Animate ball and keeper to their positions
+    setBallPosition(playerPos.ball);
+    setKeeperPosition(keeperPos.keeper);
+
+    // Check result after animation
+    setTimeout(() => {
+      const isSaved = selectedDestination === randomKeeperDest;
+
+      if (isSaved) {
         setShowResult('saved');
         
         // Post game session to API
@@ -187,80 +135,64 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
           }
         };
         postGameSession();
-        
+
         setTimeout(() => {
           setGameOver(true);
         }, 1500);
+      } else {
+        setShowResult('goal');
+        setScore(prev => prev + 1);
+
+        setTimeout(() => {
+          // Reset for next shot
+          setShowResult(null);
+          setBallPosition({ x: 50, y: 85 });
+          setKeeperPosition({ x: 50, y: 50 });
+          setSelectedDestination(null);
+          setKeeperDestination(null);
+          setIsKicking(false);
+        }, 1500);
       }
-    }, 600);
+    }, 800);
   };
 
   const handleRestart = () => {
-    // Check if player can play more
-    if (!canPlayMore()) {
-      // No more plays available today
-      return;
-    }
+    if (!canPlayMore()) return;
 
     if (needsAd()) {
-      // Show ad modal
       setShowAdModal(true);
-      return;
-    }
-
-    // Use a play
-    if (usePlay()) {
+    } else if (usePlay()) {
       setScore(0);
       setGameOver(false);
       setBallPosition({ x: 50, y: 85 });
+      setKeeperPosition({ x: 50, y: 50 });
+      setSelectedDestination(null);
+      setKeeperDestination(null);
       setIsKicking(false);
       setShowResult(null);
-      setDifficulty(1.5);
       setGameStarted(true);
     }
   };
 
-  const handleAdWatched = () => {
-    setShowAdModal(false);
-    if (usePlay()) {
-      if (gameOver) {
-        // Restart after ad
-        setScore(0);
-        setGameOver(false);
-        setBallPosition({ x: 50, y: 85 });
-        setIsKicking(false);
-        setShowResult(null);
-        setDifficulty(1.5);
-      }
-      setGameStarted(true);
+  // Get keeper body position class based on destination
+  const getKeeperStyle = () => {
+    if (!keeperDestination && !isKicking) {
+      // Default center position
+      return { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' };
     }
-  };
-
-  const handleShareComplete = () => {
-    if (shareForPlays()) {
-      // Restart after sharing
-      setScore(0);
-      setGameOver(false);
-      setBallPosition({ x: 50, y: 85 });
-      setIsKicking(false);
-      setShowResult(null);
-      setDifficulty(1.5);
-      setGameStarted(true);
-    }
-  };
-
-  const getShareText = () => {
-    return t('shareScore').replace('{score}', score).replace('{team}', selectedTeam.name);
+    
+    const pos = keeperPosition;
+    return {
+      left: `${pos.x}%`,
+      top: `${pos.y}%`,
+      transform: 'translate(-50%, -50%)',
+    };
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-400 to-green-300 flex flex-col">
-      {/* Play Limit Banner */}
-      <div className="p-4">
-        <PlayLimitBanner />
-      </div>
-
-      <div className="p-4 flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-b from-green-600 via-green-500 to-green-400 flex flex-col">
+      {/* Header */}
+      <div className="p-4 flex justify-between items-center bg-black bg-opacity-20">
         <Button variant="ghost" size="sm" onClick={onBack} className="text-white">
           <ArrowLeft className="w-4 h-4 mr-2" />
           {t('back')}
@@ -277,113 +209,136 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
         </div>
       </div>
 
-      <div 
-        ref={gameRef}
-        className="flex-1 relative overflow-hidden cursor-crosshair"
-        onClick={handleClick}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        {/* Goal - responsive width */}
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-[70%] sm:w-80 max-w-xs sm:max-w-none h-24 sm:h-32 border-4 border-white rounded-t-lg">
-          {/* Goal Net */}
-          <div className="w-full h-full bg-white bg-opacity-10 backdrop-blur-sm"></div>
-        </div>
+      {/* Play Limit Banner */}
+      <div className="px-4 py-2">
+        <PlayLimitBanner />
+      </div>
 
-        {/* Goalkeeper */}
-        <div 
-          className="absolute transition-all duration-100"
-          style={{
-            left: `${goalKeeperPosition}%`,
-            top: '70px',
-            transform: 'translateX(-50%)',
-            fontSize: '4.5rem',
-            filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))'
-          }}
-        >
-          🤾
-        </div>
+      {/* Game Area */}
+      <div className="flex-1 relative overflow-hidden">
+        {/* Goal Frame */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-[85%] sm:w-[70%] max-w-md h-32 sm:h-40 border-4 border-white rounded-t-lg bg-white bg-opacity-10">
+          {/* Goal Net Pattern */}
+          <div className="w-full h-full" style={{
+            backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.3) 1px, transparent 1px)',
+            backgroundSize: '20px 20px'
+          }}></div>
 
-        {/* Aim Indicator */}
-        {aimPosition && !isKicking && !gameOver && (
-          <>
-            {/* Arrow from ball to aim position */}
-            <svg 
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              style={{ zIndex: 5 }}
-            >
-              <defs>
-                <marker
-                  id="arrowhead"
-                  markerWidth="10"
-                  markerHeight="10"
-                  refX="9"
-                  refY="3"
-                  orient="auto"
+          {/* Destination Buttons inside goal */}
+          {!isKicking && !gameOver && (
+            <div className="absolute inset-0 flex flex-col p-2">
+              {/* Upper row */}
+              <div className="flex-1 flex items-start justify-between px-2 pt-1">
+                <button
+                  onClick={() => handleDestinationSelect(DESTINATIONS.UPPER_LEFT)}
+                  className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 transition-all ${
+                    selectedDestination === DESTINATIONS.UPPER_LEFT
+                      ? 'bg-yellow-400 border-yellow-500 scale-110'
+                      : 'bg-white bg-opacity-30 border-white hover:bg-opacity-50'
+                  }`}
                 >
-                  <polygon points="0 0, 10 3, 0 6" fill="white" opacity="0.8" />
-                </marker>
-              </defs>
-              <line
-                x1={`${ballPosition.x}%`}
-                y1={`${ballPosition.y}%`}
-                x2={`${aimPosition.x}%`}
-                y2={`${aimPosition.y}%`}
-                stroke="white"
-                strokeWidth="3"
-                strokeDasharray="8,4"
-                opacity="0.8"
-                markerEnd="url(#arrowhead)"
-              />
-            </svg>
-            {/* Target circle at aim position */}
-            <div
-              className="absolute w-8 h-8 border-4 border-white rounded-full pointer-events-none animate-pulse"
-              style={{
-                left: `${aimPosition.x}%`,
-                top: `${aimPosition.y}%`,
-                transform: 'translate(-50%, -50%)',
-                zIndex: 5
-              }}
-            />
-          </>
-        )}
+                  <span className="text-xs sm:text-sm font-bold text-white drop-shadow">↖</span>
+                </button>
+                <button
+                  onClick={() => handleDestinationSelect(DESTINATIONS.UPPER_CENTER)}
+                  className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 transition-all ${
+                    selectedDestination === DESTINATIONS.UPPER_CENTER
+                      ? 'bg-yellow-400 border-yellow-500 scale-110'
+                      : 'bg-white bg-opacity-30 border-white hover:bg-opacity-50'
+                  }`}
+                >
+                  <span className="text-xs sm:text-sm font-bold text-white drop-shadow">↑</span>
+                </button>
+                <button
+                  onClick={() => handleDestinationSelect(DESTINATIONS.UPPER_RIGHT)}
+                  className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 transition-all ${
+                    selectedDestination === DESTINATIONS.UPPER_RIGHT
+                      ? 'bg-yellow-400 border-yellow-500 scale-110'
+                      : 'bg-white bg-opacity-30 border-white hover:bg-opacity-50'
+                  }`}
+                >
+                  <span className="text-xs sm:text-sm font-bold text-white drop-shadow">↗</span>
+                </button>
+              </div>
+              {/* Lower row */}
+              <div className="flex-1 flex items-end justify-between px-4 pb-1">
+                <button
+                  onClick={() => handleDestinationSelect(DESTINATIONS.BOTTOM_LEFT)}
+                  className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 transition-all ${
+                    selectedDestination === DESTINATIONS.BOTTOM_LEFT
+                      ? 'bg-yellow-400 border-yellow-500 scale-110'
+                      : 'bg-white bg-opacity-30 border-white hover:bg-opacity-50'
+                  }`}
+                >
+                  <span className="text-xs sm:text-sm font-bold text-white drop-shadow">↙</span>
+                </button>
+                <button
+                  onClick={() => handleDestinationSelect(DESTINATIONS.BOTTOM_RIGHT)}
+                  className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 transition-all ${
+                    selectedDestination === DESTINATIONS.BOTTOM_RIGHT
+                      ? 'bg-yellow-400 border-yellow-500 scale-110'
+                      : 'bg-white bg-opacity-30 border-white hover:bg-opacity-50'
+                  }`}
+                >
+                  <span className="text-xs sm:text-sm font-bold text-white drop-shadow">↘</span>
+                </button>
+              </div>
+            </div>
+          )}
 
-        {/* Ball */}
-        <div 
-          className={`absolute transition-all ${
-            isKicking ? 'duration-600 ease-out' : 'duration-300'
-          }`}
-          style={{
-            left: `${ballPosition.x}%`,
-            top: `${ballPosition.y}%`,
-            transform: 'translate(-50%, -50%)',
-            zIndex: 10,
-            fontSize: '3rem',
-            filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))'
-          }}
-        >
-          ⚽
+          {/* Goalkeeper */}
+          <div 
+            className="absolute transition-all duration-500 ease-out text-4xl sm:text-5xl"
+            style={getKeeperStyle()}
+          >
+            🧤
+          </div>
+
+          {/* Ball when kicked into goal */}
+          {isKicking && (
+            <div 
+              className="absolute transition-all duration-500 ease-out text-3xl sm:text-4xl"
+              style={{
+                left: `${ballPosition.x}%`,
+                top: `${ballPosition.y}%`,
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              ⚽
+            </div>
+          )}
         </div>
 
-        {/* Result Message */}
-        {showResult && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-6xl font-bold animate-bounce">
-            {showResult === 'goal' ? (
-              <span className="text-green-500 drop-shadow-lg">{t('goal')} 🎉</span>
-            ) : showResult === 'out' ? (
-              <span className="text-orange-500 drop-shadow-lg">{t('out')} 😬</span>
-            ) : (
-              <span className="text-red-500 drop-shadow-lg">{t('saved')} 😮</span>
+        {/* Ball at player's feet (before kick) */}
+        {!isKicking && (
+          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
+            <button
+              onClick={handleShoot}
+              disabled={!selectedDestination || gameOver}
+              className={`text-5xl sm:text-6xl transition-all ${
+                selectedDestination && !gameOver
+                  ? 'cursor-pointer hover:scale-110 animate-bounce'
+                  : 'opacity-50 cursor-not-allowed'
+              }`}
+            >
+              ⚽
+            </button>
+            {!gameOver && (
+              <p className="text-white text-center mt-2 text-sm font-semibold drop-shadow">
+                {selectedDestination ? t('clickBallToShoot') : t('selectDestination')}
+              </p>
             )}
           </div>
         )}
 
-        {/* Instructions */}
-        {!isKicking && !gameOver && score === 0 && (
-          <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 text-white text-center animate-pulse">
-            <p className="font-semibold text-lg">{t('clickToShoot')}</p>
-            <p className="text-sm">{t('aimInstructions')}</p>
+        {/* Result Message */}
+        {showResult && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-6xl font-bold animate-bounce z-20">
+            {showResult === 'goal' ? (
+              <span className="text-green-300 drop-shadow-lg">{t('goal')} 🎉</span>
+            ) : (
+              <span className="text-red-400 drop-shadow-lg">{t('saved')} 😮</span>
+            )}
           </div>
         )}
 
@@ -392,12 +347,12 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
 
         {/* Game Over Screen */}
         {gameOver && (
-          <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
-            <div className="bg-white rounded-2xl p-8 text-center max-w-sm mx-4">
-              <h2 className="text-3xl font-bold mb-4 text-gray-800">{t('gameOver')}</h2>
+          <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-30">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 text-center max-w-sm mx-4">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">{t('gameOver')}</h2>
               <div className="mb-6">
                 <p className="text-gray-600 mb-2">{t('finalScore')}</p>
-                <p className="text-6xl font-bold" style={{ color: selectedTeam.color }}>
+                <p className="text-5xl sm:text-6xl font-bold" style={{ color: selectedTeam.color }}>
                   {score}
                 </p>
               </div>
