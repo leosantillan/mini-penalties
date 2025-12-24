@@ -379,6 +379,7 @@ const translations = {
     aimInstructions: 'Visez le but et évitez le gardien',
     goal: 'BUT!',
     saved: 'ARRÊTÉ!',
+    out: 'DEHORS!',
     gameOver: 'Fin du Jeu!',
     finalScore: 'Score Final',
     goalsContributed: 'Buts contribués à',
