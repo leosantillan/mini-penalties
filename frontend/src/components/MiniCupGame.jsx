@@ -130,9 +130,9 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       const goalRightPost = 65;
       const isInsideGoal = clampedX >= goalLeftPost && clampedX <= goalRightPost;
       
-      // If ball is outside the goal posts, it's always a miss
+      // If ball is outside the goal posts, it's OUT (not saved)
       if (!isInsideGoal) {
-        setShowResult('miss');
+        setShowResult('out');
         
         // Post game session to API
         const postGameSession = async () => {
@@ -155,7 +155,8 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       
       // Ball is inside goal - check if goalkeeper saves it
       // Use the goalkeeper position at moment of shot (not current position)
-      const goalKeeperRange = Math.max(2, 3.5 - (difficulty * 0.2));
+      // Very small range - goalkeeper only saves if ball is RIGHT at them
+      const goalKeeperRange = 1.5;
       const distance = Math.abs(clampedX - keeperPosAtShot);
       const isGoal = distance > goalKeeperRange;
       
@@ -171,7 +172,7 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       } else {
         // Move ball to goalkeeper's position at shot for visual blocking
         setBallPosition({ x: keeperPosAtShot, y: 12 });
-        setShowResult('miss');
+        setShowResult('saved');
         
         // Post game session to API
         const postGameSession = async () => {
