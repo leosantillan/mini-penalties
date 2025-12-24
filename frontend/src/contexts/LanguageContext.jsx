@@ -155,6 +155,8 @@ const translations = {
     // Game
     clickToShoot: '¡Haz clic para disparar!',
     aimInstructions: 'Apunta al gol y evita al portero',
+    selectDestination: 'Selecciona dónde disparar',
+    clickBallToShoot: '¡Haz clic en la pelota para disparar!',
     goal: '¡GOL!',
     saved: '¡ATAJADO!',
     out: '¡FUERA!',
