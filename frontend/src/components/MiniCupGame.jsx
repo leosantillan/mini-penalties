@@ -161,9 +161,6 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
       const distance = Math.abs(clampedX - keeperPosAtShot);
       const isGoal = distance > goalKeeperRange;
       
-      // Debug log for troubleshooting
-      console.log(`Shot: ball=${clampedX.toFixed(1)}%, keeper=${keeperPosAtShot.toFixed(1)}%, distance=${distance.toFixed(1)}%, range=${goalKeeperRange}, isGoal=${isGoal}`);
-      
       if (isGoal) {
         setShowResult('goal');
         setScore(prev => prev + 1);
