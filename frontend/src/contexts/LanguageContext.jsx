@@ -41,6 +41,8 @@ const translations = {
     // Game
     clickToShoot: 'Click/Tap to shoot!',
     aimInstructions: 'Aim for the goal and avoid the keeper',
+    selectDestination: 'Select where to shoot',
+    clickBallToShoot: 'Click the ball to shoot!',
     goal: 'GOAL!',
     saved: 'SAVED!',
     out: 'OUT!',
