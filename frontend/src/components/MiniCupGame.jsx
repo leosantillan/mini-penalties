@@ -453,7 +453,7 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
                         showReward={true}
                       />
                     )}
-                    <Button onClick={onBack} variant="outline" className="w-full" size="lg">
+                    <Button onClick={onGoHome} variant="outline" className="w-full" size="lg">
                       {t('goToHome')}
                     </Button>
                   </>
