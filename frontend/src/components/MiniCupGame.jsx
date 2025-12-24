@@ -302,28 +302,61 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
             </div>
           )}
 
-          {/* Goalkeeper */}
+          {/* Goalkeeper - styled like reference image */}
           <div 
             className="absolute transition-all duration-500 ease-out"
             style={getKeeperStyle()}
           >
-            {/* Goalkeeper figure with outstretched arms */}
-            <div className="relative flex flex-col items-center">
+            <div 
+              className="relative flex flex-col items-center transition-transform duration-500"
+              style={{ transform: `rotate(${getArmRotation()}deg)` }}
+            >
+              {/* Left Glove */}
+              <div className="absolute -top-1 -left-10 sm:-left-12 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md"></div>
+              
+              {/* Left Arm (green sleeve) */}
+              <div className="absolute -top-0.5 -left-10 sm:-left-12 w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full origin-right"></div>
+              
+              {/* Right Arm (green sleeve) */}
+              <div className="absolute -top-0.5 -right-10 sm:-right-12 w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full origin-left"></div>
+              
+              {/* Right Glove */}
+              <div className="absolute -top-1 -right-10 sm:-right-12 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md"></div>
+              
               {/* Head */}
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-yellow-400 rounded-full border-2 border-yellow-600"></div>
-              {/* Body with arms */}
-              <div className="relative">
-                {/* Left arm */}
-                <div className="absolute -left-8 sm:-left-10 top-1 w-8 sm:w-10 h-2 sm:h-3 bg-yellow-400 rounded-full border border-yellow-600 -rotate-12"></div>
-                {/* Right arm */}
-                <div className="absolute -right-8 sm:-right-10 top-1 w-8 sm:w-10 h-2 sm:h-3 bg-yellow-400 rounded-full border border-yellow-600 rotate-12"></div>
-                {/* Torso */}
-                <div className="w-5 h-8 sm:w-6 sm:h-10 bg-yellow-400 rounded-md border-2 border-yellow-600 mt-0.5"></div>
+              <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-200 rounded-full border-2 border-amber-300 z-10">
+                {/* Face details */}
+                <div className="relative w-full h-full">
+                  <div className="absolute top-2 left-1 w-1 h-1 bg-gray-800 rounded-full"></div>
+                  <div className="absolute top-2 right-1 w-1 h-1 bg-gray-800 rounded-full"></div>
+                </div>
               </div>
+              
+              {/* Torso - Yellow vest over green */}
+              <div className="relative -mt-0.5">
+                {/* Green undershirt showing at sides */}
+                <div className="absolute -left-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-l-md"></div>
+                <div className="absolute -right-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-r-md"></div>
+                {/* Yellow vest */}
+                <div className="w-6 h-8 sm:w-7 sm:h-10 bg-yellow-400 rounded-md border-2 border-yellow-500 relative z-10">
+                  {/* Vest details - number or logo area */}
+                  <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-500 rounded-sm"></div>
+                </div>
+              </div>
+              
+              {/* Shorts (green) */}
+              <div className="w-7 h-3 sm:w-8 sm:h-4 bg-green-700 rounded-b-md -mt-0.5"></div>
+              
               {/* Legs */}
-              <div className="flex gap-1">
-                <div className="w-2 h-6 sm:w-2.5 sm:h-8 bg-gray-800 rounded-b-md"></div>
-                <div className="w-2 h-6 sm:w-2.5 sm:h-8 bg-gray-800 rounded-b-md"></div>
+              <div className="flex gap-1 -mt-0.5">
+                <div className="w-2.5 h-5 sm:w-3 sm:h-6 bg-amber-200 rounded-b-md"></div>
+                <div className="w-2.5 h-5 sm:w-3 sm:h-6 bg-amber-200 rounded-b-md"></div>
+              </div>
+              
+              {/* Feet/boots (green) */}
+              <div className="flex gap-2 -mt-0.5">
+                <div className="w-3 h-1.5 sm:w-4 sm:h-2 bg-green-800 rounded-md"></div>
+                <div className="w-3 h-1.5 sm:w-4 sm:h-2 bg-green-800 rounded-md"></div>
               </div>
             </div>
           </div>
