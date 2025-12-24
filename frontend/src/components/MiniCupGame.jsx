@@ -189,6 +189,22 @@ const MiniCupGame = ({ selectedTeam, onBack }) => {
     };
   };
 
+  // Get arm rotation based on keeper destination (like clock hands)
+  // 9:00 = -90° (left), 10:30 = -45° (upper left), 12:00 = 0° (up), 1:30 = 45° (upper right), 3:00 = 90° (right)
+  const getArmRotation = () => {
+    if (!keeperDestination) return 0; // Default: arms up (12 o'clock)
+    
+    const rotations = {
+      [DESTINATIONS.BOTTOM_LEFT]: -90,    // 9 o'clock
+      [DESTINATIONS.UPPER_LEFT]: -45,     // 10:30
+      [DESTINATIONS.UPPER_CENTER]: 0,     // 12 o'clock
+      [DESTINATIONS.UPPER_RIGHT]: 45,     // 1:30
+      [DESTINATIONS.BOTTOM_RIGHT]: 90,    // 3 o'clock
+    };
+    
+    return rotations[keeperDestination] || 0;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-600 via-green-500 to-green-400 flex flex-col">
       {/* Header */}
