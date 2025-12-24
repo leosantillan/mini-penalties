@@ -150,12 +150,12 @@ const LandingPage = ({ onStart, onStats }) => {
           <h2 className="text-2xl font-bold text-white mb-6 text-center">{t('howToPlay')}</h2>
           <div className="grid md:grid-cols-3 gap-6 text-center">
             <div>
-              <div className="text-5xl mb-3">👆</div>
+              <div className="text-5xl mb-3">🌍</div>
               <h3 className="font-bold text-white mb-2">{t('step1Title')}</h3>
               <p className="text-blue-100 text-sm">{t('step1Desc')}</p>
             </div>
             <div>
-              <div className="text-5xl mb-3">⬆️</div>
+              <div className="text-5xl mb-3">🎯</div>
               <h3 className="font-bold text-white mb-2">{t('step2Title')}</h3>
               <p className="text-blue-100 text-sm">{t('step2Desc')}</p>
             </div>
