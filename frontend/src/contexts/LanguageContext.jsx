@@ -267,6 +267,7 @@ const translations = {
     aimInstructions: 'Mire no gol e evite o goleiro',
     goal: 'GOL!',
     saved: 'DEFENDEU!',
+    out: 'FORA!',
     gameOver: 'Fim de Jogo!',
     finalScore: 'Pontuação Final',
     goalsContributed: 'Gols contribuídos para',
