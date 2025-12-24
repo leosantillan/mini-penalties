@@ -412,6 +412,21 @@ frontend:
         agent: "testing"
         comment: "✅ GAME UI TRANSLATIONS TEST PASSED: Spanish game instructions working perfectly - '¡Haz clic para disparar!' and 'Apunta al gol y evita al portero' found. PlayLimitBanner shows Spanish translations: 'Jugadas Restantes', 'Anuncios Vistos', 'Total Hoy'. All game UI elements properly translated."
 
+  - task: "Goalkeeper Arm Rotation (Clock-Hand Effect)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/MiniCupGame.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported that goalkeeper's entire body rotates instead of just the arms when pointing to destinations."
+      - working: true
+        agent: "main"
+        comment: "✅ FIXED: Refactored goalkeeper component to have separate arm elements that rotate independently from the body. Each arm rotates from its shoulder attachment point (CSS origin-left/origin-right) like clock hands: 9 o'clock (left), 10:30 (upper-left), 12 o'clock (center), 1:30 (upper-right), 3 o'clock (right). Body stays upright. Tested on wide and narrow screens via screenshots - working correctly."
+
   - task: "Navigation Flow Multilingual Support"
     implemented: true
     working: true
