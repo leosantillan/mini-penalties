@@ -294,9 +294,9 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
 
         {/* Instruction Message - Below Goal */}
         {!isKicking && !gameOver && !selectedDestination && (
-          <div className="absolute top-44 sm:top-52 left-1/2 transform -translate-x-1/2 z-10">
-            <div className="bg-black bg-opacity-70 rounded-xl px-6 py-3">
-              <p className="text-white text-lg sm:text-2xl font-bold text-center drop-shadow animate-pulse">
+          <div className="absolute top-40 sm:top-48 left-1/2 transform -translate-x-1/2 z-10">
+            <div className="bg-black bg-opacity-70 rounded-xl px-4 sm:px-6 py-2 sm:py-3">
+              <p className="text-white text-base sm:text-xl font-bold text-center drop-shadow animate-pulse">
                 {t('selectDestination')}
               </p>
             </div>
