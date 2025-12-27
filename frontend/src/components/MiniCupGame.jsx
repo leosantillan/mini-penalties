@@ -461,7 +461,16 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
 
         {/* Ball at player's feet (before kick) */}
         {!isKicking && (
-          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
+          <div className="absolute bottom-16 sm:bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+            {/* Instruction Message - Above Ball */}
+            {!gameOver && selectedDestination && (
+              <div className="mb-4 bg-black bg-opacity-70 rounded-xl px-6 py-3">
+                <p className="text-white text-lg sm:text-2xl font-bold text-center drop-shadow animate-pulse">
+                  {t('clickBallToShoot')}
+                </p>
+              </div>
+            )}
+            
             <button
               onClick={handleShoot}
               disabled={!selectedDestination || gameOver}
@@ -473,11 +482,6 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
             >
               ⚽
             </button>
-            {!gameOver && (
-              <p className="text-white text-center mt-2 text-sm font-semibold drop-shadow">
-                {selectedDestination ? t('clickBallToShoot') : t('selectDestination')}
-              </p>
-            )}
           </div>
         )}
 
