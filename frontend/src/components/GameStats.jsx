@@ -104,7 +104,7 @@ const GameStats = ({ onBack }) => {
               </div>
               <div className="text-right">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-blue-600">
+                  <span className="text-3xl font-bold text-green-600">
                     {formatGoals(stat.total_goals)}
                   </span>
                   <span className="text-sm text-gray-500">{t('goals')}</span>
