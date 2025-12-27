@@ -194,19 +194,19 @@ const GameStats = ({ onBack }) => {
         </Tabs>
 
         {/* Summary Card */}
-        <Card className="mt-6 p-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+        <Card className="mt-6 p-6 bg-gradient-to-r from-green-500 to-green-600 text-white">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <div className="text-3xl font-bold mb-1">{todayStats.length}</div>
-              <div className="text-blue-100 text-sm">{t('teamsToday')}</div>
+              <div className="text-green-100 text-sm">{t('teamsToday')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold mb-1">{monthStats.length}</div>
-              <div className="text-blue-100 text-sm">{t('teamsThisMonth')}</div>
+              <div className="text-green-100 text-sm">{t('teamsThisMonth')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold mb-1">{yearStats.length}</div>
-              <div className="text-blue-100 text-sm">{t('teamsThisYear')}</div>
+              <div className="text-green-100 text-sm">{t('teamsThisYear')}</div>
             </div>
           </div>
         </Card>
