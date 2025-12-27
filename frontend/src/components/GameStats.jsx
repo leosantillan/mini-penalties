@@ -87,7 +87,7 @@ const GameStats = ({ onBack }) => {
                       ? 'bg-gray-200 text-gray-600'
                       : index === 2
                       ? 'bg-orange-100 text-orange-600'
-                      : 'bg-blue-50 text-blue-600'
+                      : 'bg-green-50 text-green-600'
                   }`}
                 >
                   {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : index + 1}
