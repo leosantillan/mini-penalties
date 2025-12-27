@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Trophy, Play, Settings, BarChart3 } from 'lucide-react';
+import { Play, Settings, BarChart3 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 
 const LandingPage = ({ onStart, onStats }) => {
   const navigate = useNavigate();
   const { t } = useLanguage();
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    // Spinning ball animation
-    const interval = setInterval(() => {
-      setRotation(prev => (prev + 2) % 360);
-    }, 30);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-500 via-green-600 to-green-700 flex items-center justify-center p-4">
