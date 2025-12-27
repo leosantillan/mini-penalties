@@ -43,6 +43,21 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
   const [keeperPosition, setKeeperPosition] = useState({ x: 50, y: 50 });
   const [keeperDestination, setKeeperDestination] = useState(null);
   const [showKeeper, setShowKeeper] = useState(false);
+  const [shirtDesign, setShirtDesign] = useState(null);
+
+  // Load shirt design from localStorage
+  useEffect(() => {
+    if (selectedTeam?.team_id) {
+      const savedDesign = localStorage.getItem(`shirt_design_${selectedTeam.team_id}`);
+      if (savedDesign) {
+        try {
+          setShirtDesign(JSON.parse(savedDesign));
+        } catch (e) {
+          setShirtDesign(null);
+        }
+      }
+    }
+  }, [selectedTeam]);
 
   // Use a play when component mounts (game starts)
   useEffect(() => {
