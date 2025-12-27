@@ -29,23 +29,11 @@ const LandingPage = ({ onStart, onStats }) => {
 
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <div className="mb-8 relative inline-block">
-            <div 
-              className="w-32 h-32 mx-auto bg-white rounded-full shadow-2xl flex items-center justify-center text-7xl"
-              style={{ transform: `rotate(${rotation}deg)` }}
-            >
-              ⚽
-            </div>
-            <div className="absolute -top-2 -right-2 bg-yellow-400 rounded-full p-3 shadow-lg animate-bounce">
-              <Trophy className="w-6 h-6 text-white" />
-            </div>
-          </div>
-          
           {/* Klasigol Logo */}
           <img 
             src="https://customer-assets.emergentagent.com/job_027d5a18-d686-4e2e-bf20-138bfe6449a9/artifacts/r2mdeoph_Klasigol-logo-transparente.png" 
             alt="Klasigol"
-            className="h-16 sm:h-20 md:h-24 mx-auto mb-4 drop-shadow-lg"
+            className="h-28 sm:h-36 md:h-44 mx-auto mb-6 drop-shadow-lg"
           />
           <p className="text-xl sm:text-2xl text-green-100 mb-2">{t('clubWorldCup')}</p>
           <p className="text-base sm:text-lg text-green-200 mb-8 px-4">{t('tagline')}</p>
