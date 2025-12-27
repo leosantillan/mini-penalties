@@ -251,27 +251,51 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
       <div className="flex-1 relative overflow-hidden">
         {/* Score Display with T-shirt - Top Right Corner */}
         <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 flex flex-col items-center">
-          {/* T-shirt with team colors */}
+          {/* T-shirt with team design from admin panel or fallback */}
           <div className="relative">
-            <svg viewBox="0 0 60 50" className="w-12 h-10 sm:w-16 sm:h-14">
-              {/* T-shirt shape */}
-              <path 
-                d="M15 8 L5 15 L10 20 L10 45 L50 45 L50 20 L55 15 L45 8 L40 12 L20 12 L15 8 Z" 
-                fill={selectedTeam.color || '#3B82F6'}
-                stroke={selectedTeam.color_secondary || '#1E40AF'}
-                strokeWidth="2"
-              />
-              {/* Collar */}
-              <path 
-                d="M20 12 Q30 18 40 12" 
-                fill="none" 
-                stroke={selectedTeam.color_secondary || '#1E40AF'}
-                strokeWidth="2"
-              />
-            </svg>
-            {/* Score on shirt */}
-            <div className="absolute inset-0 flex items-center justify-center pt-2">
-              <span className="text-white font-bold text-lg sm:text-2xl drop-shadow-lg" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
+            {shirtDesign?.grid ? (
+              /* Render the actual shirt design grid */
+              <div 
+                className="w-10 h-10 sm:w-14 sm:h-14 rounded-sm overflow-hidden border-2 border-white shadow-lg"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: `repeat(12, 1fr)`,
+                  gridTemplateRows: `repeat(12, 1fr)`,
+                }}
+              >
+                {shirtDesign.grid.flat().map((color, index) => (
+                  <div
+                    key={index}
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+            ) : (
+              /* Fallback: Simple colored t-shirt SVG */
+              <svg viewBox="0 0 60 50" className="w-12 h-10 sm:w-16 sm:h-14">
+                <path 
+                  d="M15 8 L5 15 L10 20 L10 45 L50 45 L50 20 L55 15 L45 8 L40 12 L20 12 L15 8 Z" 
+                  fill={selectedTeam.color || '#3B82F6'}
+                  stroke={selectedTeam.color2 || '#1E40AF'}
+                  strokeWidth="2"
+                />
+                <path 
+                  d="M20 12 Q30 18 40 12" 
+                  fill="none" 
+                  stroke={selectedTeam.color2 || '#1E40AF'}
+                  strokeWidth="2"
+                />
+              </svg>
+            )}
+            {/* Score overlay on shirt */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span 
+                className="font-bold text-lg sm:text-2xl drop-shadow-lg"
+                style={{ 
+                  color: shirtDesign?.grid ? '#FFFFFF' : '#FFFFFF',
+                  textShadow: '1px 1px 3px rgba(0,0,0,0.8), -1px -1px 3px rgba(0,0,0,0.8)' 
+                }}
+              >
                 {score}
               </span>
             </div>
