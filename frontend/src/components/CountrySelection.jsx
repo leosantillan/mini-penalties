@@ -30,14 +30,14 @@ const CountrySelection = ({ onCountrySelect, onBack }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center">
         <div className="text-gray-800 text-2xl">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
@@ -46,7 +46,7 @@ const CountrySelection = ({ onCountrySelect, onBack }) => {
           </Button>
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <Globe className="w-10 h-10 text-blue-600" />
+              <Globe className="w-10 h-10 text-green-600" />
               <h1 className="text-4xl font-bold text-gray-800">{t('chooseCountry')}</h1>
             </div>
             <p className="text-gray-600">{t('selectCountryDesc')}</p>
