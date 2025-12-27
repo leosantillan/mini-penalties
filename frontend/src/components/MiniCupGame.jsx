@@ -256,23 +256,20 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
             {shirtDesign?.grid ? (
               /* Render the actual shirt design grid */
               <div 
-                className="w-10 h-10 sm:w-14 sm:h-14 rounded-sm overflow-hidden border-2 border-white shadow-lg"
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-md overflow-hidden border-2 border-white shadow-lg"
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: `repeat(12, 1fr)`,
-                  gridTemplateRows: `repeat(12, 1fr)`,
+                  gridTemplateColumns: 'repeat(12, 1fr)',
+                  gridTemplateRows: 'repeat(12, 1fr)',
                 }}
               >
                 {shirtDesign.grid.flat().map((color, index) => (
-                  <div
-                    key={index}
-                    style={{ backgroundColor: color }}
-                  />
+                  <div key={index} style={{ backgroundColor: color }} />
                 ))}
               </div>
             ) : (
               /* Fallback: Simple colored t-shirt SVG */
-              <svg viewBox="0 0 60 50" className="w-12 h-10 sm:w-16 sm:h-14">
+              <svg viewBox="0 0 60 50" className="w-14 h-12 sm:w-18 sm:h-16">
                 <path 
                   d="M15 8 L5 15 L10 20 L10 45 L50 45 L50 20 L55 15 L45 8 L40 12 L20 12 L15 8 Z" 
                   fill={selectedTeam.color || '#3B82F6'}
@@ -287,21 +284,24 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
                 />
               </svg>
             )}
-            {/* Score overlay on shirt */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span 
-                className="font-bold text-lg sm:text-2xl drop-shadow-lg"
-                style={{ 
-                  color: shirtDesign?.grid ? '#FFFFFF' : '#FFFFFF',
-                  textShadow: '1px 1px 3px rgba(0,0,0,0.8), -1px -1px 3px rgba(0,0,0,0.8)' 
-                }}
-              >
-                {score}
-              </span>
-            </div>
+          </div>
+          {/* Score below the shirt */}
+          <div className="mt-1 bg-black bg-opacity-60 rounded-lg px-3 py-1">
+            <span className="text-white font-bold text-xl sm:text-2xl">{score}</span>
           </div>
           <span className="text-white text-xs font-semibold mt-1 drop-shadow">{t('goals')}</span>
         </div>
+
+        {/* Instruction Message - Below Goal */}
+        {!isKicking && !gameOver && !selectedDestination && (
+          <div className="absolute top-44 sm:top-52 left-1/2 transform -translate-x-1/2 z-10">
+            <div className="bg-black bg-opacity-70 rounded-xl px-6 py-3">
+              <p className="text-white text-lg sm:text-2xl font-bold text-center drop-shadow animate-pulse">
+                {t('selectDestination')}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Goal Frame */}
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-[85%] sm:w-[70%] max-w-md h-32 sm:h-40 border-4 border-white rounded-t-lg bg-white bg-opacity-10">
