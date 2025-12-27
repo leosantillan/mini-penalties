@@ -459,13 +459,13 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
           )}
         </div>
 
-        {/* Ball at player's feet (before kick) */}
+        {/* Ball at player's feet (before kick) - positioned closer to goal */}
         {!isKicking && (
-          <div className="absolute bottom-16 sm:bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+          <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
             {/* Instruction Message - Above Ball */}
             {!gameOver && selectedDestination && (
-              <div className="mb-4 bg-black bg-opacity-70 rounded-xl px-6 py-3">
-                <p className="text-white text-lg sm:text-2xl font-bold text-center drop-shadow animate-pulse">
+              <div className="mb-2 sm:mb-3 bg-black bg-opacity-70 rounded-xl px-4 sm:px-6 py-2 sm:py-3">
+                <p className="text-white text-base sm:text-xl font-bold text-center drop-shadow animate-pulse">
                   {t('clickBallToShoot')}
                 </p>
               </div>
@@ -474,7 +474,7 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
             <button
               onClick={handleShoot}
               disabled={!selectedDestination || gameOver}
-              className={`text-5xl sm:text-6xl transition-transform ${
+              className={`text-4xl sm:text-5xl transition-transform ${
                 selectedDestination && !gameOver
                   ? 'cursor-pointer hover:scale-110'
                   : 'opacity-50 cursor-not-allowed'
