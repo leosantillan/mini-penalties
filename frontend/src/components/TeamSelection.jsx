@@ -10,6 +10,63 @@ import AdModal from './AdModal';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Component to render shirt design from grid or fallback
+const ShirtDesignDisplay = ({ teamId, color, color2, size = 'md' }) => {
+  const [design, setDesign] = useState(null);
+
+  useEffect(() => {
+    const savedDesign = localStorage.getItem(`shirt_design_${teamId}`);
+    if (savedDesign) {
+      try {
+        setDesign(JSON.parse(savedDesign));
+      } catch (e) {
+        setDesign(null);
+      }
+    }
+  }, [teamId]);
+
+  const sizeClasses = {
+    sm: 'w-12 h-12',
+    md: 'w-16 h-16',
+    lg: 'w-20 h-20',
+  };
+
+  if (design?.grid) {
+    return (
+      <div 
+        className={`${sizeClasses[size]} rounded-md overflow-hidden border-2 border-gray-200 shadow-md`}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(12, 1fr)',
+          gridTemplateRows: 'repeat(12, 1fr)',
+        }}
+      >
+        {design.grid.flat().map((cellColor, index) => (
+          <div key={index} style={{ backgroundColor: cellColor }} />
+        ))}
+      </div>
+    );
+  }
+
+  // Fallback: Simple colored shirt SVG
+  return (
+    <svg viewBox="0 0 60 50" className={sizeClasses[size]}>
+      <path 
+        d="M15 8 L5 15 L10 20 L10 45 L50 45 L50 20 L55 15 L45 8 L40 12 L20 12 L15 8 Z" 
+        fill={color || '#3B82F6'}
+        stroke={color2 || '#1E40AF'}
+        strokeWidth="2"
+      />
+      <path 
+        d="M20 12 Q30 18 40 12" 
+        fill="none" 
+        stroke={color2 || '#1E40AF'}
+        strokeWidth="2"
+      />
+    </svg>
+  );
+};
+
 const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
   const [teams, setTeams] = useState([]);
   const [sortedTeams, setSortedTeams] = useState([]);
