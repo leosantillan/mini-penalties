@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Play, Settings, BarChart3 } from 'lucide-react';
+import { Play, BarChart3, Newspaper } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 
@@ -48,15 +48,17 @@ const LandingPage = ({ onStart, onStats }) => {
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                 {t('stats')}
               </Button>
+              
+              <Button 
+                onClick={() => navigate('/news')}
+                size="lg"
+                variant="outline"
+                className="bg-white/10 text-white hover:bg-white hover:text-green-600 border-2 border-white text-lg sm:text-xl px-8 py-5 sm:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold backdrop-blur-sm w-full sm:w-auto"
+              >
+                <Newspaper className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
+                {t('comingSoon')}
+              </Button>
             </div>
-            
-            <button
-              onClick={() => navigate('/admin/login')}
-              className="text-green-100 hover:text-white text-sm flex items-center gap-2 transition-colors"
-            >
-              <Settings className="w-4 h-4" />
-              {t('adminPanel')}
-            </button>
           </div>
         </div>
 
