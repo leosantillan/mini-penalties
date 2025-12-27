@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Trophy, Users, TrendingUp, Play, Settings, BarChart3 } from 'lucide-react';
-import axios from 'axios';
+import { Trophy, Play, Settings, BarChart3 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const LandingPage = ({ onStart, onStats }) => {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [rotation, setRotation] = useState(0);
-  const [totalGoals, setTotalGoals] = useState(0);
-  const [totalTeams, setTotalTeams] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Spinning ball animation
@@ -23,40 +16,8 @@ const LandingPage = ({ onStart, onStats }) => {
       setRotation(prev => (prev + 2) % 360);
     }, 30);
 
-    // Fetch real data from API
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${API}/teams`);
-        const teams = response.data;
-        const total = teams.reduce((sum, team) => sum + team.goals, 0);
-        setTotalGoals(total);
-        setTotalTeams(teams.length);
-      } catch (error) {
-        console.error('Error fetching teams:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-
     return () => clearInterval(interval);
   }, []);
-
-  const formatGoals = (goals) => {
-    if (goals >= 1000000) {
-      return `${(goals / 1000000).toFixed(1)}M`;
-    }
-    return goals.toLocaleString();
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-500 via-green-600 to-green-700 flex items-center justify-center">
-        <div className="text-white text-2xl">Loading...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-500 via-green-600 to-green-700 flex items-center justify-center p-4">
@@ -115,33 +76,6 @@ const LandingPage = ({ onStart, onStats }) => {
               <Settings className="w-4 h-4" />
               {t('adminPanel')}
             </button>
-          </div>
-        </div>
-
-        {/* Stats Section */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 text-center border border-white border-opacity-30">
-            <div className="flex justify-center mb-3">
-              <Trophy className="w-12 h-12 text-yellow-300" />
-            </div>
-            <div className="text-4xl font-bold text-white mb-2">{totalTeams}</div>
-            <div className="text-green-100 font-medium">{t('teamsCompeting')}</div>
-          </div>
-          
-          <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 text-center border border-white border-opacity-30">
-            <div className="flex justify-center mb-3">
-              <TrendingUp className="w-12 h-12 text-lime-300" />
-            </div>
-            <div className="text-4xl font-bold text-white mb-2">{formatGoals(totalGoals)}</div>
-            <div className="text-green-100 font-medium">{t('totalGoals')}</div>
-          </div>
-          
-          <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 text-center border border-white border-opacity-30">
-            <div className="flex justify-center mb-3">
-              <Users className="w-12 h-12 text-purple-300" />
-            </div>
-            <div className="text-4xl font-bold text-white mb-2">∞</div>
-            <div className="text-green-100 font-medium">{t('playersWorldwide')}</div>
           </div>
         </div>
 
