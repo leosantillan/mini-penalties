@@ -206,7 +206,12 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 font-bold text-sm">
                     {index + 1}
                   </div>
-                  <span className="text-2xl">{team.flag}</span>
+                  <ShirtDesignDisplay 
+                    teamId={team.team_id} 
+                    color={team.color} 
+                    color2={team.color2}
+                    size="sm"
+                  />
                   <span className="font-semibold text-gray-800">{team.name}</span>
                 </div>
                 <div className="text-right">
