@@ -123,14 +123,14 @@ const GameStats = ({ onBack }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center">
         <div className="text-2xl text-gray-600">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
           <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
