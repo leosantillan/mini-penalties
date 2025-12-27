@@ -10,6 +10,7 @@ const translations = {
     tagline: 'Help your team win',
     startPlaying: 'Start Playing',
     stats: 'Stats',
+    comingSoon: 'Coming Soon',
     adminPanel: 'Admin Panel',
     teamsCompeting: 'Teams Competing',
     totalGoals: 'Total Goals Scored',
@@ -21,6 +22,18 @@ const translations = {
     step2Desc: 'Choose where to shoot inside the goal, then tap the ball',
     step3Title: '3. Score Goals!',
     step3Desc: 'Beat the goalkeeper and climb the leaderboard!',
+    
+    // News Page
+    newsSubtitle: 'Stay updated with the latest news and features',
+    news1Title: 'New Tournament Mode',
+    news1Desc: 'Compete in weekly tournaments against players worldwide!',
+    news2Title: 'New Teams Added',
+    news2Desc: 'More teams from around the world are joining the competition.',
+    news3Title: 'Multiplayer Mode',
+    news3Desc: 'Challenge your friends in real-time penalty shootouts!',
+    comingSoonLabel: 'Coming Soon',
+    stayTuned: 'Stay Tuned!',
+    stayTunedDesc: 'Follow us for updates on new features and releases.',
     
     // Country Selection
     chooseCountry: 'Choose Your Country',
