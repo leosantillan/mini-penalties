@@ -41,9 +41,12 @@ const LandingPage = ({ onStart, onStats }) => {
             </div>
           </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-            {t('miniCup')}
-          </h1>
+          {/* Klasigol Logo */}
+          <img 
+            src="https://customer-assets.emergentagent.com/job_027d5a18-d686-4e2e-bf20-138bfe6449a9/artifacts/r2mdeoph_Klasigol-logo-transparente.png" 
+            alt="Klasigol"
+            className="h-16 sm:h-20 md:h-24 mx-auto mb-4 drop-shadow-lg"
+          />
           <p className="text-xl sm:text-2xl text-green-100 mb-2">{t('clubWorldCup')}</p>
           <p className="text-base sm:text-lg text-green-200 mb-8 px-4">{t('tagline')}</p>
           
