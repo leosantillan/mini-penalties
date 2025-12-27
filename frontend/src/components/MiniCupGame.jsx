@@ -97,6 +97,7 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
   const handleDestinationSelect = (destination) => {
     if (isKicking || gameOver) return;
     setSelectedDestination(destination);
+    setShowKeeper(true); // Show goalkeeper after selecting destination
   };
 
   const handleShoot = () => {
