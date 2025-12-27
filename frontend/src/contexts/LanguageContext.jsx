@@ -6,8 +6,8 @@ const translations = {
   en: {
     // Landing Page
     miniCup: 'Mini Cup',
-    clubWorldCup: 'Club World Cup 2025',
-    tagline: 'Score goals. Beat the keeper. Top the leaderboard.',
+    clubWorldCup: 'Who is the greatest?',
+    tagline: 'Help your team win',
     startPlaying: 'Start Playing',
     stats: 'Stats',
     adminPanel: 'Admin Panel',
@@ -120,8 +120,8 @@ const translations = {
   es: {
     // Landing Page
     miniCup: 'Mini Copa',
-    clubWorldCup: 'Copa Mundial de Clubes 2025',
-    tagline: 'Marca goles. Vence al portero. Lidera la tabla.',
+    clubWorldCup: '¿Quién es el más grande?',
+    tagline: 'Ayuda a tu equipo a ganar',
     startPlaying: 'Comenzar a Jugar',
     stats: 'Estadísticas',
     adminPanel: 'Panel Admin',
@@ -234,8 +234,8 @@ const translations = {
   pt: {
     // Landing Page
     miniCup: 'Mini Copa',
-    clubWorldCup: 'Copa do Mundo de Clubes 2025',
-    tagline: 'Marque gols. Vença o goleiro. Lidere o ranking.',
+    clubWorldCup: 'Quem é o maior?',
+    tagline: 'Ajude seu time a vencer',
     startPlaying: 'Começar a Jogar',
     stats: 'Estatísticas',
     adminPanel: 'Painel Admin',
@@ -348,8 +348,8 @@ const translations = {
   fr: {
     // Landing Page
     miniCup: 'Mini Coupe',
-    clubWorldCup: 'Coupe du Monde des Clubs 2025',
-    tagline: 'Marquez des buts. Battez le gardien. Dominez le classement.',
+    clubWorldCup: 'Qui est le plus grand?',
+    tagline: 'Aidez votre équipe à gagner',
     startPlaying: 'Commencer à Jouer',
     stats: 'Statistiques',
     adminPanel: 'Panneau Admin',
@@ -462,8 +462,8 @@ const translations = {
   it: {
     // Landing Page
     miniCup: 'Mini Coppa',
-    clubWorldCup: 'Coppa del Mondo per Club 2025',
-    tagline: 'Segna gol. Batti il portiere. Scala la classifica.',
+    clubWorldCup: 'Chi è il più grande?',
+    tagline: 'Aiuta la tua squadra a vincere',
     startPlaying: 'Inizia a Giocare',
     stats: 'Statistiche',
     adminPanel: 'Pannello Admin',
