@@ -43,6 +43,7 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 85 });
   const [keeperPosition, setKeeperPosition] = useState({ x: 50, y: 50 });
   const [keeperDestination, setKeeperDestination] = useState(null);
+  const [showKeeper, setShowKeeper] = useState(false);
 
   // Use a play when component mounts (game starts)
   useEffect(() => {
