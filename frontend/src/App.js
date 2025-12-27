@@ -106,6 +106,7 @@ function App() {
             <div className="App">
           <Routes>
             <Route path="/" element={<GameFlow />} />
+            <Route path="/news" element={<NewsPage />} />
             <Route path="/admin/login" element={<AdminLogin onBack={() => window.location.href = '/'} />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Navigate to="/admin/dashboard" />} />
