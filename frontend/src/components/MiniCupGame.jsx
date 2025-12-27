@@ -496,11 +496,11 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
           </div>
         )}
 
-        {/* Ad Modal */}
+        {/* Ad Modal - needs to be above game over screen */}
         <AdModal isOpen={showAdModal} onClose={handleAdWatched} onCancel={onBack} />
 
         {/* Game Over Screen */}
-        {gameOver && (
+        {gameOver && !showAdModal && (
           <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-30">
             <div className="bg-white rounded-2xl p-6 sm:p-8 text-center max-w-sm mx-4">
               <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">{t('gameOver')}</h2>
