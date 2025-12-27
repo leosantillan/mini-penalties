@@ -173,6 +173,7 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
       setKeeperDestination(null);
       setIsKicking(false);
       setShowResult(null);
+      setShowKeeper(false);
       setGameStarted(true);
     }
   };
