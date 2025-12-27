@@ -264,6 +264,7 @@ const translations = {
     tagline: 'Ajude seu time a vencer',
     startPlaying: 'Começar a Jogar',
     stats: 'Estatísticas',
+    comingSoon: 'Em Breve',
     adminPanel: 'Painel Admin',
     teamsCompeting: 'Equipes Competindo',
     totalGoals: 'Total de Gols Marcados',
@@ -275,6 +276,18 @@ const translations = {
     step2Desc: 'Escolha onde chutar dentro do gol e toque na bola',
     step3Title: '3. Marque Gols!',
     step3Desc: 'Vença o goleiro e suba no ranking!',
+    
+    // News Page
+    newsSubtitle: 'Fique atualizado com as últimas novidades',
+    news1Title: 'Novo Modo Torneio',
+    news1Desc: 'Compita em torneios semanais contra jogadores do mundo todo!',
+    news2Title: 'Novos Times Adicionados',
+    news2Desc: 'Mais times de todo o mundo estão entrando na competição.',
+    news3Title: 'Modo Multiplayer',
+    news3Desc: 'Desafie seus amigos em pênaltis em tempo real!',
+    comingSoonLabel: 'Em Breve',
+    stayTuned: 'Fique Ligado!',
+    stayTunedDesc: 'Siga-nos para atualizações sobre novos recursos.',
     
     // Country Selection
     chooseCountry: 'Escolha Seu País',
