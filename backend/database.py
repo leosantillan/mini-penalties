@@ -18,3 +18,4 @@ goals_collection = db.goals
 users_collection = db.users
 game_sessions_collection = db.game_sessions
 config_collection = db.config
+announcements_collection = db.announcements
