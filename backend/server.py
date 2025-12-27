@@ -621,6 +621,77 @@ async def update_game_config(
     config = await config_collection.find_one({"config_id": "default"}, {"_id": 0})
     return GameConfig(**config)
 
+# ==================== ANNOUNCEMENTS ====================
+
+@api_router.get("/announcements", response_model=List[Announcement])
+async def get_announcements():
+    """Public endpoint to get active announcements"""
+    announcements = await announcements_collection.find(
+        {"is_active": True}, 
+        {"_id": 0}
+    ).sort("order", 1).to_list(100)
+    return announcements
+
+@api_router.get("/admin/announcements", response_model=List[Announcement])
+async def get_all_announcements(current_user: dict = Depends(get_admin_user)):
+    """Admin endpoint to get all announcements"""
+    announcements = await announcements_collection.find(
+        {}, {"_id": 0}
+    ).sort("order", 1).to_list(100)
+    return announcements
+
+@api_router.post("/admin/announcements", response_model=Announcement)
+async def create_announcement(
+    announcement: AnnouncementCreate,
+    current_user: dict = Depends(get_admin_user)
+):
+    """Admin endpoint to create an announcement"""
+    announcement_id = str(uuid.uuid4())[:8]
+    new_announcement = {
+        "announcement_id": announcement_id,
+        **announcement.dict(),
+        "created_at": datetime.utcnow()
+    }
+    await announcements_collection.insert_one(new_announcement)
+    created = await announcements_collection.find_one(
+        {"announcement_id": announcement_id}, {"_id": 0}
+    )
+    return Announcement(**created)
+
+@api_router.put("/admin/announcements/{announcement_id}", response_model=Announcement)
+async def update_announcement(
+    announcement_id: str,
+    announcement_update: AnnouncementUpdate,
+    current_user: dict = Depends(get_admin_user)
+):
+    """Admin endpoint to update an announcement"""
+    existing = await announcements_collection.find_one({"announcement_id": announcement_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Announcement not found")
+    
+    update_data = {k: v for k, v in announcement_update.dict().items() if v is not None}
+    if update_data:
+        await announcements_collection.update_one(
+            {"announcement_id": announcement_id},
+            {"$set": update_data}
+        )
+    
+    updated = await announcements_collection.find_one(
+        {"announcement_id": announcement_id}, {"_id": 0}
+    )
+    return Announcement(**updated)
+
+@api_router.delete("/admin/announcements/{announcement_id}")
+async def delete_announcement(
+    announcement_id: str,
+    current_user: dict = Depends(get_admin_user)
+):
+    """Admin endpoint to delete an announcement"""
+    result = await announcements_collection.delete_one({"announcement_id": announcement_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Announcement not found")
+    return {"message": "Announcement deleted successfully"}
+
 # ==================== ROOT & HEALTH CHECK ====================
 
 @api_router.get("/")
