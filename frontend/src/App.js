@@ -115,6 +115,7 @@ function App() {
               <Route path="countries" element={<CountriesManager />} />
               <Route path="teams" element={<TeamsManager />} />
               <Route path="users" element={<UsersManager />} />
+              <Route path="announcements" element={<AnnouncementsManager />} />
               <Route path="statistics" element={<Statistics />} />
               <Route path="configuration" element={<ConfigurationManager />} />
             </Route>
