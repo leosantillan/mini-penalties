@@ -153,6 +153,7 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
           setSelectedDestination(null);
           setKeeperDestination(null);
           setIsKicking(false);
+          setShowKeeper(false); // Hide keeper for next shot selection
         }, 1500);
       }
     }, 800);
