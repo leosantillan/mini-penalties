@@ -213,31 +213,58 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-600 via-green-500 to-green-400 flex flex-col">
-      {/* Header */}
-      <div className="p-4 flex justify-between items-center bg-black bg-opacity-20">
-        <Button variant="ghost" size="sm" onClick={onBack} className="text-white">
-          <ArrowLeft className="w-4 h-4 mr-2" />
+      {/* Header with Back button only */}
+      <div className="p-2 sm:p-4 flex justify-between items-center bg-black bg-opacity-20">
+        <Button variant="ghost" size="sm" onClick={onBack} className="text-white text-xs sm:text-sm">
+          <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
           {t('back')}
         </Button>
         <div className="text-white text-center">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{selectedTeam.flag}</span>
-            <span className="font-bold text-sm sm:text-base">{selectedTeam.name}</span>
-          </div>
+          <span className="font-bold text-xs sm:text-base">{selectedTeam.name}</span>
         </div>
-        <div className="text-white font-bold text-xl flex items-center gap-2">
-          <Trophy className="w-5 h-5" />
-          {score}
-        </div>
+        {/* Empty div for flex spacing */}
+        <div className="w-16 sm:w-20"></div>
       </div>
 
-      {/* Play Limit Banner */}
-      <div className="px-4 py-2">
-        <PlayLimitBanner />
+      {/* Ad Space Banner */}
+      <div className="px-2 sm:px-4 py-2">
+        <div className="bg-gray-800 bg-opacity-50 rounded-lg p-2 sm:p-3 text-center border border-gray-600 border-dashed">
+          <p className="text-gray-300 text-xs sm:text-sm">📺 Ad Space</p>
+        </div>
       </div>
 
       {/* Game Area */}
       <div className="flex-1 relative overflow-hidden">
+        {/* Score Display with T-shirt - Top Right Corner */}
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 flex flex-col items-center">
+          {/* T-shirt with team colors */}
+          <div className="relative">
+            <svg viewBox="0 0 60 50" className="w-12 h-10 sm:w-16 sm:h-14">
+              {/* T-shirt shape */}
+              <path 
+                d="M15 8 L5 15 L10 20 L10 45 L50 45 L50 20 L55 15 L45 8 L40 12 L20 12 L15 8 Z" 
+                fill={selectedTeam.color || '#3B82F6'}
+                stroke={selectedTeam.color_secondary || '#1E40AF'}
+                strokeWidth="2"
+              />
+              {/* Collar */}
+              <path 
+                d="M20 12 Q30 18 40 12" 
+                fill="none" 
+                stroke={selectedTeam.color_secondary || '#1E40AF'}
+                strokeWidth="2"
+              />
+            </svg>
+            {/* Score on shirt */}
+            <div className="absolute inset-0 flex items-center justify-center pt-2">
+              <span className="text-white font-bold text-lg sm:text-2xl drop-shadow-lg" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
+                {score}
+              </span>
+            </div>
+          </div>
+          <span className="text-white text-xs font-semibold mt-1 drop-shadow">{t('goals')}</span>
+        </div>
+
         {/* Goal Frame */}
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-[85%] sm:w-[70%] max-w-md h-32 sm:h-40 border-4 border-white rounded-t-lg bg-white bg-opacity-10">
           {/* Goal Net Pattern */}
