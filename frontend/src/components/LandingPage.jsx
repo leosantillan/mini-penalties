@@ -52,14 +52,14 @@ const LandingPage = ({ onStart, onStats }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-500 via-green-600 to-green-700 flex items-center justify-center">
         <div className="text-white text-2xl">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-500 via-green-600 to-green-700 flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">
         {/* Language Selector */}
         <div className="mb-8 flex justify-center">
@@ -83,15 +83,15 @@ const LandingPage = ({ onStart, onStats }) => {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
             {t('miniCup')}
           </h1>
-          <p className="text-xl sm:text-2xl text-blue-100 mb-2">{t('clubWorldCup')}</p>
-          <p className="text-base sm:text-lg text-blue-200 mb-8 px-4">{t('tagline')}</p>
+          <p className="text-xl sm:text-2xl text-green-100 mb-2">{t('clubWorldCup')}</p>
+          <p className="text-base sm:text-lg text-green-200 mb-8 px-4">{t('tagline')}</p>
           
           <div className="flex flex-col gap-4 items-center">
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0">
               <Button 
                 onClick={onStart}
                 size="lg"
-                className="bg-white text-blue-600 hover:bg-blue-50 text-lg sm:text-xl px-8 sm:px-12 py-5 sm:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold w-full sm:w-auto"
+                className="bg-white text-green-600 hover:bg-green-50 text-lg sm:text-xl px-8 sm:px-12 py-5 sm:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold w-full sm:w-auto"
               >
                 <Play className="w-5 h-5 sm:w-6 sm:h-6 mr-2 fill-current" />
                 {t('startPlaying')}
@@ -101,7 +101,7 @@ const LandingPage = ({ onStart, onStats }) => {
                 onClick={onStats}
                 size="lg"
                 variant="outline"
-                className="bg-white/10 text-white hover:bg-white hover:text-blue-600 border-2 border-white text-lg sm:text-xl px-8 py-5 sm:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold backdrop-blur-sm w-full sm:w-auto"
+                className="bg-white/10 text-white hover:bg-white hover:text-green-600 border-2 border-white text-lg sm:text-xl px-8 py-5 sm:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 font-bold backdrop-blur-sm w-full sm:w-auto"
               >
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                 {t('stats')}
@@ -110,7 +110,7 @@ const LandingPage = ({ onStart, onStats }) => {
             
             <button
               onClick={() => navigate('/admin/login')}
-              className="text-blue-100 hover:text-white text-sm flex items-center gap-2 transition-colors"
+              className="text-green-100 hover:text-white text-sm flex items-center gap-2 transition-colors"
             >
               <Settings className="w-4 h-4" />
               {t('adminPanel')}
@@ -125,15 +125,15 @@ const LandingPage = ({ onStart, onStats }) => {
               <Trophy className="w-12 h-12 text-yellow-300" />
             </div>
             <div className="text-4xl font-bold text-white mb-2">{totalTeams}</div>
-            <div className="text-blue-100 font-medium">{t('teamsCompeting')}</div>
+            <div className="text-green-100 font-medium">{t('teamsCompeting')}</div>
           </div>
           
           <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 text-center border border-white border-opacity-30">
             <div className="flex justify-center mb-3">
-              <TrendingUp className="w-12 h-12 text-green-300" />
+              <TrendingUp className="w-12 h-12 text-lime-300" />
             </div>
             <div className="text-4xl font-bold text-white mb-2">{formatGoals(totalGoals)}</div>
-            <div className="text-blue-100 font-medium">{t('totalGoals')}</div>
+            <div className="text-green-100 font-medium">{t('totalGoals')}</div>
           </div>
           
           <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl p-6 text-center border border-white border-opacity-30">
@@ -141,7 +141,7 @@ const LandingPage = ({ onStart, onStats }) => {
               <Users className="w-12 h-12 text-purple-300" />
             </div>
             <div className="text-4xl font-bold text-white mb-2">∞</div>
-            <div className="text-blue-100 font-medium">{t('playersWorldwide')}</div>
+            <div className="text-green-100 font-medium">{t('playersWorldwide')}</div>
           </div>
         </div>
 
@@ -152,17 +152,17 @@ const LandingPage = ({ onStart, onStats }) => {
             <div>
               <div className="text-5xl mb-3">🌍</div>
               <h3 className="font-bold text-white mb-2">{t('step1Title')}</h3>
-              <p className="text-blue-100 text-sm">{t('step1Desc')}</p>
+              <p className="text-green-100 text-sm">{t('step1Desc')}</p>
             </div>
             <div>
               <div className="text-5xl mb-3">🎯</div>
               <h3 className="font-bold text-white mb-2">{t('step2Title')}</h3>
-              <p className="text-blue-100 text-sm">{t('step2Desc')}</p>
+              <p className="text-green-100 text-sm">{t('step2Desc')}</p>
             </div>
             <div>
               <div className="text-5xl mb-3">🏆</div>
               <h3 className="font-bold text-white mb-2">{t('step3Title')}</h3>
-              <p className="text-blue-100 text-sm">{t('step3Desc')}</p>
+              <p className="text-green-100 text-sm">{t('step3Desc')}</p>
             </div>
           </div>
         </div>
