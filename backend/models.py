@@ -172,3 +172,54 @@ class GameConfigUpdate(BaseModel):
     plays_per_share: Optional[int] = None
     max_ad_views: Optional[int] = None
     max_share_rewards: Optional[int] = None
+
+# Announcement Models
+class Announcement(BaseModel):
+    announcement_id: str
+    title_en: str
+    title_es: str
+    title_pt: str
+    title_fr: str
+    title_it: str
+    description_en: str
+    description_es: str
+    description_pt: str
+    description_fr: str
+    description_it: str
+    icon: str = "📣"
+    date: str
+    is_active: bool = True
+    order: int = 0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class AnnouncementCreate(BaseModel):
+    title_en: str
+    title_es: str
+    title_pt: str
+    title_fr: str
+    title_it: str
+    description_en: str
+    description_es: str
+    description_pt: str
+    description_fr: str
+    description_it: str
+    icon: str = "📣"
+    date: str
+    is_active: bool = True
+    order: int = 0
+
+class AnnouncementUpdate(BaseModel):
+    title_en: Optional[str] = None
+    title_es: Optional[str] = None
+    title_pt: Optional[str] = None
+    title_fr: Optional[str] = None
+    title_it: Optional[str] = None
+    description_en: Optional[str] = None
+    description_es: Optional[str] = None
+    description_pt: Optional[str] = None
+    description_fr: Optional[str] = None
+    description_it: Optional[str] = None
+    icon: Optional[str] = None
+    date: Optional[str] = None
+    is_active: Optional[bool] = None
+    order: Optional[int] = None
