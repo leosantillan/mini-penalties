@@ -467,26 +467,18 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
           )}
         </div>
 
-        {/* Ball at player's feet (before kick) - positioned closer to goal */}
-        {!isKicking && (
-          <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-            {/* Instruction Message - Above Ball */}
-            {!gameOver && selectedDestination && (
-              <div className="mb-2 sm:mb-3 bg-black bg-opacity-70 rounded-xl px-4 sm:px-6 py-2 sm:py-3">
-                <p className="text-white text-base sm:text-xl font-bold text-center drop-shadow animate-pulse">
-                  {t('clickBallToShoot')}
-                </p>
-              </div>
-            )}
-            
+        {/* Ball with "Click to shoot" message - only after selecting destination */}
+        {!isKicking && selectedDestination && !gameOver && (
+          <div className="absolute top-40 sm:top-48 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center">
+            <div className="bg-black bg-opacity-70 rounded-xl px-4 sm:px-6 py-2 sm:py-3 mb-3">
+              <p className="text-white text-base sm:text-xl font-bold text-center drop-shadow animate-pulse">
+                {t('clickBallToShoot')}
+              </p>
+            </div>
+            {/* Ball right below the message */}
             <button
               onClick={handleShoot}
-              disabled={!selectedDestination || gameOver}
-              className={`text-4xl sm:text-5xl transition-transform ${
-                selectedDestination && !gameOver
-                  ? 'cursor-pointer hover:scale-110'
-                  : 'opacity-50 cursor-not-allowed'
-              }`}
+              className="text-4xl sm:text-5xl transition-transform cursor-pointer hover:scale-110"
             >
               ⚽
             </button>
