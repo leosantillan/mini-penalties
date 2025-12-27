@@ -19,7 +19,8 @@ from models import (
     Token, LoginRequest,
     TeamStats, DailyStats, MonthlyStats, LeaderboardEntry,
     UserRole,
-    GameConfig, GameConfigUpdate
+    GameConfig, GameConfigUpdate,
+    Announcement, AnnouncementCreate, AnnouncementUpdate
 )
 from auth import (
     get_password_hash, verify_password, create_access_token,
@@ -27,7 +28,8 @@ from auth import (
 )
 from database import (
     countries_collection, teams_collection, goals_collection,
-    users_collection, game_sessions_collection, config_collection, db
+    users_collection, game_sessions_collection, config_collection, 
+    announcements_collection, db
 )
 
 ROOT_DIR = Path(__file__).parent
