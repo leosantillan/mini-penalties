@@ -17,6 +17,7 @@ import TeamsManager from "./components/admin/TeamsManager";
 import UsersManager from "./components/admin/UsersManager";
 import Statistics from "./components/admin/Statistics";
 import ConfigurationManager from "./components/admin/ConfigurationManager";
+import AnnouncementsManager from "./components/admin/AnnouncementsManager";
 import GameStats from "./components/GameStats";
 import NewsPage from "./components/NewsPage";
 
