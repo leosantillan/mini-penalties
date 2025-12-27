@@ -335,74 +335,76 @@ const MiniCupGame = ({ selectedTeam, onBack, onGoHome }) => {
             </div>
           )}
 
-          {/* Goalkeeper - styled like reference image */}
-          <div 
-            className="absolute transition-all duration-500 ease-out"
-            style={getKeeperStyle()}
-          >
-            <div className="relative flex flex-col items-center">
-              {/* Head */}
-              <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-200 rounded-full border-2 border-amber-300 z-10 relative">
-                {/* Face details */}
-                <div className="absolute top-1.5 sm:top-2 left-1 w-1 h-1 bg-gray-800 rounded-full"></div>
-                <div className="absolute top-1.5 sm:top-2 right-1 w-1 h-1 bg-gray-800 rounded-full"></div>
-              </div>
-              
-              {/* Torso - Yellow vest over green with arms attached */}
-              <div className="relative -mt-0.5">
-                {/* Green undershirt showing at sides */}
-                <div className="absolute -left-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-l-md"></div>
-                <div className="absolute -right-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-r-md"></div>
+          {/* Goalkeeper - styled like reference image - only shows after selecting destination */}
+          {(showKeeper || isKicking) && (
+            <div 
+              className="absolute transition-all duration-500 ease-out"
+              style={getKeeperStyle()}
+            >
+              <div className="relative flex flex-col items-center">
+                {/* Head */}
+                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-amber-200 rounded-full border-2 border-amber-300 z-10 relative">
+                  {/* Face details */}
+                  <div className="absolute top-1.5 sm:top-2 left-1 w-1 h-1 bg-gray-800 rounded-full"></div>
+                  <div className="absolute top-1.5 sm:top-2 right-1 w-1 h-1 bg-gray-800 rounded-full"></div>
+                </div>
                 
-                {/* Left Arm - rotates from shoulder (right edge of arm is pivot point) */}
-                <div 
-                  className="absolute top-0 right-full transition-transform duration-500 origin-right"
-                  style={{ transform: `rotate(${-90 - getArmRotation()}deg)` }}
-                >
-                  <div className="flex items-center">
-                    {/* Left Glove */}
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md z-10"></div>
-                    {/* Left Arm (green sleeve) */}
-                    <div className="w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full -ml-1"></div>
+                {/* Torso - Yellow vest over green with arms attached */}
+                <div className="relative -mt-0.5">
+                  {/* Green undershirt showing at sides */}
+                  <div className="absolute -left-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-l-md"></div>
+                  <div className="absolute -right-1 top-0 w-2 h-8 sm:h-10 bg-green-600 rounded-r-md"></div>
+                  
+                  {/* Left Arm - rotates from shoulder (right edge of arm is pivot point) */}
+                  <div 
+                    className="absolute top-0 right-full transition-transform duration-500 origin-right"
+                    style={{ transform: `rotate(${-90 - getArmRotation()}deg)` }}
+                  >
+                    <div className="flex items-center">
+                      {/* Left Glove */}
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md z-10"></div>
+                      {/* Left Arm (green sleeve) */}
+                      <div className="w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full -ml-1"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Right Arm - rotates from shoulder (left edge of arm is pivot point) */}
+                  <div 
+                    className="absolute top-0 left-full transition-transform duration-500 origin-left"
+                    style={{ transform: `rotate(${-90 + getArmRotation()}deg)` }}
+                  >
+                    <div className="flex items-center">
+                      {/* Right Arm (green sleeve) */}
+                      <div className="w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full -mr-1"></div>
+                      {/* Right Glove */}
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md z-10"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Yellow vest */}
+                  <div className="w-6 h-8 sm:w-7 sm:h-10 bg-yellow-400 rounded-md border-2 border-yellow-500 relative z-10">
+                    {/* Vest details */}
+                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-500 rounded-sm"></div>
                   </div>
                 </div>
                 
-                {/* Right Arm - rotates from shoulder (left edge of arm is pivot point) */}
-                <div 
-                  className="absolute top-0 left-full transition-transform duration-500 origin-left"
-                  style={{ transform: `rotate(${-90 + getArmRotation()}deg)` }}
-                >
-                  <div className="flex items-center">
-                    {/* Right Arm (green sleeve) */}
-                    <div className="w-10 sm:w-12 h-3 sm:h-4 bg-green-600 rounded-full -mr-1"></div>
-                    {/* Right Glove */}
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full border-2 border-gray-300 shadow-md z-10"></div>
-                  </div>
+                {/* Shorts (green) */}
+                <div className="w-7 h-3 sm:w-8 sm:h-4 bg-green-700 rounded-b-md -mt-0.5"></div>
+                
+                {/* Legs */}
+                <div className="flex gap-1 -mt-0.5">
+                  <div className="w-2.5 h-5 sm:w-3 sm:h-6 bg-amber-200 rounded-b-md"></div>
+                  <div className="w-2.5 h-5 sm:w-3 sm:h-6 bg-amber-200 rounded-b-md"></div>
                 </div>
                 
-                {/* Yellow vest */}
-                <div className="w-6 h-8 sm:w-7 sm:h-10 bg-yellow-400 rounded-md border-2 border-yellow-500 relative z-10">
-                  {/* Vest details */}
-                  <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-500 rounded-sm"></div>
+                {/* Feet/boots (green) */}
+                <div className="flex gap-2 -mt-0.5">
+                  <div className="w-3 h-1.5 sm:w-4 sm:h-2 bg-green-800 rounded-md"></div>
+                  <div className="w-3 h-1.5 sm:w-4 sm:h-2 bg-green-800 rounded-md"></div>
                 </div>
-              </div>
-              
-              {/* Shorts (green) */}
-              <div className="w-7 h-3 sm:w-8 sm:h-4 bg-green-700 rounded-b-md -mt-0.5"></div>
-              
-              {/* Legs */}
-              <div className="flex gap-1 -mt-0.5">
-                <div className="w-2.5 h-5 sm:w-3 sm:h-6 bg-amber-200 rounded-b-md"></div>
-                <div className="w-2.5 h-5 sm:w-3 sm:h-6 bg-amber-200 rounded-b-md"></div>
-              </div>
-              
-              {/* Feet/boots (green) */}
-              <div className="flex gap-2 -mt-0.5">
-                <div className="w-3 h-1.5 sm:w-4 sm:h-2 bg-green-800 rounded-md"></div>
-                <div className="w-3 h-1.5 sm:w-4 sm:h-2 bg-green-800 rounded-md"></div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Ball when kicked into goal */}
           {isKicking && (
