@@ -158,36 +158,34 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
           {teams.map((team, index) => (
             <Card 
               key={team.team_id}
-              className="p-6 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
-              style={{ borderLeft: `6px solid ${team.color}` }}
+              className="p-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col items-center text-center"
               onClick={() => handleTeamClick(team)}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <span className="text-4xl">{team.flag}</span>
-                  <div>
-                    <h3 className="font-bold text-lg text-gray-800">{team.name}</h3>
-                    <p className="text-sm text-gray-500">{team.country}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="flex items-center gap-1 text-gray-500 text-xs mb-1">
-                    <TrendingUp className="w-3 h-3" />
-                    <span>{t('rank')} #{sortedTeams.findIndex(t => t.team_id === team.team_id) + 1}</span>
-                  </div>
-                  <div className="font-bold text-2xl" style={{ color: team.color }}>
-                    {formatGoals(team.goals)}
-                  </div>
-                  <div className="text-xs text-gray-500">{t('goals')}</div>
-                </div>
+              {/* Shirt Design */}
+              <div className="mb-3">
+                <ShirtDesignDisplay 
+                  teamId={team.team_id} 
+                  color={team.color} 
+                  color2={team.color2}
+                  size="lg"
+                />
               </div>
-              <Button className="w-full" style={{ backgroundColor: team.color }}>
-                {t('playAs')} {team.name}
-              </Button>
+              
+              {/* Team Name */}
+              <h3 className="font-bold text-base sm:text-lg text-gray-800 mb-1">{team.name}</h3>
+              
+              {/* Goals */}
+              <div className="flex items-center gap-1">
+                <Trophy className="w-4 h-4 text-yellow-500" />
+                <span className="font-bold text-lg" style={{ color: team.color }}>
+                  {formatGoals(team.goals)}
+                </span>
+                <span className="text-xs text-gray-500">{t('goals')}</span>
+              </div>
             </Card>
           ))}
         </div>
