@@ -74,14 +74,14 @@ const TeamSelection = ({ selectedCountry, onTeamSelect, onBack }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center">
         <div className="text-gray-800 text-2xl">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 py-8 px-4">
       {/* Ad Modal */}
       <AdModal isOpen={showAdModal} onClose={handleAdWatched} onCancel={handleAdCancel} />
       
